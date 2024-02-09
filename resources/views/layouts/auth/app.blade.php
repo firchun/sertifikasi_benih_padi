@@ -8,12 +8,13 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Authentication | {{ env('APP_NAME') ?? 'Laravel' }}</title>
+    <title>{{ $title ?? 'Login' }} | {{ env('APP_NAME') ?? 'Laravel' }}</title>
 
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('backend_theme/') }}/assets/img/favicon/favicon.ico" />
+    {{-- <link rel="icon" type="image/x-icon" href="{{ asset('backend_theme/') }}/assets/img/favicon/favicon.ico" /> --}}
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/') }}/logo.png" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -51,8 +52,8 @@
     <!-- Content -->
 
     <div class="container-xxl">
-        <div class="authentication-wrapper authentication-basic container-p-y">
-            <div class="authentication-inner">
+        <div class="authentication-wrapper authentication-basic container-p-y" style="overflow: visible;">
+            <div class="authentication-inner" id="layout-auth">
                 <!-- form -->
                 @yield('content')
                 <!-- /form -->
@@ -79,9 +80,7 @@
     <script src="{{ asset('backend_theme/') }}/assets/js/main.js"></script>
 
     <!-- Page JS -->
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    @stack('js')
 
 </body>
 
