@@ -1,11 +1,11 @@
 @push('js')
     <script>
         $(function() {
-            $('#datatable-customers').DataTable({
+            $('#datatable-kelas-benih').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: '{{ url('customers-datatable') }}',
+                ajax: '{{ url('kelas-benih-datatable') }}',
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -16,14 +16,10 @@
                         name: 'name'
                     },
                     {
-                        data: 'phone',
-                        name: 'phone'
+                        data: 'description',
+                        name: 'description'
                     },
 
-                    {
-                        data: 'address',
-                        name: 'address'
-                    },
                     {
                         data: 'action',
                         name: 'action'
@@ -34,31 +30,30 @@
                 $('#create').modal('show');
             });
             $('.refresh').click(function() {
-                $('#datatable-customers').DataTable().ajax.reload();
+                $('#datatable-kelas-benih').DataTable().ajax.reload();
             });
-            window.editCustomer = function(id) {
+            window.editKelasBenih = function(id) {
                 $.ajax({
                     type: 'GET',
-                    url: '/customers/edit/' + id,
+                    url: '/kelas_benih/edit/' + id,
                     success: function(response) {
-                        $('#customersModalLabel').text('Edit Customer');
-                        $('#formCustomerId').val(response.id);
-                        $('#formCustomerName').val(response.name);
-                        $('#formCustomerPhone').val(response.phone);
-                        $('#formCustomerAddress').val(response.address);
-                        $('#customersModal').modal('show');
+                        $('#customersModalLabel').text('Edit kelas benih');
+                        $('#formKelasBenihId').val(response.id);
+                        $('#formKelasBenihName').val(response.name);
+                        $('#formKelasBenihDescription').val(response.description);
+                        $('#kelasBenihModal').modal('show');
                     },
                     error: function(xhr) {
                         alert('Terjadi kesalahan: ' + xhr.responseText);
                     }
                 });
             };
-            $('#saveCustomerBtn').click(function() {
-                var formData = $('#userForm').serialize();
+            $('#saveKelasBenihBtn').click(function() {
+                var formData = $('#kelasBenihForm').serialize();
 
                 $.ajax({
                     type: 'POST',
-                    url: '/customers/store',
+                    url: '/kelas_benih/store',
                     data: formData,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -66,29 +61,30 @@
                     success: function(response) {
                         alert(response.message);
                         // Refresh DataTable setelah menyimpan perubahan
-                        $('#datatable-customers').DataTable().ajax.reload();
-                        $('#customersModal').modal('hide');
+                        $('#datatable-kelas-benih').DataTable().ajax.reload();
+                        $('#kelasBenihModal').modal('hide');
                     },
                     error: function(xhr) {
                         alert('Terjadi kesalahan: ' + xhr.responseText);
                     }
                 });
             });
-            $('#createCustomerBtn').click(function() {
-                var formData = $('#createUserForm').serialize();
+            $('#createKelasBenihBtn').click(function() {
+                var formData = $('#createKelasBenihForm').serialize();
 
                 $.ajax({
                     type: 'POST',
-                    url: '/customers/store',
+                    url: '/kelas_benih/store',
                     data: formData,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
                         alert(response.message);
-                        $('#customersModalLabel').text('Edit Customer');
-                        $('#formCustomerName').val('');
-                        $('#datatable-customers').DataTable().ajax.reload();
+                        $('#customersModalLabel').text('Edit varietas');
+                        $('#formKelasBenihName').val('');
+                        $('#formKelasBenihDescription').val('');
+                        $('#datatable-kelas-benih').DataTable().ajax.reload();
                         $('#create').modal('hide');
                     },
                     error: function(xhr) {
@@ -96,17 +92,17 @@
                     }
                 });
             });
-            window.deleteCustomers = function(id) {
-                if (confirm('Apakah Anda yakin ingin menghapus pelanggan ini?')) {
+            window.deleteKelasBenih = function(id) {
+                if (confirm('Apakah Anda yakin ingin menghapus kelas ini?')) {
                     $.ajax({
                         type: 'DELETE',
-                        url: '/customers/delete/' + id,
+                        url: '/kelas_benih/delete/' + id,
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function(response) {
                             // alert(response.message);
-                            $('#datatable-customers').DataTable().ajax.reload();
+                            $('#datatable-kelas-benih').DataTable().ajax.reload();
                         },
                         error: function(xhr) {
                             alert('Terjadi kesalahan: ' + xhr.responseText);

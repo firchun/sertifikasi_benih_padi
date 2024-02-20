@@ -2,10 +2,9 @@
     <meta charset="utf-8">
     <title>{{ $title . ' | ' . env('APP_NAME') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-    <meta name="description" content="This is meta description">
-    <meta name="author" content="Themefisher">
-    <link rel="shortcut icon" href="{{ asset('/') }}img/favicon.png" type="image/x-icon">
-    <link rel="icon" href="{{ asset('/') }}img/favicon.png" type="image/x-icon">
+    <meta name="description" content="{{ env('APP_DESCRIPTION') ?? 'Laravel' }}">
+    <link rel="shortcut icon" href="{{ asset('/') }}img/logo2.png" type="image/x-icon">
+    <link rel="icon" href="{{ asset('/') }}img/logo2.png" type="image/x-icon">
     @stack('css')
     <!-- theme meta -->
     <meta name="theme-name" content="wallet" />

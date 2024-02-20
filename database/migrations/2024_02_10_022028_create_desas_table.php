@@ -13,8 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['Admin', 'BPSB', 'Dinas', 'Penangkar'])->default('Penangkar')->after('email');
+        Schema::create('desas', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('id_kecamatan');
+            $table->string('name');
+            $table->text('description');
+            $table->timestamps();
+
+            $table->foreign('id_kecamatan')->references('id')->on('kecamatans');
         });
     }
 
@@ -25,8 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('desas');
     }
 };

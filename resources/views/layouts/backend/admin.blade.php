@@ -11,11 +11,11 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <title>{{ $title ?? 'Laravel' }} | {{ env('APP_NAME') ?? 'Laravel' }}</title>
 
-    <meta name="description" content="" />
+    <meta name="description" content="{{ env('APP_DESCRIPTION') ?? 'Laravel' }}">
 
     <!-- Favicon -->
     {{-- <link rel="icon" type="image/x-icon" href="{{ asset('backend_theme/') }}/assets/img/favicon/favicon.ico" /> --}}
-    <link rel="icon" type="image/x-icon" href="{{ asset('img/') }}/logo.png" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/') }}/logo2.png" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DesaController;
+use App\Http\Controllers\KecamatanController;
+use App\Http\Controllers\KelasBenihController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VarietasController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -28,12 +32,6 @@ Route::middleware(['auth:web'])->group(function () {
     //akun managemen
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    //customers managemen
-    Route::get('/customers', [CustomerController::class, 'index'])->name('customers');
-    Route::post('/customers/store',  [CustomerController::class, 'store'])->name('customers.store');
-    Route::get('/customers/edit/{id}',  [CustomerController::class, 'edit'])->name('customers.edit');
-    Route::delete('/customers/delete/{id}',  [CustomerController::class, 'destroy'])->name('customers.delete');
-    Route::get('/customers-datatable', [CustomerController::class, 'getCustomersDataTable']);
 });
 Route::middleware(['auth:web', 'role:Admin'])->group(function () {
     //user managemen
@@ -42,4 +40,29 @@ Route::middleware(['auth:web', 'role:Admin'])->group(function () {
     Route::get('/users/edit/{id}',  [UserController::class, 'edit'])->name('users.edit');
     Route::delete('/users/delete/{id}',  [UserController::class, 'destroy'])->name('users.delete');
     Route::get('/users-datatable', [UserController::class, 'getUsersDataTable']);
+    //varietas managemen
+    Route::get('/varietas', [VarietasController::class, 'index'])->name('varietas');
+    Route::post('/varietas/store',  [VarietasController::class, 'store'])->name('varietas.store');
+    Route::get('/varietas/edit/{id}',  [VarietasController::class, 'edit'])->name('varietas.edit');
+    Route::delete('/varietas/delete/{id}',  [VarietasController::class, 'destroy'])->name('varietas.delete');
+    Route::get('/varietas-datatable', [VarietasController::class, 'getVarietasDataTable']);
+    //kelas Benih managemen
+    Route::get('/kelas_benih', [KelasBenihController::class, 'index'])->name('kelas_benih');
+    Route::post('/kelas_benih/store',  [KelasBenihController::class, 'store'])->name('kelas_benih.store');
+    Route::get('/kelas_benih/edit/{id}',  [KelasBenihController::class, 'edit'])->name('kelas_benih.edit');
+    Route::delete('/kelas_benih/delete/{id}',  [KelasBenihController::class, 'destroy'])->name('kelas_benih.delete');
+    Route::get('/kelas-benih-datatable', [KelasBenihController::class, 'getKelasBenihDataTable']);
+    //desa managemen
+    Route::get('/desa', [DesaController::class, 'index'])->name('desa');
+    Route::post('/desa/store',  [DesaController::class, 'store'])->name('desa.store');
+    Route::get('/desa/edit/{id}',  [DesaController::class, 'edit'])->name('desa.edit');
+    Route::delete('/desa/delete/{id}',  [DesaController::class, 'destroy'])->name('desa.delete');
+    Route::get('/desa-datatable', [DesaController::class, 'getDesaDataTable']);
+    //kecamatan managemen
+    Route::get('/kecamatan/getall', [KecamatanController::class, 'getAll'])->name('kecamatan.getall');
+    Route::get('/kecamatan', [KecamatanController::class, 'index'])->name('kecamatan');
+    Route::post('/kecamatan/store',  [KecamatanController::class, 'store'])->name('kecamatan.store');
+    Route::get('/kecamatan/edit/{id}',  [KecamatanController::class, 'edit'])->name('kecamatan.edit');
+    Route::delete('/kecamatan/delete/{id}',  [KecamatanController::class, 'destroy'])->name('kecamatan.delete');
+    Route::get('/kecamatan-datatable', [KecamatanController::class, 'getKecamatanDataTable']);
 });

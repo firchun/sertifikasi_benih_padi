@@ -60,7 +60,7 @@
                 </div>
                 <!-- /Logo -->
                 <h4 class="mb-2">Welcome 👋</h4>
-                <p class="mb-4">Silahkan login terlebih dahulu</p>
+                <p class="mb-4">Silahkan mendaftar di sini</p>
 
                 <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
                     {{-- <input type="hidden" name="role" value="mahasiswa"> --}}
@@ -70,6 +70,57 @@
                         <input type="text" class="form-control" id="name" name="name" placeholder="Nama Lengkap"
                             autofocus />
                         @error('name')
+                            <span class="text-danger" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+                    {{-- <div class="mb-3">
+                        <label for="nik" class="form-label" id="no-title">NIK</label>
+                        <input type="number" class="form-control" id="nik" name="nik"
+                            placeholder="Nomor Induk Kependudukan" autofocus />
+                        @error('nik')
+                            <span class="text-danger" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="tempat_lahir" class="form-label" id="no-title">Tempat Lahir</label>
+                        <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir"
+                            placeholder="Tempat Lahir" autofocus />
+                        @error('tempat_lahir')
+                            <span class="text-danger" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="tanggal_lahir" class="form-label" id="no-title">Tanggal Lahir</label>
+                        <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" autofocus />
+                        @error('tanggal_lahir')
+                            <span class="text-danger" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div> --}}
+                    <div class="mb-3">
+                        <label for="no_hp" class="form-label" id="no-title">Nomor HP/WA</label>
+                        <input type="number" class="form-control" id="no_hp" name="no_hp" autofocus />
+                        @error('no_hp')
+                            <span class="text-danger" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_desa" class="form-label" id="no-title">Desa/Kampung</label>
+                        <select class="form-select" id="id_desa" name="id_desa">
+                            @foreach (App\Models\Desa::all() as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('id_desa')
                             <span class="text-danger" role="alert">
                                 <small>{{ $message }}</small>
                             </span>
@@ -89,7 +140,8 @@
                     </div>
                     <div class="mb-3 form-password-toggle">
                         <div class="d-flex justify-content-between">
-                            <label class="form-label" for="password">Password<br><small>*Minimal 8 atau lebih
+                            <label class="form-label" for="password">Password<br><small class="text-muted">*Minimal 8
+                                    atau lebih
                                     karakter</small></label>
                         </div>
                         <div class="input-group input-group-merge">

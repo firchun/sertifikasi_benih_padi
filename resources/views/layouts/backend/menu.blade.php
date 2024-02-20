@@ -47,7 +47,7 @@
                     </g>
                 </svg>
             </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2">{{ env('APP_NAME') ?? 'Laravel' }}</span>
+            <span class="app-brand-text  menu-text fw-bolder ms-2">{{ env('APP_NAME') ?? 'Laravel' }}</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -68,24 +68,57 @@
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">customers</span>
-        </li>
-        <li class="menu-item {{ request()->is('customers') ? 'active' : '' }}">
-            <a href="{{ url('/customers') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div data-i18n="Analytics">Customers</div>
-            </a>
-        </li>
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">users</span>
-        </li>
-        <li class="menu-item {{ request()->is('users') ? 'active' : '' }}">
-            <a href="{{ url('/users') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div data-i18n="Analytics">Users</div>
-            </a>
-        </li>
+        @if (Auth::user()->role == 'Admin')
+            {{-- master data  --}}
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Master Data</span>
+            </li>
+            <li class="menu-item {{ request()->is('kecamatan') ? 'active' : '' }}">
+                <a href="{{ url('/kecamatan') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-city"></i>
+                    <div data-i18n="Analytics">Data Kecamatan</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->is('desa') ? 'active' : '' }}">
+                <a href="{{ url('/desa') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-city"></i>
+                    <div data-i18n="Analytics">Data Desa</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->is('kelas_benih') ? 'active' : '' }}">
+                <a href="{{ url('/kelas_benih') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-tree"></i>
+                    <div data-i18n="Analytics">Kelas Benih</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->is('varietas') ? 'active' : '' }}">
+                <a href="{{ url('/varietas') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-tree"></i>
+                    <div data-i18n="Analytics">Varietas Benih</div>
+                </a>
+            </li>
+            {{-- end master data --}}
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Pengguna</span>
+            </li>
+            <li class="menu-item {{ request()->is('users') ? 'active' : '' }}">
+                <a href="{{ url('/users') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-user"></i>
+                    <div data-i18n="Analytics">Pengguna</div>
+                </a>
+            </li>
+        @elseif(Auth::user()->role == 'Penangkar' || Auth::user()->role == 'Gapoktan')
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Data
+                    {{ Auth::user()->role == 'Penangkar' ? 'Penangkar' : 'Gapoktan' }}</span>
+            </li>
+            <li class="menu-item {{ request()->is('users') ? 'active' : '' }}">
+                <a href="{{ url('/users') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-data"></i>
+                    <div data-i18n="Analytics">Data</div>
+                </a>
+            </li>
+        @endif
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Akun</span>
         </li>

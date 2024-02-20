@@ -13,8 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['Admin', 'BPSB', 'Dinas', 'Penangkar'])->default('Penangkar')->after('email');
+        Schema::create('harga_kelas_benihs', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('id_kelas_benih');
+            $table->integer('harga');
+            $table->timestamps();
+
+            $table->foreign('id_kelas_benih')->references('id')->on('kelas_benihs');
         });
     }
 
@@ -25,8 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('harga_kelas_benihs');
     }
 };

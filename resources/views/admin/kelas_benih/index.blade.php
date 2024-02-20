@@ -28,13 +28,12 @@
                     </div>
                 </div>
                 <div class="card-datatable table-responsive">
-                    <table id="datatable-customers" class="table table-hover table-bordered display">
+                    <table id="datatable-kelas-benih" class="table table-hover table-bordered display">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Address</th>
+                                <th>Nama</th>
+                                <th>Keterangan</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -42,9 +41,8 @@
                         <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Address</th>
+                                <th>Nama</th>
+                                <th>Keterangan</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -53,6 +51,6 @@
             </div>
         </div>
     </div>
-    @include('admin.customers.components.modal')
+    @include('admin.kelas_benih.components.modal')
 @endsection
-@include('admin.customers.script')
+@include('admin.kelas_benih.script')
