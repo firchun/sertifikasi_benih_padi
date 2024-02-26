@@ -5,7 +5,7 @@
             <div class="col-lg-4">
                 <a href="{{ url('/') }}">
                     <img loading="prelaod" decoding="async" class="img-fluid" width="50"
-                        src="{{ asset('/') }}img/favicon.png" alt="Wallet">
+                        src="{{ asset('/') }}img/logo2.png" alt="Wallet">
                 </a>
             </div>
             <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">

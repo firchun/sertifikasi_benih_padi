@@ -16,9 +16,44 @@ class VarietasController extends Controller
         ];
         return view('admin.varietas.index', $data);
     }
+    public function getall()
+    {
+        $varietas = Varietas::select([
+            'id',
+            'name',
+            'description',
+            'umur',
+            'potensi_hasil',
+            'ketahanan_hama',
+            'ketahanan_penyakit',
+            'ketahanan_abiotik',
+            'anjuran_tanam',
+            'created_at',
+            'updated_at'
+        ])
+            ->when(request()->search, function ($query, $search) {
+                return $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->orderByDesc('id')
+            ->paginate(10);
+
+        return response()->json($varietas);
+    }
     public function getVarietasDataTable()
     {
-        $varietas = varietas::select(['id', 'name', 'description', 'created_at', 'updated_at'])->orderByDesc('id');
+        $varietas = varietas::select([
+            'id',
+            'name',
+            'description',
+            'umur',
+            'potensi_hasil',
+            'ketahanan_hama',
+            'ketahanan_penyakit',
+            'ketahanan_abiotik',
+            'anjuran_tanam',
+            'created_at',
+            'updated_at'
+        ])->orderByDesc('id');
 
         return Datatables::of($varietas)
             ->addColumn('action', function ($varietas) {
@@ -37,6 +72,12 @@ class VarietasController extends Controller
         $varietasData = [
             'name' => $request->input('name'),
             'description' => $request->input('description'),
+            'umur' => $request->input('umur'),
+            'potensi_hasil' => $request->input('potensi_hasil'),
+            'ketahanan_hama' => $request->input('ketahanan_hama'),
+            'ketahanan_abiotik' => $request->input('ketahanan_abiotik'),
+            'ketahanan_penyakit' => $request->input('ketahanan_penyakit'),
+            'anjuran_tanam' => $request->input('anjuran_tanam'),
         ];
 
         if ($request->filled('id')) {

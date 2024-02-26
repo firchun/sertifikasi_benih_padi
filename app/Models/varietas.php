@@ -12,5 +12,11 @@ class varietas extends Model
     protected $fillable = [
         'name',
         'description',
+        'umur',
+        'potensi_hasil',
+        'ketahanan_hama',
+        'ketahanan_penyakit',
+        'ketahanan_abiotik',
+        'anjuran_tanam',
     ];
 }

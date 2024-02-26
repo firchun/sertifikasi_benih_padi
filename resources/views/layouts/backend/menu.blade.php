@@ -109,13 +109,12 @@
             </li>
         @elseif(Auth::user()->role == 'Penangkar' || Auth::user()->role == 'Gapoktan')
             <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">Data
-                    {{ Auth::user()->role == 'Penangkar' ? 'Penangkar' : 'Gapoktan' }}</span>
+                <span class="menu-header-text">Penangkaran</span>
             </li>
-            <li class="menu-item {{ request()->is('users') ? 'active' : '' }}">
-                <a href="{{ url('/users') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-data"></i>
-                    <div data-i18n="Analytics">Data</div>
+            <li class="menu-item {{ request()->is('penangkars') ? 'active' : '' }}">
+                <a href="{{ url('/penangkars') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-plus"></i>
+                    <div data-i18n="Analytics">Pengajuan Penangkar</div>
                 </a>
             </li>
         @endif

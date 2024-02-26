@@ -41,6 +41,12 @@
                         $('#formVarietasId').val(response.id);
                         $('#formVarietasName').val(response.name);
                         $('#formVarietasDescription').val(response.description);
+                        $('#formVarietasUmur').val(response.umur);
+                        $('#formVarietasPotensiHasil').val(response.potensi_hasil);
+                        $('#formVarietasKetahananHama').val(response.ketahanan_hama);
+                        $('#formVarietasKetahananPenyakit').val(response.ketahanan_penyakit);
+                        $('#formVarietasKetahananAbiotik').val(response.ketahanan_abiotik);
+                        $('#formVarietasAnjuranTanam').val(response.anjuran_tanam);
                         $('#varietasModal').modal('show');
                     },
                     error: function(xhr) {

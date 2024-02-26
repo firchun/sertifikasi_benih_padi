@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('Penangkars', function (Blueprint $table) {
+        Schema::create('testimonis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user');
             $table->string('nama');
-            $table->text('alamat');
-            $table->enum('jenis', ['Mandiri', 'Kelompok']);
-            $table->integer('jumlah_anggota')->default(1);
-            $table->float('total_luas_lahan');
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->string('sebagai');
+            $table->text('testimoni');
             $table->timestamps();
         });
     }
@@ -34,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Penangkars');
+        Schema::dropIfExists('testimonis');
     }
 };

@@ -4,9 +4,12 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DesaController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\KelasBenihController;
+use App\Http\Controllers\PenangkarController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VarietasController;
+use App\Models\PenangkarAnggota;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +27,25 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.index', ['title' => 'Home']);
 });
+Route::get('/maps', function () {
+    return view('pages.maps', ['title' => 'Lokasi Penangkar']);
+})->name('maps');
+Route::get('/stoks', function () {
+    return view('pages.stok', ['title' => 'Stok Benih']);
+})->name('stoks');
+Route::get('/varietas-unggulan', function () {
+    return view('pages.varietas', ['title' => 'Varietas Unggulan']);
+});
+Route::get('/lahan', function () {
+    return view('pages.lahan', ['title' => 'Pemanfaatan Lahan Pertanian']);
+});
+Route::get('/penanaman-padi', function () {
+    return view('pages.penanaman-padi', ['title' => 'Penanaman benih padi']);
+});
+Route::get('/varietas/getall', [VarietasController::class, 'getall'])->name('varietas.getall');
+//testimoni
+Route::get('/testimoni/getall', [TestimoniController::class, 'getall'])->name('testimoni.getall');
+Route::post('/testimoni/store',  [TestimoniController::class, 'store'])->name('testimoni.store');
 
 Auth::routes();
 Route::middleware(['auth:web'])->group(function () {
@@ -32,8 +54,17 @@ Route::middleware(['auth:web'])->group(function () {
     //akun managemen
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    //penangkar managemen
+    Route::get('/penangkars', [PenangkarController::class, 'index'])->name('penangkars');
+    Route::post('/penangkars/store',  [PenangkarController::class, 'store'])->name('penangkars.store');
+    Route::get('/penangkars/edit/{id}',  [PenangkarController::class, 'edit'])->name('penangkars.edit');
+    Route::delete('/penangkars/delete/{id}',  [PenangkarController::class, 'destroy'])->name('penangkars.delete');
+    Route::get('/penangkars-datatable', [PenangkarController::class, 'getPenangkarsDataTable']);
 });
 Route::middleware(['auth:web', 'role:Admin'])->group(function () {
+    //testimoni
+    Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
+    Route::delete('/testimoni/delete/{id}',  [TestimoniController::class, 'destroy'])->name('testimoni.delete');
     //user managemen
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::post('/users/store',  [UserController::class, 'store'])->name('users.store');
@@ -42,6 +73,7 @@ Route::middleware(['auth:web', 'role:Admin'])->group(function () {
     Route::get('/users-datatable', [UserController::class, 'getUsersDataTable']);
     //varietas managemen
     Route::get('/varietas', [VarietasController::class, 'index'])->name('varietas');
+
     Route::post('/varietas/store',  [VarietasController::class, 'store'])->name('varietas.store');
     Route::get('/varietas/edit/{id}',  [VarietasController::class, 'edit'])->name('varietas.edit');
     Route::delete('/varietas/delete/{id}',  [VarietasController::class, 'destroy'])->name('varietas.delete');

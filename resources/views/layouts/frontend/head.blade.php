@@ -8,6 +8,7 @@
     @stack('css')
     <!-- theme meta -->
     <meta name="theme-name" content="wallet" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- # Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +20,9 @@
     <link rel="stylesheet" href="{{ asset('frontend_theme/') }}/plugins/font-awesome/fontawesome.min.css">
     <link rel="stylesheet" href="{{ asset('frontend_theme/') }}/plugins/font-awesome/brands.css">
     <link rel="stylesheet" href="{{ asset('frontend_theme/') }}/plugins/font-awesome/solid.css">
+
+    {{-- <script src="https://maps.googleapis.com/maps/api"></script> --}}
+
 
     <!-- # Main Style Sheet -->
     <link rel="stylesheet" href="{{ asset('frontend_theme/') }}/css/style.css">
