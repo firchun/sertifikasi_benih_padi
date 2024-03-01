@@ -5,7 +5,7 @@
         <div class="container">
 
             <div class="post-slider rounded overflow-hidden" style="border-radius: 20px; height:50vh;">
-                <img loading="lazy" decoding="async" src="{{ asset('img/benih.jpg') }}" alt="Post Thumbnail"
+                <img loading="lazy" decoding="async" src="{{ asset('img/benih.JPG') }}" alt="Post Thumbnail"
                     style="height:50vh; object-fit : cover;">
                 <img loading="lazy" decoding="async" src="{{ asset('img/dinastphbun.jpg') }}" alt="Post Thumbnail"
                     style="height:50vh; object-fit : cover;">
