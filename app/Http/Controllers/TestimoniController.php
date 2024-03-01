@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class TestimoniController extends Controller
 {
@@ -18,6 +19,17 @@ class TestimoniController extends Controller
     {
         $Testimoni = Testimoni::all();
         return response()->json($Testimoni);
+    }
+    public function getTestimoniDataTable()
+    {
+        $Testimoni = Testimoni::select(['id', 'nama', 'testimoni', 'sebagai', 'created_at', 'updated_at'])->orderByDesc('id');
+
+        return DataTables::of($Testimoni)
+            ->addColumn('action', function ($Testimoni) {
+                return view('admin.testimoni.components.actions', compact('Testimoni'));
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
     public function store(Request $request)
     {

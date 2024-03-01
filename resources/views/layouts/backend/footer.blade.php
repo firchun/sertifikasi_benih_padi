@@ -5,7 +5,7 @@
             <script>
                 document.write(new Date().getFullYear());
             </script>
-            , Sneat template
+            , {{ env('APP_NAME') ?? 'Sneat template' }}
 
         </div>
 

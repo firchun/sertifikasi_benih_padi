@@ -64,6 +64,7 @@ Route::middleware(['auth:web'])->group(function () {
 Route::middleware(['auth:web', 'role:Admin'])->group(function () {
     //testimoni
     Route::get('/testimoni', [TestimoniController::class, 'index'])->name('testimoni');
+    Route::get('/testimoni-datatable', [TestimoniController::class, 'getTestimoniDataTable']);
     Route::delete('/testimoni/delete/{id}',  [TestimoniController::class, 'destroy'])->name('testimoni.delete');
     //user managemen
     Route::get('/users', [UserController::class, 'index'])->name('users');

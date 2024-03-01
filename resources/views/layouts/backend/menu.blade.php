@@ -101,6 +101,12 @@
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Pengguna</span>
             </li>
+            <li class="menu-item {{ request()->is('testimoni') ? 'active' : '' }}">
+                <a href="{{ url('/testimoni') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-message"></i>
+                    <div data-i18n="Analytics">Testimoni</div>
+                </a>
+            </li>
             <li class="menu-item {{ request()->is('users') ? 'active' : '' }}">
                 <a href="{{ url('/users') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user"></i>
