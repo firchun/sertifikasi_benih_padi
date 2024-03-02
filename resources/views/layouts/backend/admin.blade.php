@@ -96,7 +96,7 @@
 
 <body>
     <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-wrapper layout-content-navbar @if (Auth::user()->role == 'Penangkar') layout-without-menu @endif">
         <div class="layout-container">
             <!-- Menu -->
             @include('layouts.backend.menu')

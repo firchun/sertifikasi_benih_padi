@@ -26,6 +26,7 @@
                         <p class="mb-4">Dengan benih padi bersertifikat, hasil panen lebih terjamin karena telah melalui
                             proses seleksi dan pengujian ketat, meningkatkan produktivitas, kualitas panen, dan mendukung
                             keberlanjutan lingkungan serta ekonomi lokal.
+                            {{-- Tingkatkan Kualitas Hasil Panen dengan Benih Padi Bersertifikat! --}}
                         </p>
                         <a type="button" class="btn btn-primary" href="{{ route('register') }}">Daftar menjadi penangkar
                             <span style="font-size: 14px;" class="ms-2 fas fa-arrow-right"></span></a>

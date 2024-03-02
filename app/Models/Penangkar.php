@@ -9,6 +9,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Penangkar extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'nama',
+        'id_user',
+        'alamat',
+        'jenis',
+        'jumlah_anggota',
+        'luas_lahan',
+        'latitude',
+        'longitude',
+    ];
 
     public function user(): BelongsTo
     {

@@ -1,12 +1,13 @@
 @extends('layouts.backend.admin')
 
 @section('content')
+    @include('layouts.backend.alert')
     <div class="jumbroton text-center">
         <img src="{{ asset('img/logo2.png') }}" style="width: 10vh;" class="mb-2" alt="logo">
         <h2>Selamat datang di <br><span class="text-primary">Sistem Informasi Sertifikasi Benih Padi</span></h2>
     </div>
     <hr>
-    @if (Auth::user()->role != 'Penangkar' && Auth::user()->role != 'Gapoktan')
+    @if (Auth::user()->role != 'Penangkar')
         <div class="row">
             @include('admin.dashboard_component.card1', [
                 'count' => $users,
@@ -37,5 +38,7 @@
                 'icon' => 'city',
             ])
         </div>
+    @elseif(Auth::user()->role == 'Penangkar')
+        @include('admin.dashboard_component.penangkar')
     @endif
 @endsection

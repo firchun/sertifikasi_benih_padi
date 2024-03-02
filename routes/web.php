@@ -54,9 +54,12 @@ Route::middleware(['auth:web'])->group(function () {
     //akun managemen
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    //add penangkar
+    Route::post('/penangkars/store',  [PenangkarController::class, 'store'])->name('penangkars.store');
+});
+Route::middleware(['auth:web', 'role:BPSB,Dinas'])->group(function () {
     //penangkar managemen
     Route::get('/penangkars', [PenangkarController::class, 'index'])->name('penangkars');
-    Route::post('/penangkars/store',  [PenangkarController::class, 'store'])->name('penangkars.store');
     Route::get('/penangkars/edit/{id}',  [PenangkarController::class, 'edit'])->name('penangkars.edit');
     Route::delete('/penangkars/delete/{id}',  [PenangkarController::class, 'destroy'])->name('penangkars.delete');
     Route::get('/penangkars-datatable', [PenangkarController::class, 'getPenangkarsDataTable']);
