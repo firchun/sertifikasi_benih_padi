@@ -39,6 +39,17 @@
                 <div class="tab-pane fade" id="penangkar" role="tabpanel" aria-labelledby="penangkar-tab">
                     <div class="container">
                         <h3>Daftar Penangkar</h3>
+                        <hr>
+                        <!-- Tampilan loading -->
+                        <div id="loading" style="display: none; text-align: center;">
+                            <h4>Harap Tunggu....</h4>
+                        </div>
+                        <div class="widget widget-categories">
+                            <ul class="list-unstyled widget-list" id="additional_Info">
+
+                            </ul>
+
+                        </div>
                     </div>
                 </div>
 
@@ -48,8 +59,47 @@
     </section>
 @endsection
 @push('js')
+    <script>
+        $(document).ready(function() {
+            $('#loading').show();
+
+            function loadData() {
+                $.ajax({
+                    url: "{{ route('penangkars.getall') }}",
+                    dataType: 'json',
+                    method: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        $('#loading').hide();
+                        // Membersihkan data sebelum memuat yang baru
+                        $('#additional_Info').empty();
+                        // Memuat data baru
+                        $.each(response, function(index, item) {
+                            var accordionContent = `
+                           
+                            <li><a href="https://maps.google.com/?saddr=My+Location&daddr=${item.latitude},${item.longitude}" target="_blank"><strong>Penangkaran :</strong> ${item.nama}</a>
+                                        </li>
+                            `;
+                            $('#additional_Info').append(accordionContent);
+                        });
+
+                    },
+                    error: function() {
+                        console.log('Gagal mengambil data');
+                    }
+                });
+            }
+            loadData();
+        });
+    </script>
+    {{-- maps --}}
     <script src="https://maps.googleapis.com/maps/api/js?&key={{ env('GMAP_API_KEY') }}&callback=myMap"></script>
     <script>
+        var map;
+        var markers = [];
+
         function initialize() {
             var center = new google.maps.LatLng(-8.3983748, 140.4270463);
             var mapOptions = {
@@ -58,7 +108,67 @@
                 zoomControl: true,
                 mapTypeId: google.maps.MapTypeId.HYBRID
             };
-            var map = new google.maps.Map(document.getElementById('gmap'), mapOptions);
+            map = new google.maps.Map(document.getElementById('gmap'), mapOptions);
+
+            $.ajax({
+                url: "{{ route('penangkars.getall') }}",
+                dataType: 'json',
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    markers = response.map(el => {
+                        return {
+                            "id": el['id'],
+                            "nama": el['nama'],
+                            "ketua": el['user']['name'],
+                            "latitude": parseFloat(el['latitude']),
+                            "longitude": parseFloat(el['longitude']),
+                        }
+                    });
+                    for (i = 0; i < markers.length; i++) {
+                        addMarker(markers[i]);
+                    }
+                }
+            });
+        }
+
+        function addMarker(marker) {
+            var pos = new google.maps.LatLng(marker["latitude"], marker["longitude"]);
+
+            var content = `
+                <div class="popupContent" style="width:200px;">
+                    <div class="text-center justify-content-center text-black">
+                        <strong>Penangkar ${marker.nama}</strong>
+                        <hr>
+                            <br><strong>Nama Penangkaran :</strong><br> ${marker.nama}<br>
+                            <strong>Ketua Penangkaran :</strong> <br>${marker.ketua}
+                        <div class="mt-4">
+                        <a href="https://maps.google.com/?saddr=My+Location&daddr=${marker.latitude},${marker.longitude}" target="_blank" class="btn btn-primary btn-sm" style="padding:10px;">Rute</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            var icon = {
+                url: '{{ asset('img/marker.png') }}',
+                scaledSize: new google.maps.Size(30, 41)
+            };
+
+            var marker1 = new google.maps.Marker({
+                position: pos,
+                map: map,
+                icon: icon
+            });
+
+            // Marker click listener
+            google.maps.event.addListener(marker1, 'click', function() {
+                var infowindow = new google.maps.InfoWindow({
+                    content: content
+                });
+                infowindow.open(map, marker1);
+            });
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);

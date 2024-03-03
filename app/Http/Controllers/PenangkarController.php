@@ -17,6 +17,12 @@ class PenangkarController extends Controller
         ];
         return view('admin.penangkar.index', $data);
     }
+    public function getAll()
+    {
+        $Penangkar = Penangkar::select(['id', 'id_user', 'nama', 'alamat', 'jumlah_anggota', 'jenis', 'luas_lahan', 'latitude', 'longitude', 'created_at', 'updated_at'])->with(['user'])->orderByDesc('id')->get();
+
+        return response()->json($Penangkar);
+    }
     public function getPenangkarsDataTable()
     {
         $Penangkar = Penangkar::select(['id', 'id_user', 'nama', 'alamat', 'jumlah_anggota', 'jenis', 'luas_lahan', 'latitude', 'longitude', 'created_at', 'updated_at'])->with(['user'])->orderByDesc('id');

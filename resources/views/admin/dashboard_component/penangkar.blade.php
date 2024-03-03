@@ -168,20 +168,128 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        Data Sertifikasi
-                    </div>
-                </div>
-                <div class="card-body">
+                @if (App\Models\Sertifikasi::where('id_user', Auth::user()->id)->get()->isEmpty())
+                    <div class="text-center">
+                        <div class="border border-primary bg-white"
+                            style="margin-top:20px; margin-bottom:20px; padding:30px; border-radius:20px;">
 
-                </div>
+                            <p class="text-muted">Anda belum melakukan sertifikasi, silahkan klik tombol dibawah untuk
+                                mengajuakn data sertifikasi..</p>
+                            <a href="{{ route('sertifikasi.pengajuan') }}" class="btn btn-lg btn-primary"><span
+                                    class="bx bx-file"></span> Ajukan Sertifikasi</a>
+                        </div>
+                    </div>
+                @else
+                    <div class="d-flex mb-4">
+                        <a href="{{ route('sertifikasi.pengajuan') }}" class="btn btn-lg btn-primary"><span
+                                class="bx bx-file"></span> Ajukan Sertifikasi Baru</a>
+                        <button id="refreshDataBtn" class="btn btn-secondary mx-3"> <i class="bx bx-sync me-sm-1">
+                            </i></button>
+                    </div>
+                    <hr>
+                    <div id="sertifikasiContainer" class="row">
+                        <div id="loadingIndicator" class="d-none text-center"
+                            style="margin-top:50px; margin-bottom:50px;">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <span class="ms-2">Loading...</span>
+                        </div>
+                    </div>
+                    @push('js')
+                        <script>
+                            $(document).ready(function() {
+                                function dataSertifikasi() {
+                                    $('#loadingIndicator').removeClass('d-none');
+                                    $.ajax({
+                                        url: '{{ route('sertifikasi.get') }}',
+                                        type: 'GET',
+                                        success: function(response) {
+                                            var sertifikasiData = response.data;
+                                            var sertifikasiHtml = '';
+                                            sertifikasiData.forEach(function(item) {
+                                                sertifikasiHtml += `
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card border border-primary">
+                                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                                        <span>Data Sertifikasi <span class="badge bg-success">Benih Padi</span></span>
+                                                        <div class="btn-group float-end">
+                                                            <button type="button" class="btn  btn-icon rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <i class="bx bx-menu"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                                <li><a class="dropdown-item" href="javascript:void(0);">Detail Sertifikasi</a></li>
+                                                                <li><a class="dropdown-item" href="javascript:void(0);">Edit data</a></li>
+                                                                <li><hr class="dropdown-divider"></li>
+                                                                <li><a class="dropdown-item text-danger" href="javascript:void(0);">Batalkan Pengajuan</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <ul class="list-group mb-3">
+                                                            <li class="list-group-item d-flex align-items-center">
+                                                                <i class="bx bx-user me-2"></i>
+                                                                ${item.user ? item.user.name : 'Nama Tidak Tersedia'}
+                                                            </li>
+                                                            <li class="list-group-item d-flex align-items-center">
+                                                                <i class="bx bx-current-location me-2"></i>
+                                                                ${item.desa.name}, ${item.kecamatan.name} - Merauke
+                                                            </li>
+                                                            <li class="list-group-item d-flex align-items-center">
+                                                                <i class="bx bx-droplet me-2"></i>
+                                                                Varietas ${item.varietas.name}
+                                                            </li>
+                                                            <li class="list-group-item d-flex align-items-center">
+                                                                <i class="bx bx-calendar me-2"></i>
+                                                                Tanam : ${item.tanggal_tanam}
+                                                            </li>
+                                                            <li class="list-group-item d-flex align-items-center">
+                                                                <i class="bx bx-calendar me-2"></i>
+                                                                Sebar : ${item.tanggal_sebar}
+                                                            </li>
+                                                        </ul>
+                                                        <p>Asal Benih</p>
+                                                        <ul class="list-group"> 
+                                                            <li class="list-group-item d-flex align-items-center">
+                                                                <i class="bx bx-user me-2"></i>
+                                                                Produsen : ${item.produsen_asal}
+                                                            </li>
+                                                            <li class="list-group-item d-flex align-items-center">
+                                                                <i class="bx bx-droplet me-2"></i>
+                                                                Asal Benih : ${item.benih_asal}
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="card-footer bg-primary text-white">
+                                                        <strong class="text-center">Status : ${item.status}</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                            });
+                                            $('#sertifikasiContainer').html(sertifikasiHtml);
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.error(xhr.responseText);
+                                        },
+                                        complete: function() {
+                                            $('#loadingIndicator').addClass('d-none');
+                                        }
+                                    });
+                                }
+                                $('#refreshDataBtn').click(function() {
+                                    dataSertifikasi();
+                                });
+                                dataSertifikasi();
+                            });
+                        </script>
+                    @endpush
+                @endif
             </div>
             <div class="col-lg-4 col-md-6">
                 @php
                     $penangkar = App\Models\Penangkar::where('id_user', Auth::user()->id)->first();
                     $anggota = App\Models\PenangkarAnggota::where('id_penangkar', $penangkar->id)->get();
-
                 @endphp
                 <div class="card mb-3">
                     <div class="card-header">

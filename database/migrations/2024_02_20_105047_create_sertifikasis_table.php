@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('nama_pemohon');
             $table->string('alamat');
             //sertifikasi benih untuk..
-            $table->integer('luas_pertanaman');
+            $table->float('luas_pertanaman');
             $table->foreignId('id_varietas');
             $table->date('tanggal_sebar');
             $table->date('tanggal_tanam');

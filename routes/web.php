@@ -6,6 +6,7 @@ use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\KelasBenihController;
 use App\Http\Controllers\PenangkarController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SertifikasiController;
 use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VarietasController;
@@ -47,6 +48,7 @@ Route::get('/varietas/getall', [VarietasController::class, 'getall'])->name('var
 Route::get('/testimoni/getall', [TestimoniController::class, 'getall'])->name('testimoni.getall');
 Route::post('/testimoni/store',  [TestimoniController::class, 'store'])->name('testimoni.store');
 
+Route::get('/penangkars/getall',  [PenangkarController::class, 'getAll'])->name('penangkars.getall');
 Auth::routes();
 Route::middleware(['auth:web'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -56,6 +58,12 @@ Route::middleware(['auth:web'])->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     //add penangkar
     Route::post('/penangkars/store',  [PenangkarController::class, 'store'])->name('penangkars.store');
+    //pengajuan Sertifikasi
+    Route::get('/sertifikasi', [SertifikasiController::class, 'getData'])->name('sertifikasi.get');
+    Route::post('/sertifikasi/store',  [SertifikasiController::class, 'store'])->name('sertifikasi.store');
+    Route::get('/sertifikasi/pengajuan',  [SertifikasiController::class, 'pengajuan'])->name('sertifikasi.pengajuan');
+});
+Route::middleware(['auth:web', 'role:Penangkar'])->group(function () {
 });
 Route::middleware(['auth:web', 'role:BPSB,Dinas'])->group(function () {
     //penangkar managemen

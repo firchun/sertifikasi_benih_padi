@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.4",
+        "renatomarinho/laravel-page-speed": "^2.1",
         "yajra/laravel-datatables-oracle": "^10.11"
     },
     "require-dev": {
