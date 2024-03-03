@@ -32,10 +32,10 @@ class Sertifikasi extends Model
     }
     public function varietas(): BelongsTo
     {
-        return $this->belongsTo(Varietas::class, 'id_varietas');
+        return $this->belongsTo(varietas::class, 'id_varietas');
     }
     public function varietas_sebelumnya(): BelongsTo
     {
-        return $this->belongsTo(Varietas::class, 'id_varietas_sebelumnya');
+        return $this->belongsTo(varietas::class, 'id_varietas_sebelumnya');
     }
 }
