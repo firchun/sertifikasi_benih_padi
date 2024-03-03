@@ -6,9 +6,17 @@ use App\Models\Sertifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class SertifikasiController extends Controller
 {
+    public function index()
+    {
+        $data = [
+            'title' => 'Data Sertifikasi Benih'
+        ];
+        return view('admin.sertifikasi.index', $data);
+    }
     public function pengajuan()
     {
         $data = [
@@ -23,6 +31,17 @@ class SertifikasiController extends Controller
             ->get();
 
         return response()->json(['data' => $sertifikasi]);
+    }
+    public function getSertifikasisDataTable()
+    {
+        $Sertifikasi = Sertifikasi::with(['desa', 'kecamatan', 'kelas_benih_sebelumnya', 'kelas_benih_asal', 'varietas', 'varietas_sebelumnya', 'user'])->orderByDesc('id');
+
+        return Datatables::of($Sertifikasi)
+            ->addColumn('action', function ($Sertifikasi) {
+                return view('admin.sertifikasi.components.actions', compact('Sertifikasi'));
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
     public function store(Request $request)
     {
@@ -76,5 +95,31 @@ class SertifikasiController extends Controller
                 return response()->json(['message' => $message]);
             }
         }
+    }
+    public function terima($id)
+    {
+        $sertifikasi = Sertifikasi::find($id);
+
+        if (!$sertifikasi) {
+            return response()->json(['message' => 'Sertifikasi not found'], 404);
+        }
+        $sertifikasi->update(['status' => 'Permohonan diterima']);
+
+        $message = 'Permohonan berhasil diterima';
+
+        return response()->json(['message' => $message]);
+    }
+    public function tolak($id)
+    {
+        $sertifikasi = Sertifikasi::find($id);
+
+        if (!$sertifikasi) {
+            return response()->json(['message' => 'Sertifikasi not found'], 404);
+        }
+        $sertifikasi->update(['status' => 'Permohonan ditolak']);
+
+        $message = 'Permohonan berhasil ditolak';
+
+        return response()->json(['message' => $message]);
     }
 }

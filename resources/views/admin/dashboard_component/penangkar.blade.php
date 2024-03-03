@@ -210,7 +210,7 @@
                                             sertifikasiData.forEach(function(item) {
                                                 sertifikasiHtml += `
                                             <div class="col-md-6 mb-3">
-                                                <div class="card border border-primary">
+                                                <div class="card border border-${item.status == 'Permohonan ditolak' ? 'danger' : 'primary'}">
                                                     <div class="card-header d-flex justify-content-between align-items-center">
                                                         <span>Data Sertifikasi <span class="badge bg-success">Benih Padi</span></span>
                                                         <div class="btn-group float-end">
@@ -260,7 +260,7 @@
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <div class="card-footer bg-primary text-white">
+                                                    <div class="card-footer bg-${item.status == 'Permohonan ditolak' ? 'danger' : 'primary'} text-white">
                                                         <strong class="text-center">Status : ${item.status}</strong>
                                                     </div>
                                                 </div>

@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DesaController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\KelasBenihController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PenangkarController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SertifikasiController;
@@ -59,13 +60,21 @@ Route::middleware(['auth:web'])->group(function () {
     //add penangkar
     Route::post('/penangkars/store',  [PenangkarController::class, 'store'])->name('penangkars.store');
     //pengajuan Sertifikasi
-    Route::get('/sertifikasi', [SertifikasiController::class, 'getData'])->name('sertifikasi.get');
+    Route::get('/sertifikasi/data', [SertifikasiController::class, 'getData'])->name('sertifikasi.get');
     Route::post('/sertifikasi/store',  [SertifikasiController::class, 'store'])->name('sertifikasi.store');
+    Route::post('/sertifikasi/terima/{id}',  [SertifikasiController::class, 'terima'])->name('sertifikasi.terima');
+    Route::post('/sertifikasi/tolak/{id}',  [SertifikasiController::class, 'tolak'])->name('sertifikasi.tolak');
     Route::get('/sertifikasi/pengajuan',  [SertifikasiController::class, 'pengajuan'])->name('sertifikasi.pengajuan');
 });
 Route::middleware(['auth:web', 'role:Penangkar'])->group(function () {
 });
 Route::middleware(['auth:web', 'role:BPSB,Dinas'])->group(function () {
+    //laporan managemen
+    Route::get('/laporan/sertifikasi', [LaporanController::class, 'laporan_sertifikasi'])->name('laporan.sertifikasi');
+    Route::get('/laporan/penangkaran', [LaporanController::class, 'laporan_penangkaran'])->name('laporan.penangkaran');
+    //sertifikasi managemen
+    Route::get('/sertifikasi', [SertifikasiController::class, 'index'])->name('sertifikasi');
+    Route::get('/sertifikasis-datatable', [SertifikasiController::class, 'getSertifikasisDataTable']);
     //penangkar managemen
     Route::get('/penangkars', [PenangkarController::class, 'index'])->name('penangkars');
     Route::get('/penangkars/edit/{id}',  [PenangkarController::class, 'edit'])->name('penangkars.edit');

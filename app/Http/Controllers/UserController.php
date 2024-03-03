@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -46,11 +47,13 @@ class UserController extends Controller
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255'],
+                'role' => ['required', 'string',  'max:255'],
             ]);
         } else {
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'role' => ['required', 'string',  'max:255'],
             ]);
         }
 
@@ -73,6 +76,7 @@ class UserController extends Controller
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'role' => $request->input('role'),
+                'id_desa' => Desa::first()->id,
                 'password' => Hash::make('password'),
             ];
 

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('sertifikasis', function (Blueprint $table) {
-            $table->enum('status', ['Proses Permohonan', 'Pemerikasaan Lapangan Pendahuluan', 'Pemeriksaan Fase Vegetatif', 'Pemerikasan Fase Berbunga', 'Pemerikasaan Fase Masak', 'Pemeriksaan Alat Panen', 'Pengujian Benih', 'Sertifikasi Selesai'])->default('Proses Permohonan')->after('jumlah_benih');
+            $table->enum('status', ['Proses Permohonan', 'Permohonan diterima', 'Pemerikasaan Lapangan Pendahuluan', 'Pemeriksaan Fase Vegetatif', 'Pemerikasan Fase Berbunga', 'Pemerikasaan Fase Masak', 'Pemeriksaan Alat Panen', 'Pengujian Benih', 'Sertifikasi Selesai'])->default('Proses Permohonan')->after('jumlah_benih');
         });
     }
 

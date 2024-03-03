@@ -11,13 +11,14 @@
                         name: 'id'
                     },
 
-                    {
-                        data: 'user.name',
-                        name: 'user.name'
-                    },
+
                     {
                         data: 'nama',
                         name: 'nama'
+                    },
+                    {
+                        data: 'user.name',
+                        name: 'user.name'
                     },
                     {
                         data: 'alamat',

@@ -126,6 +126,27 @@
                         <div data-i18n="Analytics">Data Penangkar</div>
                     </a>
                 </li>
+                <li class="menu-item {{ request()->is('sertifikasi') ? 'active' : '' }}">
+                    <a href="{{ url('/sertifikasi') }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-folder"></i>
+                        <div data-i18n="Analytics">Data Sertifikasi</div>
+                    </a>
+                </li>
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Laporan</span>
+                </li>
+                <li class="menu-item {{ request()->is('laporan/penangkaran') ? 'active' : '' }}">
+                    <a href="{{ url('/laporan/penangkaran') }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-folder"></i>
+                        <div data-i18n="Analytics">Laporan Penangkaran</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->is('laporan/sertifikasi') ? 'active' : '' }}">
+                    <a href="{{ url('/laporan/sertifikasi') }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-folder"></i>
+                        <div data-i18n="Analytics">Laporan Sertifikasi</div>
+                    </a>
+                </li>
             @endif
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Akun</span>
