@@ -31,7 +31,14 @@ class PenangkarController extends Controller
             ->addColumn('action', function ($Penangkar) {
                 return view('admin.penangkar.components.actions', compact('Penangkar'));
             })
-            ->rawColumns(['action'])
+            ->addColumn('koordinat', function ($Penangkar) {
+                $latitude = $Penangkar->latitude;
+                $longitude = $Penangkar->longitude;
+                $googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
+                return '<a href="' . $googleMapsUrl . '" target="__blank">' . $latitude . ', ' . $longitude . '</a>';
+            })
+
+            ->rawColumns(['action', 'koordinat'])
             ->make(true);
     }
     public function store(Request $request)

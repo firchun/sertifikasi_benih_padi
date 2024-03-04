@@ -24,6 +24,10 @@
                         data: 'alamat',
                         name: 'alamat'
                     },
+                    {
+                        data: 'koordinat',
+                        name: 'koordinat'
+                    },
 
                     {
                         data: 'action',

@@ -39,6 +39,29 @@ class VarietasController extends Controller
 
         return response()->json($varietas);
     }
+    public function getThree()
+    {
+        $varietas = Varietas::select([
+            'id',
+            'name',
+            'description',
+            'umur',
+            'potensi_hasil',
+            'ketahanan_hama',
+            'ketahanan_penyakit',
+            'ketahanan_abiotik',
+            'anjuran_tanam',
+            'created_at',
+            'updated_at'
+        ])
+            ->when(request()->search, function ($query, $search) {
+                return $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->orderByDesc('id')
+            ->latest()->limit(3)->get();
+
+        return response()->json($varietas);
+    }
     public function getVarietasDataTable()
     {
         $varietas = varietas::select([

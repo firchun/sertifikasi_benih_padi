@@ -12,6 +12,7 @@ use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VarietasController;
 use App\Models\PenangkarAnggota;
+use App\Models\varietas;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,12 @@ Route::get('/maps', function () {
 Route::get('/stoks', function () {
     return view('pages.stok', ['title' => 'Stok Benih']);
 })->name('stoks');
+
+Route::get('/detail_stoks/{id}', function ($id) {
+    $varietas = varietas::find($id);
+    return view('pages.detail_stok', ['title' => 'Stok Benih : ' . $varietas->name]);
+})->name('detail_stoks');
+
 Route::get('/varietas-unggulan', function () {
     return view('pages.varietas', ['title' => 'Varietas Unggulan']);
 });
@@ -45,6 +52,7 @@ Route::get('/penanaman-padi', function () {
     return view('pages.penanaman-padi', ['title' => 'Penanaman benih padi']);
 });
 Route::get('/varietas/getall', [VarietasController::class, 'getall'])->name('varietas.getall');
+Route::get('/varietas/getthree', [VarietasController::class, 'getThree'])->name('varietas.getthree');
 //testimoni
 Route::get('/testimoni/getall', [TestimoniController::class, 'getall'])->name('testimoni.getall');
 Route::post('/testimoni/store',  [TestimoniController::class, 'store'])->name('testimoni.store');
