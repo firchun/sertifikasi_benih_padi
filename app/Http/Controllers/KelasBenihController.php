@@ -17,13 +17,16 @@ class KelasBenihController extends Controller
     }
     public function getKelasBenihDataTable()
     {
-        $kelasBenih = kelasBenih::select(['id', 'name', 'description', 'created_at', 'updated_at'])->orderByDesc('id');
+        $kelasBenih = kelasBenih::select(['id', 'name', 'code', 'price', 'description', 'created_at', 'updated_at'])->orderByDesc('id');
 
         return Datatables::of($kelasBenih)
             ->addColumn('action', function ($kelasBenih) {
                 return view('admin.kelas_benih.components.actions', compact('kelasBenih'));
             })
-            ->rawColumns(['action'])
+            ->addColumn('harga', function ($kelasBenih) {
+                return 'Rp ' . number_format($kelasBenih->price) . ' /Kg';
+            })
+            ->rawColumns(['action', 'harga'])
             ->make(true);
     }
     public function store(Request $request)

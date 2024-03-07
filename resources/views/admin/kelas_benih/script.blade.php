@@ -16,10 +16,17 @@
                         name: 'name'
                     },
                     {
+                        data: 'code',
+                        name: 'code'
+                    },
+                    {
+                        data: 'harga',
+                        name: 'harga'
+                    },
+                    {
                         data: 'description',
                         name: 'description'
                     },
-
                     {
                         data: 'action',
                         name: 'action'
@@ -40,6 +47,8 @@
                         $('#customersModalLabel').text('Edit kelas benih');
                         $('#formKelasBenihId').val(response.id);
                         $('#formKelasBenihName').val(response.name);
+                        $('#formKelasBenihCode').val(response.code);
+                        $('#formKelasBenihPrice').val(response.price);
                         $('#formKelasBenihDescription').val(response.description);
                         $('#kelasBenihModal').modal('show');
                     },

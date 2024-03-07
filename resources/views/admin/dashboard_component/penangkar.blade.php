@@ -300,12 +300,12 @@
                             <tr>
                                 <td class="fw-bold">Nama Penangkaran</td>
                                 <td>:</td>
-                                <td>{{ $penangkar->nama }}</td>
+                                <td><input type="text" value="{{ $penangkar->nama }}" class="form-control"> </td>
                             </tr>
                             <tr>
                                 <td class="fw-bold">Alamat Penangkaran</td>
                                 <td>:</td>
-                                <td>{{ $penangkar->alamat }}</td>
+                                <td><input type="text" value="{{ $penangkar->alamat }}" class="form-control"></td>
                             </tr>
                             <tr>
                                 <td class="fw-bold">jenis Penangkaran</td>
@@ -316,13 +316,24 @@
                                 <tr>
                                     <td class="fw-bold">Jumlah Anggota</td>
                                     <td>:</td>
-                                    <td>{{ $penangkar->jumlah_anggota }}</td>
+                                    <td><input type="text" value="{{ $penangkar->jumlah_anggota }}"
+                                            class="form-control"></td>
                                 </tr>
                             @endif
                             <tr>
                                 <td class="fw-bold">Luas Lahan Penangkaran</td>
                                 <td>:</td>
-                                <td>{{ $penangkar->luas_lahan }} /ha</td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" value="{{ $penangkar->luas_lahan }}"
+                                                class="form-control">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">/ha</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="fw-bold">Koordinat</td>
@@ -330,6 +341,11 @@
                                 <td>{{ $penangkar->latitude }} , {{ $penangkar->longitude }}</td>
                             </tr>
                         </table>
+                    </div>
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-primary"><i class="bx bx-save"></i> Simpan
+                            Perubahan</button>
+
                     </div>
                 </div>
                 @if ($anggota != null)

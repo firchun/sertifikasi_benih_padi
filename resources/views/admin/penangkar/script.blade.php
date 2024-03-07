@@ -1,4 +1,5 @@
 @push('js')
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GMAP_API_KEY') }}&callback=initializeMap"></script>
     <script>
         $(function() {
             $('#datatable-penangkars').DataTable({
@@ -10,8 +11,6 @@
                         data: 'id',
                         name: 'id'
                     },
-
-
                     {
                         data: 'nama',
                         name: 'nama'
@@ -28,147 +27,98 @@
                         data: 'koordinat',
                         name: 'koordinat'
                     },
-
                     {
                         data: 'action',
                         name: 'action'
                     }
                 ]
             });
+
             $('.create-new').click(function() {
                 $('#create').modal('show');
                 getKecamatanOptions();
             });
+
             $('.refresh').click(function() {
                 $('#datatable-penangkars').DataTable().ajax.reload();
             });
-            window.editDesa = function(id) {
+
+            window.detailPenangkar = function(id) {
                 $.ajax({
                     type: 'GET',
-                    url: '/desa/edit/' + id,
+                    url: '/penangkars/detail/' + id,
                     success: function(response) {
-                        $('#customersModalLabel').text('Edit desa');
-                        $('#formDesaId').val(response.id);
-                        $('#formDesaName').val(response.name);
-                        $('#formDesaDescription').val(response.description);
-                        $('#desaModal').modal('show');
-                        getKecamatanOptions(response.id_kecamatan);
+                        $('#detailModalLabel').text('Detail Modal');
+                        $('#Nama').text(response.nama);
+                        $('#Ketua').text(response.user.name);
+                        $('#Alamat').text(response.alamat);
+                        $('#Jenis').text(response.jenis);
+                        $('#Jumlah_anggota').text(response.jumlah_anggota + ' Orang');
+                        $('#detailModal').modal('show');
+
+                        // Call initializeMap function after modal is shown
+                        $('#detailModal').on('shown.bs.modal', function() {
+                            initializeMap(response);
+                        });
                     },
                     error: function(xhr) {
                         alert('Terjadi kesalahan: ' + xhr.responseText);
                     }
                 });
             };
-            $('#saveDesaBtn').click(function() {
-                var formData = $('#desaForm').serialize();
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/desa/store',
-                    data: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        alert(response.message);
-                        // Refresh DataTable setelah menyimpan perubahan
-                        $('#datatable-desa').DataTable().ajax.reload();
-                        $('#desaModal').modal('hide');
-                    },
-                    error: function(xhr) {
-                        alert('Terjadi kesalahan: ' + xhr.responseText);
-                    }
-                });
-            });
-            $('#createDesaBtn').click(function() {
-                var formData = $('#createDesaForm').serialize();
+            // Define initializeMap function
+            function initializeMap(response) {
+                var center = new google.maps.LatLng(response.latitude, response.longitude);
+                var mapOptions = {
+                    zoom: 12,
+                    center: center,
+                    zoomControl: true,
+                    mapTypeId: google.maps.MapTypeId.HYBRID
+                };
+                var map = new google.maps.Map(document.getElementById('gmap'), mapOptions);
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/desa/store',
-                    data: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        alert(response.message);
-                        $('#customersModalLabel').text('Edit desa');
-                        $('#formDesaName').val('');
-                        $('#formDesaDescription').val('');
-                        $('#datatable-desa').DataTable().ajax.reload();
-                        $('#create').modal('hide');
-                    },
-                    error: function(xhr) {
-                        alert('Terjadi kesalahan: ' + xhr.responseText);
-                    }
+
+
+                // Create marker position using latitude and longitude
+                var pos = new google.maps.LatLng(parseFloat(response.latitude), parseFloat(response.longitude));
+
+                // Create marker content
+                var content = `
+                        <div class="popupContent" style="width:200px;">
+                            <div class="text-center justify-content-center text-black">
+                                <strong>Penangkar ${response.nama}</strong>
+                                <hr>
+                                <br><strong>Nama Penangkaran :</strong><br> ${response.nama}<br>
+                                <strong>Ketua Penangkaran :</strong> <br>${response.user.name}
+                                <div class="mt-4">
+                                    <a href="https://maps.google.com/?saddr=My+Location&daddr=${response.latitude},${response.longitude}" target="_blank" class="btn btn-primary btn-sm" style="padding:10px;">Rute</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                // Create marker icon
+                var icon = {
+                    url: '{{ asset('img/marker.png') }}',
+                    scaledSize: new google.maps.Size(30, 41)
+                };
+
+                // Create the marker
+                var marker = new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                    icon: icon
                 });
-            });
-            window.deleteDesa = function(id) {
-                if (confirm('Apakah Anda yakin ingin menghapus desa ini?')) {
-                    $.ajax({
-                        type: 'DELETE',
-                        url: '/desa/delete/' + id,
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(response) {
-                            // alert(response.message);
-                            $('#datatable-desa').DataTable().ajax.reload();
-                        },
-                        error: function(xhr) {
-                            alert('Terjadi kesalahan: ' + xhr.responseText);
-                        }
+
+                // Marker click listener
+                google.maps.event.addListener(marker, 'click', function() {
+                    var infowindow = new google.maps.InfoWindow({
+                        content: content
                     });
-                }
-            };
-
-            function getKecamatanOptions(unitValue) {
-                $.ajax({
-                    url: '/kecamatan/getall',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#formKecamatanIdKecamatan').empty();
-                        $('#formKecamatanIdKecamatanCreate').empty();
-
-                        $('#selectKecamatan').empty();
-                        $('#selectKecamatan').append(
-                            '<option value="-" >Pilih Kecamatan</option>');
-                        $.each(data, function(index, kecamatan) {
-                            $('#selectKecamatan').append('<option value="' +
-                                kecamatan.id +
-                                '" >' +
-                                kecamatan.name +
-                                '</option>');
-                        });
-
-                        $.each(data, function(index, kecamatan) {
-                            $('#formKecamatanIdKecamatanCreate').append(
-                                '<option value="' +
-                                kecamatan.id +
-                                '" >' +
-                                kecamatan.name +
-                                '</option>');
-
-                        });
-
-                        $.each(data, function(index, kecamatan) {
-                            var selected = (kecamatan.id === unitValue) ? 'selected' :
-                                '';
-                            $('#formKecamatanIdKecamatan').append('<option value="' +
-                                kecamatan.id +
-                                '" ' +
-                                selected + '>' +
-                                kecamatan.name +
-                                '</option>');
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Terjadi kesalahan: ' + error);
-                    }
+                    infowindow.open(map, marker);
                 });
             }
-
         });
     </script>
 @endpush

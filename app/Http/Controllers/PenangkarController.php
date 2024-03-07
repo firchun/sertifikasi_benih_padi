@@ -106,14 +106,14 @@ class PenangkarController extends Controller
 
         return response()->json(['message' => 'Desa deleted successfully']);
     }
-    public function edit($id)
+    public function detail($id)
     {
-        $Desa = Penangkar::find($id);
+        $Penangkar = Penangkar::with('user')->find($id);
 
-        if (!$Desa) {
-            return response()->json(['message' => 'Desa not found'], 404);
+        if (!$Penangkar) {
+            return response()->json(['message' => 'Penangkar not found'], 404);
         }
 
-        return response()->json($Desa);
+        return response()->json($Penangkar);
     }
 }

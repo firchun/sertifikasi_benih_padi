@@ -33,6 +33,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nama</th>
+                                <th>Kode</th>
+                                <th>Harga</th>
                                 <th>Keterangan</th>
                                 <th>Action</th>
                             </tr>
@@ -42,6 +44,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nama</th>
+                                <th>Kode</th>
+                                <th>Harga</th>
                                 <th>Keterangan</th>
                                 <th>Action</th>
                             </tr>

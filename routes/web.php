@@ -8,6 +8,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PenangkarController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SertifikasiController;
+use App\Http\Controllers\StokController;
 use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VarietasController;
@@ -15,6 +16,7 @@ use App\Models\PenangkarAnggota;
 use App\Models\varietas;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Svg\Gradient\Stop;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +53,10 @@ Route::get('/lahan', function () {
 Route::get('/penanaman-padi', function () {
     return view('pages.penanaman-padi', ['title' => 'Penanaman benih padi']);
 });
+//stok
+Route::get('/stoks/getall', [StokController::class, 'getall'])->name('stoks.getall');
+Route::get('/stoks/getthree', [StokController::class, 'getThree'])->name('stoks.getthree');
+//varietas
 Route::get('/varietas/getall', [VarietasController::class, 'getall'])->name('varietas.getall');
 Route::get('/varietas/getthree', [VarietasController::class, 'getThree'])->name('varietas.getthree');
 //testimoni
@@ -85,7 +91,7 @@ Route::middleware(['auth:web', 'role:BPSB,Dinas'])->group(function () {
     Route::get('/sertifikasis-datatable', [SertifikasiController::class, 'getSertifikasisDataTable']);
     //penangkar managemen
     Route::get('/penangkars', [PenangkarController::class, 'index'])->name('penangkars');
-    Route::get('/penangkars/edit/{id}',  [PenangkarController::class, 'edit'])->name('penangkars.edit');
+    Route::get('/penangkars/detail/{id}',  [PenangkarController::class, 'detail'])->name('penangkars.detail');
     Route::delete('/penangkars/delete/{id}',  [PenangkarController::class, 'destroy'])->name('penangkars.delete');
     Route::get('/penangkars-datatable', [PenangkarController::class, 'getPenangkarsDataTable']);
 });

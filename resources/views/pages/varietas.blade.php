@@ -17,7 +17,8 @@
         <div class="container">
             <div class="row justify-content-center mb-3">
                 <div class="col-lg-6 mb-4">
-                    <input type="search" class="form-control" id="searchInput" placeholder="Cari Vareiatas disini">
+                    <input type="text" class="form-control  bg-white border-success" style="border-radius: 20px;"
+                        id="search" placeholder="Cari Varietas disini....">
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -45,6 +46,15 @@
             loadData(1, search);
         });
         $(document).ready(function() {
+            $('#search').on('input', function() {
+                applyFilters();
+            });
+
+            function applyFilters() {
+                var searchFilter = $('#search').val();
+                loadData(1, searchFilter);
+                $('#loading').show();
+            }
             $('#loading').show();
 
             function loadData(page, search = '') {
@@ -60,10 +70,11 @@
                         // Membersihkan data sebelum memuat yang baru
                         $('#additional_Info').empty();
                         // Memuat data baru
-                        $.each(response.data, function(index, item) {
-                            var accordionId = item.id;
-                            var newTitle = item.name;
-                            var accordionContent = `
+                        if (response.data.length > 0) {
+                            $.each(response.data, function(index, item) {
+                                var accordionId = item.id;
+                                var newTitle = item.name;
+                                var accordionContent = `
                                 <div class="accordion-item bg-transparent">
                                     <h2 class="accordion-header accordion-button h5 border-0"
                                         id="heading-${accordionId}" type="button"
@@ -93,8 +104,15 @@
                                     </div>
                                 </div>
                             `;
-                            $('#additional_Info').append(accordionContent);
-                        });
+                                $('#additional_Info').append(accordionContent);
+                            });
+                        } else {
+                            $('#additional_Info').html(
+                                '<h5 style="text-align: center;" class="text-muted">Maaf, data tidak ditemukan.</h5>'
+                            );
+                            $('#pagination').html('');
+                        }
+
                         $('#pagination').html(generatePaginationLinks(response));
 
                         // $('#pagination').html(response.links);

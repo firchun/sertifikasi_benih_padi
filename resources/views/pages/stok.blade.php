@@ -17,10 +17,20 @@
 
     </section>
     <section class="section">
+
         <div class="container">
+            <div class="card mb-5 border-0 shadow shadow-lg">
+                <div class="card-body">
+                    <input type="text" class="form-control  bg-white border-success" style="border-radius: 20px;"
+                        id="search" placeholder="Cari Varietas disini....">
+                </div>
+            </div>
             <div class="row justify-content-center" id="additional_Info">
                 <div id="loading" style="display: none; text-align: center;">
                     <h4>Harap Tunggu....</h4>
+                </div>
+                <div id="dataKosong" style="display: none; text-align: center;">
+                    <h4>Data tidak ditemukan!!</h4>
                 </div>
             </div>
             <div id="pagination" class="mt-3">
@@ -36,51 +46,67 @@
             loadData(1, search);
         });
         $(document).ready(function() {
+            $('#search').on('input', function() {
+                applyFilters();
+            });
+
+            function applyFilters() {
+                var searchFilter = $('#search').val();
+                $('#loading').show();
+                loadData(1, searchFilter);
+            }
+
             $('#loading').show();
+
 
             function loadData(page, search = '') {
                 $.ajax({
-                    url: '{{ url('/varietas/getall') }}',
+                    url: '{{ url('/stoks/getall') }}',
                     method: 'GET',
                     data: {
                         page: page,
                         search: search
-                    }, // Hapus per_page karena sudah ada di server
+                    },
                     success: function(response) {
                         $('#loading').hide();
-                        // Membersihkan data sebelum memuat yang baru
+
                         $('#additional_Info').empty();
-                        // Memuat data baru
-                        $.each(response.data, function(index, item) {
-                            var accordionId = item.id;
-                            var newTitle = item.name;
-                            var accordionContent = `
-                            <div class="icon-box-item text-center col-lg-4 col-md-6 mb-4">
-                                <div class="rounded shadow py-5 px-4">
-                                    <div class="icon"> <i class="fas fa-leaf"></i>
+
+
+                        if (response.data.length > 0) {
+                            $.each(response.data, function(index, item) {
+                                var accordionId = item.id;
+                                var newTitle = item.name;
+                                var accordionContent = `
+                                <div class="icon-box-item text-center col-lg-4 col-md-6 mb-4">
+                                    <div class="rounded shadow py-5 px-4">
+                                        <div class="icon"> <i class="fas fa-leaf"></i>
+                                        </div>
+                                        <h3 class="mb-3">${newTitle}</h3>
+                                        
+                                        <strong class="p-1 bg-${item.stok > 0 ? 'warning' : 'danger'} text-${item.stok > 0 ? 'black' : 'white'} " style="border-radius:10px;">
+                                            ${item.stok > 0 ? 'Tersedia ' +item.stok + ' Kg': 'Stok Kosong'}
+                                        </strong>
+    
+                                        <p class="my-3"> 
+                                            <strong class="text-success">Umur Tanaman</strong><br>
+                                                <span>± ${item.umur} Hari setelah sebar</span><br>
+                                                <strong class="text-success">Potensi Hasil</strong><br>
+                                                <span>± ${item.potensi_hasil} t/ha</span>
+                                        </p>
+                                        <a class="btn btn-sm btn-outline-primary" href="{{ url('detail_stoks/${accordionId}') }}">Lihat <i
+                                                class="fa fa-arrow-right ms-1"></i></a>
                                     </div>
-                                    <h3 class="mb-3">${newTitle}</h3>
-                                    <h5 class=" text-danger"> Rp.
-                                        187,500
-                                        /Karung
-                                        <br>
-                                    </h5>
-                                    <strong class="p-1 bg-warning text-black " style="border-radius:10px;">Tersedia 
-                                        8 Ton
-                                    </strong>
-                                    <p class="my-3"> 
-                                        <strong class="text-success">Umur Tanaman</strong><br>
-                                            <span>± ${item.umur} Hari setelah sebar</span><br>
-                                            <strong class="text-success">Potensi Hasil</strong><br>
-                                            <span>± ${item.potensi_hasil} t/ha</span>
-                                    </p>
-                                    <a class="btn btn-sm btn-outline-primary" href="{{ url('detail_stoks/${accordionId}') }}">Lihat <i
-                                            class="fa fa-arrow-right ms-1"></i></a>
                                 </div>
-                            </div>
-                            `;
-                            $('#additional_Info').append(accordionContent);
-                        });
+                                `;
+                                $('#additional_Info').append(accordionContent);
+                            });
+                        } else {
+                            $('#additional_Info').html(
+                                '<h5 style="text-align: center;" class="text-muted">Maaf, data tidak ditemukan.</h5>'
+                            );
+                            $('#pagination').html('');
+                        }
                         $('#pagination').html(generatePaginationLinks(response));
 
                         // $('#pagination').html(response.links);
@@ -107,7 +133,8 @@
 
                 // Tautan sebelumnya
                 if (response.prev_page_url !== null) {
-                    paginationHtml += '<li class="page-item"><a class="page-link" href="' + response.prev_page_url +
+                    paginationHtml += '<li class="page-item"><a class="page-link" href="' + response
+                        .prev_page_url +
                         '"><</a></li>';
                 }
 
@@ -120,7 +147,8 @@
 
                 // Tautan berikutnya
                 if (response.next_page_url !== null) {
-                    paginationHtml += '<li class="page-item"><a class="page-link" href="' + response.next_page_url +
+                    paginationHtml += '<li class="page-item"><a class="page-link" href="' + response
+                        .next_page_url +
                         '">></a></li>';
                 }
 

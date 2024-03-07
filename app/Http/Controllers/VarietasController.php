@@ -16,9 +16,9 @@ class VarietasController extends Controller
         ];
         return view('admin.varietas.index', $data);
     }
-    public function getall()
+    public function getall(Request $request)
     {
-        $varietas = Varietas::select([
+        $query = Varietas::select([
             'id',
             'name',
             'description',
@@ -34,9 +34,12 @@ class VarietasController extends Controller
             ->when(request()->search, function ($query, $search) {
                 return $query->where('name', 'like', '%' . $search . '%');
             })
-            ->orderByDesc('id')
-            ->paginate(10);
+            ->orderByDesc('id');
 
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        $varietas = $query->paginate(10);
         return response()->json($varietas);
     }
     public function getThree()

@@ -29,7 +29,7 @@
 
             function loadData() {
                 $.ajax({
-                    url: '{{ url('/varietas/getthree') }}',
+                    url: '{{ url('/stoks/getthree') }}',
                     dataType: 'json',
                     method: 'GET',
                     headers: {
@@ -49,13 +49,9 @@
                                     <div class="icon"> <i class="fas fa-leaf"></i>
                                     </div>
                                     <h3 class="mb-3">${newTitle}</h3>
-                                    <h5 class=" text-danger"> Rp.
-                                        187,500
-                                        /Karung
-                                        <br>
-                                    </h5>
-                                    <strong class="p-1 bg-warning text-black " style="border-radius:10px;">Tersedia 
-                                        8 Ton
+                                  
+                                    <strong class="p-1 bg-${item.stok > 0 ? 'warning' : 'danger'} text-${item.stok > 0 ? 'black' : 'white'} " style="border-radius:10px;">
+                                        ${item.stok > 0 ? 'Tersedia ' +item.stok + ' Kg': 'Stok Kosong'}
                                     </strong>
                                     <p class="my-3"> 
                                         <strong class="text-success">Umur Tanaman</strong><br>

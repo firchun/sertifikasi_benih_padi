@@ -15,6 +15,14 @@
                         <input type="text" class="form-control" id="formKelasBenihName" name="name" required>
                     </div>
                     <div class="mb-3">
+                        <label for="formKelasBenihCode" class="form-label">Kode Kelas</label>
+                        <input type="text" class="form-control" id="formKelasBenihCode" name="code" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formKelasBenihPrice" class="form-label">Haga Benih /Kg</label>
+                        <input type="number" class="form-control" id="formKelasBenihPrice" name="price" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="formKelasBenihDescription" class="form-label">Description</label>
                         <input type="text" class="form-control" id="formKelasBenihDescription" name="description"
                             required>
@@ -42,6 +50,14 @@
                     <div class="mb-3">
                         <label for="formKelasBenihrName" class="form-label">Name</label>
                         <input type="text" class="form-control" id="formKelasBenihrName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formKelasBenihCode" class="form-label">Kode Kelas</label>
+                        <input type="text" class="form-control" id="formKelasBenihCode" name="code" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formKelasBenihPrice" class="form-label">Haga Benih /Kg</label>
+                        <input type="number" class="form-control" id="formKelasBenihPrice" name="price" required>
                     </div>
                     <div class="mb-3">
                         <label for="formKelasBenihrDescription" class="form-label">Description</label>

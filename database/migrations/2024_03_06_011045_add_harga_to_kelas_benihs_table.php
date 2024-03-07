@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('harga_kelas_benihs', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('id_kelas_benih');
-            $table->integer('harga');
-            $table->timestamps();
-
-            $table->foreign('id_kelas_benih')->references('id')->on('kelas_benihs');
+        Schema::table('kelas_benihs', function (Blueprint $table) {
+            $table->integer('price')->default(0)->after('description');
+            $table->string('code')->default('AA')->after('id');
         });
     }
 
@@ -30,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('harga_kelas_benihs');
+        Schema::table('kelas_benihs', function (Blueprint $table) {
+            //
+        });
     }
 };
