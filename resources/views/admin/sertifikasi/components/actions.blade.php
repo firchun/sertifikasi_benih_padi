@@ -7,3 +7,4 @@
         </button>
     @endif
 </div>
+@include('admin.sertifikasi.components.modal')

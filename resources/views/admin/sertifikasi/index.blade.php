@@ -28,13 +28,13 @@
                     </div>
                 </div>
                 <div class="card-datatable table-responsive">
-                    <table id="datatable-sertifikasi" class="table table-hover table-bordered display">
+                    <table id="datatable-sertifikasi" class="table table-hover table-bordered table-sm display">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Nama Ketua</th>
                                 <th>Alamat</th>
-                                <th>Luas Tanam</th>
+                                <th>Tanaman</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -45,7 +45,7 @@
                                 <th>ID</th>
                                 <th>Nama Ketua</th>
                                 <th>Alamat</th>
-                                <th>Luas Tanam</th>
+                                <th>Tanaman</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -55,6 +55,6 @@
             </div>
         </div>
     </div>
-    @include('admin.sertifikasi.components.modal')
+    {{-- @include('admin.sertifikasi.components.modal') --}}
 @endsection
 @include('admin.sertifikasi.script')

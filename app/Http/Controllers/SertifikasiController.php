@@ -40,7 +40,16 @@ class SertifikasiController extends Controller
             ->addColumn('action', function ($Sertifikasi) {
                 return view('admin.sertifikasi.components.actions', compact('Sertifikasi'));
             })
-            ->rawColumns(['action'])
+            ->addColumn('tanaman', function ($Sertifikasi) {
+                return view('admin.sertifikasi.components.tanaman', compact('Sertifikasi'));
+            })
+            ->addColumn('status', function ($Sertifikasi) {
+                return '<span class="badge bg-label-info">' . $Sertifikasi->status . '</span>';
+            })
+            ->addColumn('identitas', function ($Sertifikasi) {
+                return '<strong>Ketua : ' . $Sertifikasi->user->name . '</strong>';
+            })
+            ->rawColumns(['action', 'status', 'tanaman', 'identitas'])
             ->make(true);
     }
     public function store(Request $request)

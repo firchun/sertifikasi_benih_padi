@@ -1,4 +1,11 @@
-@if (App\Models\Penangkar::where('id_user', Auth::user()->id)->get()->isEmpty())
+@php
+    $penangkar = App\Models\Penangkar::where('id_user', Auth::user()->id)->get();
+    $penangkar_verified = App\Models\Penangkar::where('id_user', Auth::user()->id)
+        ->where('is_verified', 1)
+        ->get();
+    $sertifikasi = App\Models\Sertifikasi::where('id_user', Auth::user()->id)->get();
+@endphp
+@if ($penangkar->isEmpty())
     <div class="text-center">
         <button class="btn btn-secondary btn-lg create-new btn-primary" type="button" data-bs-toggle="modal"
             data-bs-target="#create">
@@ -168,14 +175,20 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-6">
-                @if (App\Models\Sertifikasi::where('id_user', Auth::user()->id)->get()->isEmpty())
+                @if ($sertifikasi->isEmpty())
                     <div class="text-center">
                         <div class="border border-primary bg-white"
                             style="margin-top:20px; margin-bottom:20px; padding:30px; border-radius:20px;">
-
-                            <p class="text-muted">Anda belum melakukan sertifikasi, silahkan klik tombol dibawah untuk
-                                mengajuakn data sertifikasi..</p>
-                            <a href="{{ route('sertifikasi.pengajuan') }}" class="btn btn-lg btn-primary"><span
+                            @if ($penangkar_verified->isEmpty())
+                                <p class="text-muted">Pegajuan anda sebagai penangkar belum disetujui oleh Dinas,
+                                    Silahkan menghubungi pihak terkait..</p>
+                            @else
+                                <p class="text-muted">Anda belum melakukan sertifikasi, silahkan klik tombol dibawah
+                                    untuk
+                                    mengajuakn data sertifikasi..</p>
+                            @endif
+                            <a href="{{ route('sertifikasi.pengajuan') }}"
+                                class="btn btn-lg btn-primary {{ $penangkar_verified->isEmpty() ? 'disabled' : '' }}"><span
                                     class="bx bx-file"></span> Ajukan Sertifikasi</a>
                         </div>
                     </div>

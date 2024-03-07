@@ -19,8 +19,8 @@
                         name: 'alamat'
                     },
                     {
-                        data: 'luas_pertanaman',
-                        name: 'luas_pertanaman'
+                        data: 'tanaman',
+                        name: 'tanaman'
                     },
                     {
                         data: 'status',
@@ -36,20 +36,12 @@
                 $('#datatable-sertifikasi').DataTable().ajax.reload();
             });
             window.editSertifikasi = function(id) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/desa/edit/' + id,
-                    success: function(response) {
-                        $('#customersModalLabel').text('Edit desa');
-                        $('#formDesaId').val(response.id);
-                        $('#formDesaName').val(response.name);
-                        $('#formDesaDescription').val(response.description);
-                        $('#desaModal').modal('show');
-                    },
-                    error: function(xhr) {
-                        alert('Terjadi kesalahan: ' + xhr.responseText);
-                    }
-                });
+
+                $('#sertifikasiModal' + id).modal('show');
+
+            };
+            window.openFase = function(value) {
+                $('#modal-' + value).modal('show');
             };
 
             window.terimaPermohonan = function(id) {
@@ -91,6 +83,20 @@
                 });
             };
 
+        });
+    </script>
+    <script>
+        // Menangani event saat modal ditampilkan
+        $('.modal').on('show.bs.modal', function() {
+            var zIndex = 1040 + (10 * $('.modal:visible').length);
+            $(this).css('z-index', zIndex);
+            setTimeout(function() {
+                $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+            }, 0);
+        });
+        // Mengatur kembali scrollbar ke atas saat modal ditutup
+        $('.modal').on('hidden.bs.modal', function() {
+            $('.modal:visible').length && $('body').addClass('modal-open');
         });
     </script>
 @endpush

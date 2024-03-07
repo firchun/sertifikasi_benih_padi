@@ -19,17 +19,26 @@ class PenangkarController extends Controller
     }
     public function getAll()
     {
-        $Penangkar = Penangkar::select(['id', 'id_user', 'nama', 'alamat', 'jumlah_anggota', 'jenis', 'luas_lahan', 'latitude', 'longitude', 'created_at', 'updated_at'])->with(['user'])->orderByDesc('id')->get();
+        $Penangkar = Penangkar::select(['id', 'id_user', 'nama', 'alamat', 'jumlah_anggota', 'jenis', 'luas_lahan', 'latitude', 'longitude', 'created_at', 'updated_at', 'is_verified'])->with(['user'])->orderByDesc('id')->get();
 
         return response()->json($Penangkar);
     }
     public function getPenangkarsDataTable()
     {
-        $Penangkar = Penangkar::select(['id', 'id_user', 'nama', 'alamat', 'jumlah_anggota', 'jenis', 'luas_lahan', 'latitude', 'longitude', 'created_at', 'updated_at'])->with(['user'])->orderByDesc('id');
+        $Penangkar = Penangkar::select(['id', 'id_user', 'nama', 'alamat', 'jumlah_anggota', 'jenis', 'luas_lahan', 'latitude', 'longitude', 'created_at', 'updated_at', 'is_verified'])->with(['user'])->orderByDesc('id');
 
         return Datatables::of($Penangkar)
             ->addColumn('action', function ($Penangkar) {
                 return view('admin.penangkar.components.actions', compact('Penangkar'));
+            })
+            ->addColumn('verifikasi', function ($Penangkar) {
+                return view('admin.penangkar.components.verifikasi', compact('Penangkar'));
+            })
+            ->addColumn('koordinat', function ($Penangkar) {
+                $latitude = $Penangkar->latitude;
+                $longitude = $Penangkar->longitude;
+                $googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
+                return '<a href="' . $googleMapsUrl . '" target="__blank">' . $latitude . ', ' . $longitude . '</a>';
             })
             ->addColumn('koordinat', function ($Penangkar) {
                 $latitude = $Penangkar->latitude;
@@ -38,7 +47,7 @@ class PenangkarController extends Controller
                 return '<a href="' . $googleMapsUrl . '" target="__blank">' . $latitude . ', ' . $longitude . '</a>';
             })
 
-            ->rawColumns(['action', 'koordinat'])
+            ->rawColumns(['action', 'koordinat', 'verifikasi'])
             ->make(true);
     }
     public function store(Request $request)
@@ -113,6 +122,16 @@ class PenangkarController extends Controller
         if (!$Penangkar) {
             return response()->json(['message' => 'Penangkar not found'], 404);
         }
+
+        return response()->json($Penangkar);
+    }
+    public function verifikasi($id)
+    {
+        $Penangkar = Penangkar::with('user')->find($id);
+        if (!$Penangkar) {
+            return response()->json(['message' => 'Penangkar not found'], 404);
+        }
+        $Penangkar->update(['is_verified' => 1]);
 
         return response()->json($Penangkar);
     }

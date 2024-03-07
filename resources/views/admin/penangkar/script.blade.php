@@ -28,6 +28,10 @@
                         name: 'koordinat'
                     },
                     {
+                        data: 'verifikasi',
+                        name: 'verifikasi'
+                    },
+                    {
                         data: 'action',
                         name: 'action'
                     }
@@ -60,6 +64,22 @@
                         $('#detailModal').on('shown.bs.modal', function() {
                             initializeMap(response);
                         });
+                    },
+                    error: function(xhr) {
+                        alert('Terjadi kesalahan: ' + xhr.responseText);
+                    }
+                });
+            };
+            window.verifikasiPenangkar = function(id) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/penangkars/verifikasi/' + id,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        alert('Verifikasi berhasil');
+                        $('#datatable-penangkars').DataTable().ajax.reload();
                     },
                     error: function(xhr) {
                         alert('Terjadi kesalahan: ' + xhr.responseText);

@@ -36,6 +36,7 @@
                                 <th>Nama Ketua</th>
                                 <th>Alamat</th>
                                 <th>Koordinat</th>
+                                <th>Verifikasi</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -47,6 +48,7 @@
                                 <th>Nama Ketua</th>
                                 <th>Alamat</th>
                                 <th>Koordinat</th>
+                                <th>Verifikasi</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>

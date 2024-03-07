@@ -18,6 +18,7 @@ class Penangkar extends Model
         'luas_lahan',
         'latitude',
         'longitude',
+        'is_verified',
     ];
 
     public function user(): BelongsTo

@@ -92,6 +92,7 @@ Route::middleware(['auth:web', 'role:BPSB,Dinas'])->group(function () {
     //penangkar managemen
     Route::get('/penangkars', [PenangkarController::class, 'index'])->name('penangkars');
     Route::get('/penangkars/detail/{id}',  [PenangkarController::class, 'detail'])->name('penangkars.detail');
+    Route::post('/penangkars/verifikasi/{id}',  [PenangkarController::class, 'verifikasi'])->name('penangkars.verifikasi');
     Route::delete('/penangkars/delete/{id}',  [PenangkarController::class, 'destroy'])->name('penangkars.delete');
     Route::get('/penangkars-datatable', [PenangkarController::class, 'getPenangkarsDataTable']);
 });
