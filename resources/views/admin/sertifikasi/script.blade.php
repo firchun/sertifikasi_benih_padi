@@ -11,8 +11,8 @@
                         name: 'id'
                     },
                     {
-                        data: 'user.name',
-                        name: 'user.name'
+                        data: 'identitas',
+                        name: 'identitas'
                     },
                     {
                         data: 'alamat',

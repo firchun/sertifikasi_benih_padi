@@ -2,7 +2,7 @@
     $tahapan = [
         'permohonan' => 'Permohonan',
         'fase_pendahuluan' => 'Fase Pendahuluan',
-        'fase_vegetatif' => 'Fase Begetatif',
+        'fase_vegetatif' => 'Fase Vegetatif',
         'fase_berbunga' => 'Fase Berbunga',
         'fase_masak' => 'Fase Masak',
         'pemeriksaan_alat_panen' => 'Pemeriksaan Alat Panen',
@@ -83,14 +83,16 @@
                                     @else
                                         <div class="text-center">
                                             <p> {{ $value }} belum diupdate..</p>
-                                            <button class="btn btn-secondary btn-primary" type="button"
-                                                onclick="openFase('{{ $key }}')">
-                                                <span>
-                                                    <i class="bx bx-plus me-sm-1"> </i>
-                                                    <span class="d-none d-sm-inline-block"> Isi data
-                                                        {{ $value }}</span>
-                                                </span>
-                                            </button>
+                                            @if (Auth::user()->role == 'BPSB')
+                                                <button class="btn btn-secondary btn-primary" type="button"
+                                                    onclick="openFase('{{ $key }}')">
+                                                    <span>
+                                                        <i class="bx bx-plus me-sm-1"> </i>
+                                                        <span class="d-none d-sm-inline-block"> Isi data
+                                                            {{ $value }}</span>
+                                                    </span>
+                                                </button>
+                                            @endif
                                         </div>
                                     @endif
                                 @elseif($key == 'fase_vegetatif')
@@ -99,14 +101,16 @@
                                     @else
                                         <div class="text-center">
                                             <p> {{ $value }} belum diupdate..</p>
-                                            <button class="btn btn-secondary btn-primary" type="button"
-                                                onclick="openFase('{{ $key }}')">
-                                                <span>
-                                                    <i class="bx bx-plus me-sm-1"> </i>
-                                                    <span class="d-none d-sm-inline-block"> Isi data
-                                                        {{ $value }}</span>
-                                                </span>
-                                            </button>
+                                            @if (Auth::user()->role == 'BPSB' && $fase_pendahuluan)
+                                                <button class="btn btn-secondary btn-primary" type="button"
+                                                    onclick="openFase('{{ $key }}')">
+                                                    <span>
+                                                        <i class="bx bx-plus me-sm-1"> </i>
+                                                        <span class="d-none d-sm-inline-block"> Isi data
+                                                            {{ $value }}</span>
+                                                    </span>
+                                                </button>
+                                            @endif
                                         </div>
                                     @endif
                                 @elseif($key == 'fase_berbunga')
@@ -115,14 +119,16 @@
                                     @else
                                         <div class="text-center">
                                             <p> {{ $value }} belum diupdate..</p>
-                                            <button class="btn btn-secondary btn-primary" type="button"
-                                                onclick="openFase('{{ $key }}')">
-                                                <span>
-                                                    <i class="bx bx-plus me-sm-1"> </i>
-                                                    <span class="d-none d-sm-inline-block"> Isi data
-                                                        {{ $value }}</span>
-                                                </span>
-                                            </button>
+                                            @if (Auth::user()->role == 'BPSB' && $fase_vegetatif)
+                                                <button class="btn btn-secondary btn-primary" type="button"
+                                                    onclick="openFase('{{ $key }}')">
+                                                    <span>
+                                                        <i class="bx bx-plus me-sm-1"> </i>
+                                                        <span class="d-none d-sm-inline-block"> Isi data
+                                                            {{ $value }}</span>
+                                                    </span>
+                                                </button>
+                                            @endif
                                         </div>
                                     @endif
                                 @elseif($key == 'fase_masak')
@@ -131,14 +137,16 @@
                                     @else
                                         <div class="text-center">
                                             <p> {{ $value }} belum diupdate..</p>
-                                            <button class="btn btn-secondary btn-primary" type="button"
-                                                onclick="openFase('{{ $key }}')">
-                                                <span>
-                                                    <i class="bx bx-plus me-sm-1"> </i>
-                                                    <span class="d-none d-sm-inline-block"> Isi data
-                                                        {{ $value }}</span>
-                                                </span>
-                                            </button>
+                                            @if (Auth::user()->role == 'BPSB' && $fase_berbunga)
+                                                <button class="btn btn-secondary btn-primary" type="button"
+                                                    onclick="openFase('{{ $key }}')">
+                                                    <span>
+                                                        <i class="bx bx-plus me-sm-1"> </i>
+                                                        <span class="d-none d-sm-inline-block"> Isi data
+                                                            {{ $value }}</span>
+                                                    </span>
+                                                </button>
+                                            @endif
                                         </div>
                                     @endif
                                 @elseif($key == 'pemeriksaan_alat_panen')
@@ -147,14 +155,16 @@
                                     @else
                                         <div class="text-center">
                                             <p> {{ $value }} belum diupdate..</p>
-                                            <button class="btn btn-secondary btn-primary" type="button"
-                                                onclick="openFase('{{ $key }}')">
-                                                <span>
-                                                    <i class="bx bx-plus me-sm-1"> </i>
-                                                    <span class="d-none d-sm-inline-block"> Isi data
-                                                        {{ $value }}</span>
-                                                </span>
-                                            </button>
+                                            @if (Auth::user()->role == 'BPSB' && $fase_masak)
+                                                <button class="btn btn-secondary btn-primary" type="button"
+                                                    onclick="openFase('{{ $key }}')">
+                                                    <span>
+                                                        <i class="bx bx-plus me-sm-1"> </i>
+                                                        <span class="d-none d-sm-inline-block"> Isi data
+                                                            {{ $value }}</span>
+                                                    </span>
+                                                </button>
+                                            @endif
                                         </div>
                                     @endif
                                 @endif

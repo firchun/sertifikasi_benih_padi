@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_sertifikasi');
             $table->enum('sesuai_varietas', ['Ya', 'Tidak']);
-            $table->string('Hama_penyakit');
+            $table->string('hama_penyakit');
             $table->string('kemurnian');
             $table->string('pemeriksaan');
             $table->json('campuran_varietas');

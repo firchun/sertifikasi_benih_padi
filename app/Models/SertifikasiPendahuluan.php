@@ -14,4 +14,12 @@ class SertifikasiPendahuluan extends Model
     {
         return $this->belongsTo(Sertifikasi::class, 'id_sertifikasi');
     }
+    public function kelas_benih_sebelumnya(): BelongsTo
+    {
+        return $this->belongsTo(kelasBenih::class, 'id_kelas_benih_sebelumnya');
+    }
+    public function varietas_sebelumnya(): BelongsTo
+    {
+        return $this->belongsTo(varietas::class, 'id_varietas_sebelumnya');
+    }
 }

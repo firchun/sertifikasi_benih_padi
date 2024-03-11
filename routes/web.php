@@ -87,6 +87,8 @@ Route::middleware(['auth:web', 'role:BPSB,Dinas'])->group(function () {
     Route::get('/laporan/sertifikasi', [LaporanController::class, 'laporan_sertifikasi'])->name('laporan.sertifikasi');
     Route::get('/laporan/penangkaran', [LaporanController::class, 'laporan_penangkaran'])->name('laporan.penangkaran');
     //sertifikasi managemen
+    Route::post('/sertifikasi/fase_pendahuluan_store',  [SertifikasiController::class, 'fase_pendahuluan_store'])->name('sertifikasi.fase_pendahuluan_store');
+    Route::post('/sertifikasi/fase_vegetatif_store',  [SertifikasiController::class, 'fase_vegetatif_store'])->name('sertifikasi.fase_vegetatif_store');
     Route::get('/sertifikasi', [SertifikasiController::class, 'index'])->name('sertifikasi');
     Route::get('/sertifikasis-datatable', [SertifikasiController::class, 'getSertifikasisDataTable']);
     //penangkar managemen

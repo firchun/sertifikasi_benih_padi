@@ -32,7 +32,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nama Ketua</th>
+                                <th>Penangkaran</th>
                                 <th>Alamat</th>
                                 <th>Tanaman</th>
                                 <th>Status</th>
@@ -43,7 +43,7 @@
                         <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>Nama Ketua</th>
+                                <th>Penangkaran</th>
                                 <th>Alamat</th>
                                 <th>Tanaman</th>
                                 <th>Status</th>
