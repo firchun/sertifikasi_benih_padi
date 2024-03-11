@@ -26,56 +26,70 @@
 </div>
 <div class="mb-3">
     <label for="taksiranHasil" class="form-label">Taksiran hasil</label>
-    <input type="text" class="form-control" id="taksiranHasil" name="taksiran_hasil" required>
+    <input type="number" class="form-control" id="taksiranHasil" name="taksiran_hasil" required>
 </div>
 <div class="mb-3">
     <label for="kesimpulan" class="form-label">Kesimpulan</label>
     <select class="form-control" id="kesimpulan" name="kesimpulan">
-        <option value="Memenuhi">Memenuhi</option>
-        <option value="Tidak Memenuhi">Tidak Memenuhi</option>
+        <option value="Lulus">Lulus</option>
+        <option value="Tidak Lulus">Tidak Lulus</option>
     </select>
 </div>
-<div class="form-group mb-4" id="form-container">
+<div class="form-group mb-4" id="form-container-Masak">
     <label class="mb-3">Campuran Varietas Lain</label>
     <div class="d-flex">
         <input type="number" name="no[]" placeholder="no" class="form-control mx-2" style="width: 200px;"
             value="1">
         <input type="number" placeholder="jumlah" name="jumlah[]" class="form-control mx-2" value="0">
-        <button type="button" class="btn btn-sm btn-primary add-button"><i class="bx bx-plus"></i></button>
+        <button type="button" class="btn btn-sm btn-primary add-button-Masak"><i class="bx bx-plus"></i></button>
     </div>
 </div>
+
 <button type="button" id="saveFaseMasak" class="btn btn-primary">Simpan Data</button>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const formContainer = document.getElementById('form-container');
+    $(document).ready(function() {
+        //tambah form
+        const formContainerMasak = document.getElementById('form-container-Masak');
+        let countMasak = 2;
 
-        function addForm() {
+        function addFormMasak() {
             const formGroup = document.createElement('div');
             formGroup.classList.add('form-group', 'd-flex', 'my-2');
             formGroup.innerHTML =
                 `
-            <input type="number" name="no[]" placeholder="no" class="form-control mx-2" style="width: 200px;" value="` +
-                (document.querySelectorAll('.form-group').length + 1) + `">
-        <input type="number" placeholder="jumlah" name="jumlah[]" class="form-control mx-2" value="0">
-                <button type="button" class="btn btn-danger btn-sm remove-button"><i class="bx bx-trash"></i></button>
-            `;
-            formContainer.appendChild(formGroup);
+                    <input type="number" name="no[]" placeholder="no" class="form-control mx-2" style="width: 200px;" value="` +
+                countMasak + `">
+                    <input type="number" placeholder="jumlah" name="jumlah[]" class="form-control mx-2" value="0">
+                    <button type="button" class="btn btn-danger btn-sm remove-button-Masak"><i class="bx bx-trash"></i></button>
+                    `;
+            formContainerMasak.appendChild(formGroup);
 
-            const removeButton = formGroup.querySelector('.remove-button');
-            removeButton.addEventListener('click', () => removeForm(formGroup));
+            const removeButtonMasak = formGroup.querySelector('.remove-button-Masak');
+            removeButtonMasak.addEventListener('click', () => removeFormMasak(formGroup));
+
+            countMasak++; // Increment count after adding form
+
+            resetNumbers(); // Reset numbers after adding form
         }
 
-        function removeForm(formGroup) {
+        function removeFormMasak(formGroup) {
             formGroup.remove();
+
+            resetNumbers(); // Reset numbers after removing form
         }
 
-        const addButton = document.querySelector('.add-button');
-        addButton.addEventListener('click', addForm);
+        function resetNumbers() {
+            const formGroups = formContainerMasak.querySelectorAll('.form-group');
+            formGroups.forEach((formGroup, index) => {
+                const numberInput = formGroup.querySelector('input[name="no[]"]');
+                numberInput.value = index + 2; // Set correct number sequence
+            });
+        }
 
-    });
+        const addButtonMasak = document.querySelector('.add-button-Masak');
+        addButtonMasak.addEventListener('click', addFormMasak);
 
-
-    $(document).ready(function() {
+        //simpan form
         $('#saveFaseMasak').click(function() {
             var formData = $('#formfase_masak').serialize();
             $.ajax({
@@ -92,7 +106,7 @@
                     $('#datatable-sertifikasi').DataTable().ajax.reload();
                 },
                 error: function(xhr) {
-                    alert('Terjadi kesalahan: ' + xhr.responseText);
+                    console.log('Terjadi kesalahan: ' + xhr.responseText);
                 }
             });
         });

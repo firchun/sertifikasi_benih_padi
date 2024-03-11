@@ -82,7 +82,7 @@
             const formGroups = formContainerVegetatif.querySelectorAll('.form-group');
             formGroups.forEach((formGroup, index) => {
                 const numberInput = formGroup.querySelector('input[name="no[]"]');
-                numberInput.value = index + 1; // Set correct number sequence
+                numberInput.value = index + 2; // Set correct number sequence
             });
         }
 

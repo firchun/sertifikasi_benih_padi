@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Penangkar;
 use App\Models\Sertifikasi;
+use App\Models\SertifikasiBerbunga;
+use App\Models\SertifikasiMasak;
+use App\Models\SertifikasiPanen;
 use App\Models\SertifikasiPendahuluan;
 use App\Models\SertifikasiVegetatif;
 use Illuminate\Http\Request;
@@ -43,7 +46,11 @@ class SertifikasiController extends Controller
             ->addColumn('action', function ($Sertifikasi) {
                 $penangkar = Penangkar::where('id_user', $Sertifikasi->id_user)->first();
                 $pendahuluan = SertifikasiPendahuluan::where('id_sertifikasi', $Sertifikasi->id)->first();
-                return view('admin.sertifikasi.components.actions', compact(['Sertifikasi', 'penangkar', 'pendahuluan']));
+                $vegetatif = SertifikasiVegetatif::where('id_sertifikasi', $Sertifikasi->id)->first();
+                $masak = SertifikasiMasak::where('id_sertifikasi', $Sertifikasi->id)->first();
+                $berbunga = SertifikasiBerbunga::where('id_sertifikasi', $Sertifikasi->id)->first();
+                $panen = SertifikasiPanen::where('id_sertifikasi', $Sertifikasi->id)->first();
+                return view('admin.sertifikasi.components.actions', compact(['Sertifikasi', 'penangkar', 'pendahuluan', 'vegetatif', 'masak', 'berbunga', 'panen']));
             })
             ->addColumn('identitas', function ($Sertifikasi) {
                 $penangkar = Penangkar::where('id_user', $Sertifikasi->id_user)->first();
@@ -158,8 +165,6 @@ class SertifikasiController extends Controller
             'keadaan_rumput' => 'required|string',
             'taksiran_hasil' => 'nullable|numeric',
             'kesimpulan' => 'required|string',
-            'no' => ['required', 'array'],
-            'jumlah' => ['required', 'array'],
             'no.*' => ['required', 'numeric'],
             'jumlah.*' => ['required', 'numeric'],
         ], [
@@ -167,33 +172,46 @@ class SertifikasiController extends Controller
         ]);
 
         // Menghapus id dari data yang dikumpulkan
-        $FaseVegetatifData = $request->all();
+        $FaseVegetatifData = [
+            'id_sertifikasi' => $request->input('id_sertifikasi'),
+            'sesuai_varietas' => $request->input('sesuai_varietas'),
+            'hama_penyakit' => $request->input('hama_penyakit'),
+            'kemurnian' => $request->input('kemurnian'),
+            'pemeriksaan' => $request->input('pemeriksaan'),
+            'keadaan_rumput' => $request->input('keadaan_rumput'),
+            'taksiran_hasil' => $request->input('taksiran_hasil'),
+            'kesimpulan' => $request->input('kesimpulan'),
+        ];
+
         $campuranVarietas = [];
 
         // Mendapatkan nilai array 'no' dan 'jumlah' dari request
-        $nos = $request->input('no');
-        $jumlahs = $request->input('jumlah');
+        if ($request->has('no')) {
 
-        // Memeriksa apakah kedua array memiliki panjang yang sama
-        if (count($nos) === count($jumlahs)) {
-            // Melakukan iterasi melalui elemen-elemen array 'no' dan 'jumlah'
-            foreach ($nos as $key => $no) {
-                // Mengonversi nilai 'no' dan 'jumlah' menjadi integer
-                $no = (int) $no;
-                $jumlah = (int) $jumlahs[$key];
+            $nos =  $request->input('no');
+            $jumlahs = $request->input('jumlah');
 
-                // Menggabungkan nilai 'no' dan 'jumlah' ke dalam satu array asosiatif
-                $item = [
-                    'no' => $no,
-                    'jumlah' => $jumlah
-                ];
-                // Menambahkan array asosiatif ini ke dalam array campuranVarietas
-                $campuranVarietas[] = $item;
+            // Memeriksa apakah kedua array memiliki panjang yang sama
+            if (count($nos) === count($jumlahs)) {
+                // Melakukan iterasi melalui elemen-elemen array 'no' dan 'jumlah'
+                foreach ($nos as $key => $no) {
+                    // Mengonversi nilai 'no' dan 'jumlah' menjadi integer
+                    $no = (int) $no;
+                    $jumlah = (int) $jumlahs[$key];
+
+                    // Menggabungkan nilai 'no' dan 'jumlah' ke dalam satu array asosiatif
+                    $item = [
+                        'no' => $no,
+                        'jumlah' => $jumlah
+                    ];
+                    // Menambahkan array asosiatif ini ke dalam array campuranVarietas
+                    $campuranVarietas[] = $item;
+                }
             }
+            // Mengubah array campuranVarietas menjadi format JSON
+            $FaseVegetatifData['campuran_varietas'] = json_encode($campuranVarietas);
         }
 
-        // Mengubah array campuranVarietas menjadi format JSON
-        $FaseVegetatifData['campuran_varietas'] = json_encode($campuranVarietas);
 
 
         if ($request->filled('id')) {
@@ -207,6 +225,236 @@ class SertifikasiController extends Controller
         } else {
             SertifikasiVegetatif::create($FaseVegetatifData);
             $message = 'Fase vegetatif berhasil diinput..';
+        }
+        return response()->json(['message' => $message]);
+    }
+    public function fase_berbunga_store(Request $request)
+    {
+        $request->validate([
+            'id_sertifikasi' => 'required|exists:sertifikasis,id',
+            'sesuai_varietas' => 'required|string',
+            'hama_penyakit' => 'required|string',
+            'kemurnian' => 'required|string',
+            'pemeriksaan' => 'required|string',
+            'keadaan_rumput' => 'required|string',
+            'taksiran_hasil' => 'nullable|numeric',
+            'kesimpulan' => 'required|string',
+            'no.*' => ['required', 'numeric'],
+            'jumlah.*' => ['required', 'numeric'],
+        ], [
+            'required' => 'Kolom :attribute harus diisi.',
+        ]);
+
+        // Menghapus id dari data yang dikumpulkan
+        $FaseBerbungaData = [
+            'id_sertifikasi' => $request->input('id_sertifikasi'),
+            'sesuai_varietas' => $request->input('sesuai_varietas'),
+            'hama_penyakit' => $request->input('hama_penyakit'),
+            'kemurnian' => $request->input('kemurnian'),
+            'pemeriksaan' => $request->input('pemeriksaan'),
+            'keadaan_rumput' => $request->input('keadaan_rumput'),
+            'taksiran_hasil' => $request->input('taksiran_hasil'),
+            'kesimpulan' => $request->input('kesimpulan'),
+        ];
+
+        $campuranVarietas = [];
+
+        // Mendapatkan nilai array 'no' dan 'jumlah' dari request
+        if ($request->has('no')) {
+
+            $nos =  $request->input('no');
+            $jumlahs = $request->input('jumlah');
+
+            // Memeriksa apakah kedua array memiliki panjang yang sama
+            if (count($nos) === count($jumlahs)) {
+                // Melakukan iterasi melalui elemen-elemen array 'no' dan 'jumlah'
+                foreach ($nos as $key => $no) {
+                    // Mengonversi nilai 'no' dan 'jumlah' menjadi integer
+                    $no = (int) $no;
+                    $jumlah = (int) $jumlahs[$key];
+
+                    // Menggabungkan nilai 'no' dan 'jumlah' ke dalam satu array asosiatif
+                    $item = [
+                        'no' => $no,
+                        'jumlah' => $jumlah
+                    ];
+                    // Menambahkan array asosiatif ini ke dalam array campuranVarietas
+                    $campuranVarietas[] = $item;
+                }
+            }
+            // Mengubah array campuranVarietas menjadi format JSON
+            $FaseBerbungaData['campuran_varietas'] = json_encode($campuranVarietas);
+        }
+
+
+
+        if ($request->filled('id')) {
+            $SertifikasiBerbunga = SertifikasiBerbunga::find($request->input('id'));
+            if (!$SertifikasiBerbunga) {
+                return response()->json(['message' => 'fase Berbunga not found'], 404);
+            }
+
+            $SertifikasiBerbunga->update($FaseBerbungaData);
+            $message = 'Fase Berbunga berhasil diupdate..';
+        } else {
+            SertifikasiBerbunga::create($FaseBerbungaData);
+            $message = 'Fase Berbunga berhasil diinput..';
+        }
+        return response()->json(['message' => $message]);
+    }
+    public function fase_masak_store(Request $request)
+    {
+        $request->validate([
+            'id_sertifikasi' => 'required|exists:sertifikasis,id',
+            'sesuai_varietas' => 'required|string',
+            'hama_penyakit' => 'required|string',
+            'kemurnian' => 'required|string',
+            'pemeriksaan' => 'required|string',
+            'keadaan_rumput' => 'required|string',
+            'taksiran_hasil' => 'nullable|numeric',
+            'kesimpulan' => 'required|string',
+            'no.*' => ['required', 'numeric'],
+            'jumlah.*' => ['required', 'numeric'],
+        ], [
+            'required' => 'Kolom :attribute harus diisi.',
+        ]);
+
+        // Menghapus id dari data yang dikumpulkan
+        $FaseMasakData = [
+            'id_sertifikasi' => $request->input('id_sertifikasi'),
+            'sesuai_varietas' => $request->input('sesuai_varietas'),
+            'hama_penyakit' => $request->input('hama_penyakit'),
+            'kemurnian' => $request->input('kemurnian'),
+            'pemeriksaan' => $request->input('pemeriksaan'),
+            'keadaan_rumput' => $request->input('keadaan_rumput'),
+            'taksiran_hasil' => $request->input('taksiran_hasil'),
+            'kesimpulan' => $request->input('kesimpulan'),
+        ];
+
+        $campuranVarietas = [];
+
+        // Mendapatkan nilai array 'no' dan 'jumlah' dari request
+        if ($request->has('no')) {
+
+            $nos =  $request->input('no');
+            $jumlahs = $request->input('jumlah');
+
+            // Memeriksa apakah kedua array memiliki panjang yang sama
+            if (count($nos) === count($jumlahs)) {
+                // Melakukan iterasi melalui elemen-elemen array 'no' dan 'jumlah'
+                foreach ($nos as $key => $no) {
+                    // Mengonversi nilai 'no' dan 'jumlah' menjadi integer
+                    $no = (int) $no;
+                    $jumlah = (int) $jumlahs[$key];
+
+                    // Menggabungkan nilai 'no' dan 'jumlah' ke dalam satu array asosiatif
+                    $item = [
+                        'no' => $no,
+                        'jumlah' => $jumlah
+                    ];
+                    // Menambahkan array asosiatif ini ke dalam array campuranVarietas
+                    $campuranVarietas[] = $item;
+                }
+            }
+            // Mengubah array campuranVarietas menjadi format JSON
+            $FaseMasakData['campuran_varietas'] = json_encode($campuranVarietas);
+        }
+
+
+
+        if ($request->filled('id')) {
+            $SertifikasiMasak = SertifikasiMasak::find($request->input('id'));
+            if (!$SertifikasiMasak) {
+                return response()->json(['message' => 'fase Masak not found'], 404);
+            }
+
+            $SertifikasiMasak->update($FaseMasakData);
+            $message = 'Fase Masak berhasil diupdate..';
+        } else {
+            SertifikasiMasak::create($FaseMasakData);
+            $message = 'Fase Masak berhasil diinput..';
+        }
+        return response()->json(['message' => $message]);
+    }
+    public function fase_panen_store(Request $request)
+    {
+        $request->validate([
+            'id_sertifikasi' => 'required|exists:sertifikasis,id',
+            'luas_pemeriksaan' => 'required|string',
+            'luas_panen' => 'required|string',
+            'hasil_panen' => 'required|string',
+            'campuran' => 'required|string',
+            'kesimpulan' => 'required|string',
+            'no.*' => ['required', 'numeric'],
+            'jumlah.*' => ['required', 'numeric'],
+            'jenis.*' => ['required', 'string'],
+            'pemeriksaan.*' => ['required', 'string'],
+            'keterangan.*' => ['required', 'string'],
+        ], [
+            'required' => 'Kolom :attribute harus diisi.',
+        ]);
+
+        // Menghapus id dari data yang dikumpulkan
+        $PeralatanAlatPanen = [
+            'id_sertifikasi' => $request->input('id_sertifikasi'),
+            'luas_pemeriksaan' => $request->input('luas_pemeriksaan'),
+            'luas_panen' => $request->input('luas_panen'),
+            'hasil_panen' => $request->input('hasil_panen'),
+            'campuran' => $request->input('campuran'),
+            'kesimpulan' => $request->input('kesimpulan'),
+        ];
+
+        $alatPananen = [];
+
+        // Mendapatkan nilai array 'no' dan 'jumlah' dari request
+        if ($request->has('no')) {
+
+            $nos =  $request->input('no');
+            $jeniss = $request->input('jenis');
+            $jumlahs = $request->input('jumlah');
+            $pemeriksaans = $request->input('pemeriksaan');
+            $keterangans = $request->input('keterangan');
+
+            // Memeriksa apakah kedua array memiliki panjang yang sama
+            if (count($nos) === count($jumlahs)) {
+                // Melakukan iterasi melalui elemen-elemen array 'no' dan 'jumlah'
+                foreach ($nos as $key => $no) {
+                    // Mengonversi nilai 'no' dan 'jumlah' menjadi integer
+                    $no = (int) $no;
+                    $jumlah = (int) $jumlahs[$key];
+                    $pemeriksaan =  $pemeriksaans[$key];
+                    $keterangan = $keterangans[$key];
+                    $jenis =  $jeniss[$key];
+
+                    // Menggabungkan nilai 'no' dan 'jumlah' ke dalam satu array asosiatif
+                    $item = [
+                        'no' => $no,
+                        'jumlah' => $jumlah,
+                        'jenis' => $jenis,
+                        'pemeriksaan' => $pemeriksaan,
+                        'keterangan' => $keterangan,
+                    ];
+                    // Menambahkan array asosiatif ini ke dalam array alatPananen
+                    $alatPananen[] = $item;
+                }
+            }
+            // Mengubah array campuranVarietas menjadi format JSON
+            $PeralatanAlatPanen['peralatan_panen'] = json_encode($alatPananen);
+        }
+
+
+
+        if ($request->filled('id')) {
+            $SertifikasiPanen = SertifikasiPanen::find($request->input('id'));
+            if (!$SertifikasiPanen) {
+                return response()->json(['message' => 'Pemeriksaan alat panen not found'], 404);
+            }
+
+            $SertifikasiPanen->update($PeralatanAlatPanen);
+            $message = 'Pemeriksaan alat panen berhasil diupdate..';
+        } else {
+            SertifikasiPanen::create($PeralatanAlatPanen);
+            $message = 'Pemeriksaan alat panen berhasil diinput..';
         }
         return response()->json(['message' => $message]);
     }
