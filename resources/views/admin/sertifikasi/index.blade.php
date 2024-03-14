@@ -36,7 +36,7 @@
                                 <th>Alamat</th>
                                 <th>Tanaman</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th style="min-width: 300px;">Action</th>
                             </tr>
                         </thead>
 

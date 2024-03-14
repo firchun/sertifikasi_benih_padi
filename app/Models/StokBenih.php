@@ -30,4 +30,11 @@ class StokBenih extends Model
     {
         return $this->belongsTo(KelasBenih::class, 'id_kelas_benih');
     }
+    public static function getSertifikasi($id)
+    {
+        $stokMasuk = self::where('id_sertifikasi', $id)->where('jenis_stok', 'tambah')->sum('jumlah_stok');
+        $stokKeluar = self::where('id_sertifikasi', $id)->where('jenis_stok', 'kurang')->sum('jumlah_stok');
+        $jumlahStok = $stokMasuk - $stokKeluar;
+        return $jumlahStok;
+    }
 }

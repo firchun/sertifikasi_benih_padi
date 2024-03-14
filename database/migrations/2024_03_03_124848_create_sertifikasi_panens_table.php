@@ -21,7 +21,7 @@ return new class extends Migration
             $table->float('hasil_panen');
             $table->json('peralatan_panen');
             $table->enum('campuran', ['Ada', 'Tidak Ada']);
-            $table->enum('kesimpulan', ['Lulus', 'Tidak Lulus']);
+            $table->enum('kesimpulan', ['Lulus', 'Tidak']);
             $table->timestamps();
 
             $table->foreign('id_sertifikasi')->references('id')->on('sertifikasis');

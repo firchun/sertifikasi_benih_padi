@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Penangkar;
 use App\Models\Sertifikasi;
 use App\Models\SertifikasiBerbunga;
+use App\Models\SertifikasiLab;
 use App\Models\SertifikasiMasak;
 use App\Models\SertifikasiPanen;
 use App\Models\SertifikasiPendahuluan;
 use App\Models\SertifikasiVegetatif;
+use App\Models\StokBenih;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -33,9 +35,12 @@ class SertifikasiController extends Controller
     public function getData()
     {
         $sertifikasi = Sertifikasi::where('id_user', auth()->user()->id)
-            ->with(['desa', 'kecamatan', 'kelas_benih_sebelumnya', 'kelas_benih_asal', 'varietas', 'varietas_sebelumnya', 'user'])
+            ->with(['desa', 'kecamatan', 'kelas_benih_sebelumnya', 'kelas_benih_asal', 'varietas', 'varietas_sebelumnya', 'user', 'vegetatif', 'uji_lab'])
             ->get();
 
+        foreach ($sertifikasi as $item) {
+            $item->jumlahStok = StokBenih::getSertifikasi($item->id); // Panggil fungsi getSertifikasi untuk setiap item
+        }
         return response()->json(['data' => $sertifikasi]);
     }
     public function getSertifikasisDataTable()
@@ -50,7 +55,8 @@ class SertifikasiController extends Controller
                 $masak = SertifikasiMasak::where('id_sertifikasi', $Sertifikasi->id)->first();
                 $berbunga = SertifikasiBerbunga::where('id_sertifikasi', $Sertifikasi->id)->first();
                 $panen = SertifikasiPanen::where('id_sertifikasi', $Sertifikasi->id)->first();
-                return view('admin.sertifikasi.components.actions', compact(['Sertifikasi', 'penangkar', 'pendahuluan', 'vegetatif', 'masak', 'berbunga', 'panen']));
+                $uji_lab = SertifikasiLab::where('id_sertifikasi', $Sertifikasi->id)->first();
+                return view('admin.sertifikasi.components.actions', compact(['Sertifikasi', 'penangkar', 'pendahuluan', 'vegetatif', 'masak', 'berbunga', 'panen', 'uji_lab']));
             })
             ->addColumn('identitas', function ($Sertifikasi) {
                 $penangkar = Penangkar::where('id_user', $Sertifikasi->id_user)->first();
@@ -74,6 +80,7 @@ class SertifikasiController extends Controller
             'alamat' => 'required|string',
             'luas_pertanaman' => 'required',
             'id_varietas' => 'required|exists:varietas,id',
+            'id_kelas_benih' => 'required|exists:kelas_benihs,id',
             'tanggal_sebar' => 'required|date',
             'tanggal_tanam' => 'required|date',
             'blok' => 'required|string',
@@ -95,6 +102,7 @@ class SertifikasiController extends Controller
         ]);
         $SertifikasiData = $request->all();
 
+
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
@@ -110,6 +118,7 @@ class SertifikasiController extends Controller
             $message = 'Sertifikasi updated successfully';
             return response()->json(['message' => $message]);
         } else {
+            $sertifikasiData['status'] = 'Proses Permohonan Sertifikasi';
             Sertifikasi::create($SertifikasiData);
             $message = 'Sertifikasi berhasil diajukan..';
             if (Auth::user()->role = 'Penangkar') {
@@ -150,6 +159,12 @@ class SertifikasiController extends Controller
         } else {
             SertifikasiPendahuluan::create($FasePendahuluanData);
             $message = 'Fase pendahuluan berhasil diinput..';
+            if ($request->kesimpulan == 'Memenuhi') {
+                Sertifikasi::find($request->id_sertifikasi)->update(['status' => 'Memenuhi syarat areal sertifikasi']);
+            } else {
+                Sertifikasi::find($request->id_sertifikasi)->update(['status' => 'Tidak memenuhi syarat areal sertifikasi']);
+            }
+
             return response()->json(['message' => $message]);
         }
     }
@@ -224,6 +239,11 @@ class SertifikasiController extends Controller
             $message = 'Fase vegetatif berhasil diupdate..';
         } else {
             SertifikasiVegetatif::create($FaseVegetatifData);
+            if ($request->kesimpulan == 'Lulus') {
+                Sertifikasi::find($request->id_sertifikasi)->update(['status' => 'Lulus Fase Vegetatif']);
+            } else {
+                Sertifikasi::find($request->id_sertifikasi)->update(['status' => 'Gagal Fase Vegetatif']);
+            }
             $message = 'Fase vegetatif berhasil diinput..';
         }
         return response()->json(['message' => $message]);
@@ -298,6 +318,11 @@ class SertifikasiController extends Controller
             $message = 'Fase Berbunga berhasil diupdate..';
         } else {
             SertifikasiBerbunga::create($FaseBerbungaData);
+            if ($request->kesimpulan == 'Lulus') {
+                Sertifikasi::find($request->id_sertifikasi)->update(['status' => 'Lulus Fase Berbunga']);
+            } else {
+                Sertifikasi::find($request->id_sertifikasi)->update(['status' => 'Gagal Fase Berbunga']);
+            }
             $message = 'Fase Berbunga berhasil diinput..';
         }
         return response()->json(['message' => $message]);
@@ -372,6 +397,11 @@ class SertifikasiController extends Controller
             $message = 'Fase Masak berhasil diupdate..';
         } else {
             SertifikasiMasak::create($FaseMasakData);
+            if ($request->kesimpulan == 'Lulus') {
+                Sertifikasi::find($request->id_sertifikasi)->update(['status' => 'Lulus Fase Masak']);
+            } else {
+                Sertifikasi::find($request->id_sertifikasi)->update(['status' => 'Gagal Fase Masak']);
+            }
             $message = 'Fase Masak berhasil diinput..';
         }
         return response()->json(['message' => $message]);
@@ -454,12 +484,84 @@ class SertifikasiController extends Controller
             $message = 'Pemeriksaan alat panen berhasil diupdate..';
         } else {
             SertifikasiPanen::create($PeralatanAlatPanen);
+            if ($request->kesimpulan == 'Lulus') {
+                Sertifikasi::find($request->id_sertifikasi)->update(['status' => 'Lulus Pemeriksaan Peralatan Panen']);
+            } else {
+                Sertifikasi::find($request->id_sertifikasi)->update(['status' => 'Gagal Pemeriksaan Peralatan Panen']);
+            }
             $message = 'Pemeriksaan alat panen berhasil diinput..';
         }
         return response()->json(['message' => $message]);
     }
+    public function uji_laboratorium(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'id_sertifikasi' => 'required|exists:sertifikasis,id',
+            'nomor_induk' => 'required|string',
+            'musim_tanam' => 'required|string',
+            'nomor_kelompok' => 'required|string',
+            'label' => 'required|string',
+            'kesimpulan' => 'required|string',
+            'tanggal_panen' => 'required|date',
+            'tanggal_label' => 'required|date',
+            'tanggal_selesai_pengujian' => 'required|date',
+            'campuran_varietas_lain' => 'required|numeric',
+            'volume' => 'required|numeric',
+            'kadar_air' => 'required|numeric',
+            'benih_murni' => 'required|numeric',
+            'kotoran_benih' => 'required|numeric',
+            'daya_berkecambah' => 'required|numeric',
+            'kesehatan_benih' => 'required|numeric',
+            'biji_gulma' => 'required|numeric',
+        ], [
+            'required' => 'Kolom :attribute harus diisi.',
+            'string' => 'Kolom :attribute harus berupa teks.',
+            'numeric' => 'Kolom :attribute harus berupa angka.',
+            'date' => 'Kolom :attribute harus berupa tanggal.',
+        ]);
 
+        // Collect the validated data into an array
+        $UjiLaboratorium = [
+            'id_sertifikasi' => $request->input('id_sertifikasi'),
+            'nomor_induk' => $request->input('nomor_induk'),
+            'musim_tanam' => $request->input('musim_tanam'),
+            'nomor_kelompok' => $request->input('nomor_kelompok'),
+            'tanggal_panen' => $request->input('tanggal_panen'),
+            'tanggal_label' => $request->input('tanggal_label'),
+            'tanggal_selesai_pengujian' => $request->input('tanggal_selesai_pengujian'),
+            'campuran_varietas_lain' => $request->input('campuran_varietas_lain'),
+            'volume' => $request->input('volume'),
+            'kadar_air' => $request->input('kadar_air'),
+            'benih_murni' => $request->input('benih_murni'),
+            'kotoran_benih' => $request->input('kotoran_benih'),
+            'daya_berkecambah' => $request->input('daya_berkecambah'),
+            'kesehatan_benih' => $request->input('kesehatan_benih'),
+            'biji_gulma' => $request->input('biji_gulma'),
+            'label' => $request->input('label'),
+            'kesimpulan' => $request->input('kesimpulan'),
+        ];
 
+        if ($request->filled('id')) {
+            $SertifikasiLab = SertifikasiLab::find($request->input('id'));
+            if (!$SertifikasiLab) {
+                return response()->json(['message' => 'Pemeriksaan laboratorium not found'], 404);
+            }
+
+            $SertifikasiLab->update($UjiLaboratorium);
+            $message = 'Pemeriksaan laboratorium berhasil diupdate..';
+        } else {
+            SertifikasiLab::create($UjiLaboratorium);
+            if ($request->kesimpulan == 'Lulus') {
+                Sertifikasi::find($request->id_sertifikasi)->update(['status' => 'Lulus uji laboratorium']);
+            } else {
+                Sertifikasi::find($request->id_sertifikasi)->update(['status' => 'Gagal uji laboratorium']);
+            }
+
+            $message = 'Pemeriksaan laboratorium berhasil diinput..';
+        }
+        return response()->json(['message' => $message]);
+    }
 
     public function terima($id)
     {

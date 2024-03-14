@@ -15,14 +15,17 @@
 </div>
 <div class="mb-3">
     <label for="campuran" class="form-label">Tercampurnya benih dengan varietas/ tanaman lain/areal non</label>
-    <input type="text" class="form-control" id="campuran" name="campuran" required>
+    <select class="form-control" id="campuran" name="campuran">
+        <option value="Ada">Ada</option>
+        <option value="Tidak Ada">Tidak Ada</option>
+    </select>
 </div>
 
 <div class="mb-3">
     <label for="kesimpulan" class="form-label">Kesimpulan</label>
     <select class="form-control" id="kesimpulan" name="kesimpulan">
+        <option value="Tidak">Tidak Lulus</option>
         <option value="Lulus">Lulus</option>
-        <option value="Tidak Lulus">Tidak Lulus</option>
     </select>
 </div>
 <div class="form-group mb-4" id="form-container-Panen">

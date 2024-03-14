@@ -23,7 +23,7 @@ return new class extends Migration
             $table->json('campuran_varietas');
             $table->string('keadaan_rumput');
             $table->float('taksiran_hasil')->nullable();
-            $table->enum('kesimpulan', ['Lulus', 'Tidak Lulus']);
+            $table->enum('kesimpulan', ['Lulus', 'Tidak']);
             $table->timestamps();
 
             $table->foreign('id_sertifikasi')->references('id')->on('sertifikasis');

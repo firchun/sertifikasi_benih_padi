@@ -31,8 +31,8 @@
 <div class="mb-3">
     <label for="kesimpulan" class="form-label">Kesimpulan</label>
     <select class="form-control" id="kesimpulan" name="kesimpulan">
+        <option value="Tidak">Tidak Lulus</option>
         <option value="Lulus">Lulus</option>
-        <option value="Tidak Lulus">Tidak Lulus</option>
     </select>
 </div>
 <div class="form-group mb-4" id="form-container-Berbunga">

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreignId('id_kelas_benih_sebelumnya');
             $table->foreignId('id_varietas_sebelumnya');
             $table->string('bekas_bero')->nullable();
-            $table->enum('kesimpulan', ['Memenuhi', 'Tidak Memenuhi']);
+            $table->enum('kesimpulan', ['Memenuhi', 'Tidak']);
             $table->text('catatan')->nullable();
 
             $table->foreign('id_sertifikasi')->references('id')->on('sertifikasis');

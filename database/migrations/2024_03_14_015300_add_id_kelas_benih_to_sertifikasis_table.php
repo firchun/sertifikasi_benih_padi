@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('sertifikasis', function (Blueprint $table) {
-            $table->string('status')->default('Proses Permohonan Sertifikasi')->after('jumlah_benih');
+            $table->foreignId('id_kelas_benih')->after('id_varietas');
+
+            $table->foreign('id_kelas_benih')->references('id')->on('kelas_benihs');
         });
     }
 

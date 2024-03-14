@@ -83,7 +83,7 @@
                                     @else
                                         <div class="text-center">
                                             <p> {{ $value }} belum diupdate..</p>
-                                            @if (Auth::user()->role == 'BPSB')
+                                            @if (Auth::user()->role == 'BPSB' && $permohonan->status == 'Permohonan diterima')
                                                 <button class="btn btn-secondary btn-primary" type="button"
                                                     onclick="openFase('{{ $key }}')">
                                                     <span>
@@ -102,14 +102,16 @@
                                         <div class="text-center">
                                             <p> {{ $value }} belum diupdate..</p>
                                             @if (Auth::user()->role == 'BPSB' && $fase_pendahuluan)
-                                                <button class="btn btn-secondary btn-primary" type="button"
-                                                    onclick="openFase('{{ $key }}')">
-                                                    <span>
-                                                        <i class="bx bx-plus me-sm-1"> </i>
-                                                        <span class="d-none d-sm-inline-block"> Isi data
-                                                            {{ $value }}</span>
-                                                    </span>
-                                                </button>
+                                                @if ($fase_pendahuluan->kesimpulan == 'Memenuhi')
+                                                    <button class="btn btn-secondary btn-primary" type="button"
+                                                        onclick="openFase('{{ $key }}')">
+                                                        <span>
+                                                            <i class="bx bx-plus me-sm-1"> </i>
+                                                            <span class="d-none d-sm-inline-block"> Isi data
+                                                                {{ $value }}</span>
+                                                        </span>
+                                                    </button>
+                                                @endif
                                             @endif
                                         </div>
                                     @endif
@@ -120,14 +122,16 @@
                                         <div class="text-center">
                                             <p> {{ $value }} belum diupdate..</p>
                                             @if (Auth::user()->role == 'BPSB' && $fase_vegetatif)
-                                                <button class="btn btn-secondary btn-primary" type="button"
-                                                    onclick="openFase('{{ $key }}')">
-                                                    <span>
-                                                        <i class="bx bx-plus me-sm-1"> </i>
-                                                        <span class="d-none d-sm-inline-block"> Isi data
-                                                            {{ $value }}</span>
-                                                    </span>
-                                                </button>
+                                                @if ($fase_vegetatif->kesimpulan == 'Lulus')
+                                                    <button class="btn btn-secondary btn-primary" type="button"
+                                                        onclick="openFase('{{ $key }}')">
+                                                        <span>
+                                                            <i class="bx bx-plus me-sm-1"> </i>
+                                                            <span class="d-none d-sm-inline-block"> Isi data
+                                                                {{ $value }}</span>
+                                                        </span>
+                                                    </button>
+                                                @endif
                                             @endif
                                         </div>
                                     @endif
@@ -138,14 +142,16 @@
                                         <div class="text-center">
                                             <p> {{ $value }} belum diupdate..</p>
                                             @if (Auth::user()->role == 'BPSB' && $fase_berbunga)
-                                                <button class="btn btn-secondary btn-primary" type="button"
-                                                    onclick="openFase('{{ $key }}')">
-                                                    <span>
-                                                        <i class="bx bx-plus me-sm-1"> </i>
-                                                        <span class="d-none d-sm-inline-block"> Isi data
-                                                            {{ $value }}</span>
-                                                    </span>
-                                                </button>
+                                                @if ($fase_berbunga->kesimpulan == 'Lulus')
+                                                    <button class="btn btn-secondary btn-primary" type="button"
+                                                        onclick="openFase('{{ $key }}')">
+                                                        <span>
+                                                            <i class="bx bx-plus me-sm-1"> </i>
+                                                            <span class="d-none d-sm-inline-block"> Isi data
+                                                                {{ $value }}</span>
+                                                        </span>
+                                                    </button>
+                                                @endif
                                             @endif
                                         </div>
                                     @endif
@@ -156,14 +162,16 @@
                                         <div class="text-center">
                                             <p> {{ $value }} belum diupdate..</p>
                                             @if (Auth::user()->role == 'BPSB' && $fase_masak)
-                                                <button class="btn btn-secondary btn-primary" type="button"
-                                                    onclick="openFase('{{ $key }}')">
-                                                    <span>
-                                                        <i class="bx bx-plus me-sm-1"> </i>
-                                                        <span class="d-none d-sm-inline-block"> Isi data
-                                                            {{ $value }}</span>
-                                                    </span>
-                                                </button>
+                                                @if ($fase_masak->kesimpulan == 'Lulus')
+                                                    <button class="btn btn-secondary btn-primary" type="button"
+                                                        onclick="openFase('{{ $key }}')">
+                                                        <span>
+                                                            <i class="bx bx-plus me-sm-1"> </i>
+                                                            <span class="d-none d-sm-inline-block"> Isi data
+                                                                {{ $value }}</span>
+                                                        </span>
+                                                    </button>
+                                                @endif
                                             @endif
                                         </div>
                                     @endif
@@ -202,3 +210,44 @@
         </div>
     </div>
 @endforeach
+{{-- //uji lab --}}
+<div class="modal fade" id="modal-uji-lab-{{ $Sertifikasi->id }}" tabindex="-1" aria-labelledby="customersModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel"> Uji Laboratorium</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if ($panen)
+                    @if ($uji_lab)
+                        @if ($uji_lab->kesimpulan == 'Lulus')
+                            <div class="mb-3">
+                                <button class="btn btn-primary"><i class="bx bx-file"></i> Cetak Sertifikat</button>
+                                <button class="btn btn-warning"><i class="bx bx-purchase-tag"></i> Cetak
+                                    Label</button>
+                            </div>
+                        @endif
+                    @endif
+                @endif
+                <form id="form-uji-laboratorium">
+                    @if ($panen)
+                        @if ($uji_lab)
+                            @include('admin.sertifikasi.data.uji_lab')
+                        @else
+                            @include('admin.sertifikasi.formulir.uji_lab')
+                        @endif
+                    @else
+                        <div class="text-center">
+                            Menunggu proses pemeriksaan lapangan...
+                        </div>
+                    @endif
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

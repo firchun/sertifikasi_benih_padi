@@ -209,6 +209,8 @@
                             <span class="ms-2">Loading...</span>
                         </div>
                     </div>
+                    @include('admin.dashboard_component.modal_stok')
+
                     @push('js')
                         <script>
                             $(document).ready(function() {
@@ -221,8 +223,21 @@
                                             var sertifikasiData = response.data;
                                             var sertifikasiHtml = '';
                                             sertifikasiData.forEach(function(item) {
+                                                var stok = '';
+                                                if (item.uji_lab) {
+                                                    stok = `
+                                                    <p class="mt-3">Stok benih</p>
+                                                    <button type="button" class="btn btn-sm btn-warning mb-3" onclick="updateStok()">Update Stok</button>
+                                                        <ul class="list-group"> 
+                                                            <li class="list-group-item d-flex align-items-center">
+                                                                <i class="bx bxs-component me-2"></i>
+                                                                Stok : ${item.jumlahStok} Kg 
+                                                            </li>
+                                                        </ul>
+                                                    `;
+                                                }
                                                 sertifikasiHtml += `
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-lg-6 mb-3">
                                                 <div class="card border border-${item.status == 'Permohonan ditolak' ? 'danger' : 'primary'}">
                                                     <div class="card-header d-flex justify-content-between align-items-center">
                                                         <span>Data Sertifikasi <span class="badge bg-success">Benih Padi</span></span>
@@ -233,7 +248,7 @@
                                                             <ul class="dropdown-menu dropdown-menu-end">
                                                                 <li><a class="dropdown-item" href="javascript:void(0);">Detail Sertifikasi</a></li>
                                                                 <li><a class="dropdown-item" href="javascript:void(0);">Edit data</a></li>
-                                                                <li><hr class="dropdown-divider"></li>
+                                                               <li><hr class="dropdown-divider"></li>
                                                                 <li><a class="dropdown-item text-danger" href="javascript:void(0);">Batalkan Pengajuan</a></li>
                                                             </ul>
                                                         </div>
@@ -272,6 +287,7 @@
                                                                 Asal Benih : ${item.benih_asal}
                                                             </li>
                                                         </ul>
+                                                        ${stok}
                                                     </div>
                                                     <div class="card-footer bg-${item.status == 'Permohonan ditolak' ? 'danger' : 'primary'} text-white">
                                                         <strong class="text-center">Status : ${item.status}</strong>
@@ -290,6 +306,10 @@
                                         }
                                     });
                                 }
+                                window.updateStok = function(id) {
+                                    $('#update-stok').modal('show');
+                                    console.log('berhasil');
+                                };
                                 $('#refreshDataBtn').click(function() {
                                     dataSertifikasi();
                                 });

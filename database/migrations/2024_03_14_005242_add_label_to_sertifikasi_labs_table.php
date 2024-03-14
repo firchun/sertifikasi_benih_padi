@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('sertifikasis', function (Blueprint $table) {
-            $table->string('status')->default('Proses Permohonan Sertifikasi')->after('jumlah_benih');
+        Schema::table('sertifikasi_labs', function (Blueprint $table) {
+            $table->enum('label', ['Putih', 'Kuning', 'Ungu', 'Biru'])->default('Biru')->after('kesehatan_benih');
+            $table->enum('kesimpulan', ['Lulus', 'Tidak'])->default('Tidak')->after('label');
         });
     }
 
@@ -25,7 +26,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('sertifikasis', function (Blueprint $table) {
+        Schema::table('sertifikasi_labs', function (Blueprint $table) {
             //
         });
     }

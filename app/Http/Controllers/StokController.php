@@ -38,6 +38,7 @@ class StokController extends Controller
         return response()->json($varietas);
     }
 
+
     public function getThree()
     {
         $varietas = varietas::select([

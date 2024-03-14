@@ -36,9 +36,10 @@
                 $('#datatable-sertifikasi').DataTable().ajax.reload();
             });
             window.editSertifikasi = function(id) {
-
                 $('#sertifikasiModal' + id).modal('show');
-
+            };
+            window.editLaboratorium = function(id) {
+                $('#modal-uji-lab-' + id).modal('show');
             };
             window.openFase = function(value) {
                 $('#modal-' + value).modal('show');

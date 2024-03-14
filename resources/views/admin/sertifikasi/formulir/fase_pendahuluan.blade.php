@@ -28,14 +28,41 @@
 </div>
 
 <div class="mb-3">
+    <label for="bekasTanaman" class="form-label">Bekas Tanaman</label>
+    <input type="text" class="form-control" id="bekasTanaman" name="bekas_tanam" required>
+</div>
+<div class="mb-3">
     <label for="bekasBero" class="form-label">Bekas Bero</label>
     <input type="text" class="form-control" id="bekasBero" name="bekas_bero" required>
+</div>
+<div class="row">
+    <div class="col">
+
+        <div class="mb-3">
+            <label for="nama" class="form-label">Kelas</label>
+            <select class="form-select" name="id_kelas_benih_sebelumnya">
+                @foreach (App\Models\KelasBenih::all() as $item)
+                    <option value="{{ $item->id }}">{{ $item->name . ' - ' . $item->code }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label for="nama" class="form-label">Varietas</label>
+            <select class="form-select" name="id_varietas_sebelumnya">
+                @foreach (App\Models\varietas::all() as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
 </div>
 <div class="mb-3">
     <label for="kesimpulan" class="form-label">Kesimpulan</label>
     <select class="form-control" id="kesimpulan" name="kesimpulan">
+        <option value="Tidak">Tidak Memenuhi</option>
         <option value="Memenuhi">Memenuhi</option>
-        <option value="Tidak Memenuhi">Tidak Memenuhi</option>
     </select>
 </div>
 <button type="button" id="saveFasePendahuluan" class="btn btn-primary">Simpan Data</button>
