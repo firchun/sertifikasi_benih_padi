@@ -65,12 +65,13 @@ class StokController extends Controller
 
     public function getDetailStok($id)
     {
-        $stok = StokBenih::selectRaw('stok_benihs.id_penangkar, stok_benihs.id_varietas')
+        $stok = StokBenih::selectRaw('stok_benihs.id_penangkar,stok_benihs.id_kelas_benih, stok_benihs.id_varietas')
             ->where('stok_benihs.id_varietas', $id)
-            ->groupBy('stok_benihs.id_penangkar', 'stok_benihs.id_varietas')
+            ->groupBy('stok_benihs.id_penangkar', 'stok_benihs.id_varietas', 'stok_benihs.id_kelas_benih')
             ->join('penangkars', 'penangkars.id', '=', 'stok_benihs.id_penangkar')
             ->join('varietas', 'varietas.id', '=', 'stok_benihs.id_varietas')
-            ->with(['penangkar', 'varietas'])
+            ->join('kelas_benihs', 'kelas_benihs.id', '=', 'stok_benihs.id_kelas_benih')
+            ->with(['penangkar', 'varietas', 'kelas_benih'])
             ->get();
 
         foreach ($stok as $key => $stokItem) {
