@@ -45,7 +45,7 @@ class SertifikasiController extends Controller
     }
     public function getSertifikasisDataTable()
     {
-        $Sertifikasi = Sertifikasi::with(['desa', 'kecamatan', 'kelas_benih_sebelumnya', 'kelas_benih_asal', 'varietas', 'varietas_sebelumnya', 'user'])->orderByDesc('id');
+        $Sertifikasi = Sertifikasi::with(['desa', 'kecamatan', 'kelas_benih_sebelumnya', 'kelas_benih_asal', 'varietas', 'varietas_sebelumnya', 'user', 'kelas_benih'])->orderByDesc('id');
 
         return Datatables::of($Sertifikasi)
             ->addColumn('action', function ($Sertifikasi) {
@@ -68,8 +68,12 @@ class SertifikasiController extends Controller
             ->addColumn('status', function ($Sertifikasi) {
                 return '<span class="badge bg-label-info">' . $Sertifikasi->status . '</span>';
             })
+            ->addColumn('penangkar', function ($Sertifikasi) {
+                $penangkar = Penangkar::where('id_user', $Sertifikasi->id_user)->first();
+                return $penangkar->nama;
+            })
 
-            ->rawColumns(['action', 'status', 'tanaman', 'identitas'])
+            ->rawColumns(['action', 'status', 'tanaman', 'identitas', 'penangkar'])
             ->make(true);
     }
     public function store(Request $request)

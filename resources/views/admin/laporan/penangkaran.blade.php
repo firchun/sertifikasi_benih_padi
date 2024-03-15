@@ -26,6 +26,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Tanggal</th>
                                 <th>Nama Penangkaran</th>
                                 <th>Nama Ketua</th>
                                 <th>Alamat</th>
@@ -37,6 +38,7 @@
                         <tfoot>
                             <tr>
                                 <th>ID</th>
+                                <th>Tanggal</th>
                                 <th>Nama Penangkaran</th>
                                 <th>Nama Ketua</th>
                                 <th>Alamat</th>
@@ -63,6 +65,10 @@
                         name: 'id'
                     },
                     {
+                        data: 'tanggal',
+                        name: 'tanggal'
+                    },
+                    {
                         data: 'nama',
                         name: 'nama'
                     },
@@ -83,6 +89,26 @@
                         name: 'verifikasi'
                     },
 
+                ],
+                dom: 'lBfrtip',
+                buttons: [{
+                        extend: 'pdf',
+                        text: '<i class="bx bxs-file-pdf"></i> PDF',
+                        className: 'btn-danger mx-3',
+                        orientation: 'potrait',
+                        pageSize: 'A4',
+                        exportOptions: {
+                            columns: ':visible' // Ekspor seluruh kolom yang terlihat
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="bx bxs-file-export"></i> Excel',
+                        className: 'btn-success',
+                        exportOptions: {
+                            columns: ':visible' // Ekspor seluruh kolom yang terlihat
+                        }
+                    }
                 ]
             });
 
@@ -91,4 +117,10 @@
             });
         })
     </script>
+    <!-- JS DataTables Buttons -->
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 @endpush
