@@ -56,7 +56,7 @@
                                             <div class="icon"> <i class="fas fa-leaf"></i> </div>
                                             <h3 class="mb-3">Penangkaran : ${newTitle}</h3>
                                             
-                                            <h1 class="mb-3 text-danger">Rp ${formatNumberWithDot(harga)}</h1>
+                                            <h1 class="mb-3 text-danger">Rp ${formatNumberWithDot(harga)} /Kg</h1>
                                             <strong class="p-1 mb-3 bg-${item.stok > 0 ? 'warning' : 'danger'} text-${item.stok > 0 ? 'black' : 'white'}" style="border-radius: 10px;">
                                                 ${item.stok > 0 ? 'Tersedia ' + item.stok + ' Kg' : 'Stok Kosong'}
                                             </strong>
