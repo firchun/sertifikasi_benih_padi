@@ -7,11 +7,25 @@
             </div>
             <div class="modal-body">
                 <!-- Form for Create and Edit -->
-
+                <form id="updateStok">
+                    <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
+                    <input type="hidden" name="id_varietas" id="idVarieatas">
+                    <input type="hidden" name="id_kelas_benih" id="idKelasBenih">
+                    <input type="hidden" name="id_penangkar" id="idPenangkar">
+                    <input type="hidden" name="id_sertifikasi" id="idSertifikasi">
+                    <div class="input-group">
+                        <select class="form-select" id="jeniStok" name="jenis_stok">
+                            <option value="tambah">Tambah Stok</option>
+                            <option value="kurang">Kurangi Stok</option>
+                        </select>
+                        <input type="number" placeholder="Jumlah Stok" name="jumlah_stok" class="form-control">
+                        <span class="input-group-text">Kg</span>
+                        <button class="btn btn-outline-primary" type="button" id="saveStok">Update</button>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveKecamatanBtn">Save</button>
             </div>
         </div>
     </div>

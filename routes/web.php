@@ -12,7 +12,9 @@ use App\Http\Controllers\StokController;
 use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VarietasController;
+use App\Models\Penangkar;
 use App\Models\PenangkarAnggota;
+use App\Models\StokBenih;
 use App\Models\varietas;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -41,7 +43,7 @@ Route::get('/stoks', function () {
 
 Route::get('/detail_stoks/{id}', function ($id) {
     $varietas = varietas::find($id);
-    return view('pages.detail_stok', ['title' => 'Stok Benih : ' . $varietas->name]);
+    return view('pages.detail_stok', ['title' => 'Stok Benih : ' . $varietas->name, 'varietas' => $varietas]);
 })->name('detail_stoks');
 
 Route::get('/varietas-unggulan', function () {
@@ -54,6 +56,7 @@ Route::get('/penanaman-padi', function () {
     return view('pages.penanaman-padi', ['title' => 'Penanaman benih padi']);
 });
 //stok
+Route::get('/stoks/detail_stok/{id}', [StokController::class, 'getDetailStok'])->name('stoks.detail_stok');
 Route::get('/stoks/getall', [StokController::class, 'getall'])->name('stoks.getall');
 Route::get('/stoks/getthree', [StokController::class, 'getThree'])->name('stoks.getthree');
 //varietas
@@ -72,6 +75,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     //add penangkar
+    Route::post('/stoks/store',  [StokController::class, 'store'])->name('stoks.store');
     Route::post('/penangkars/store',  [PenangkarController::class, 'store'])->name('penangkars.store');
     //pengajuan Sertifikasi
     Route::get('/sertifikasi/data', [SertifikasiController::class, 'getData'])->name('sertifikasi.get');

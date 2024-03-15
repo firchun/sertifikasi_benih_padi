@@ -54,4 +54,8 @@ class Sertifikasi extends Model
     {
         return $this->hasMany(StokBenih::class, 'id_sertifikasi');
     }
+    public function penangkar(): belongsTo
+    {
+        return $this->belongsTo(Penangkar::class, 'id_user', 'id_user');
+    }
 }

@@ -35,7 +35,7 @@ class SertifikasiController extends Controller
     public function getData()
     {
         $sertifikasi = Sertifikasi::where('id_user', auth()->user()->id)
-            ->with(['desa', 'kecamatan', 'kelas_benih_sebelumnya', 'kelas_benih_asal', 'varietas', 'varietas_sebelumnya', 'user', 'vegetatif', 'uji_lab'])
+            ->with(['desa', 'kecamatan', 'kelas_benih_sebelumnya', 'kelas_benih_asal', 'varietas', 'varietas_sebelumnya', 'user', 'vegetatif', 'uji_lab', 'penangkar'])
             ->get();
 
         foreach ($sertifikasi as $item) {
