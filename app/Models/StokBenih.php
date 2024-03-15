@@ -28,7 +28,7 @@ class StokBenih extends Model
     }
     public function kelas_benih(): BelongsTo
     {
-        return $this->belongsTo(KelasBenih::class, 'id_kelas_benih');
+        return $this->belongsTo(kelasBenih::class, 'id_kelas_benih');
     }
     public static function getSertifikasi($id)
     {
