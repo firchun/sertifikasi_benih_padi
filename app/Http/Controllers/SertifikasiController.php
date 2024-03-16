@@ -72,8 +72,33 @@ class SertifikasiController extends Controller
                 $penangkar = Penangkar::where('id_user', $Sertifikasi->id_user)->first();
                 return $penangkar->nama;
             })
+            ->addColumn('luas_lahan', function ($Sertifikasi) {
+                $penangkar = Penangkar::where('id_user', $Sertifikasi->id_user)->first();
+                return $penangkar->luas_lahan;
+            })
+            ->addColumn('koordinat', function ($Sertifikasi) {
+                $penangkar = Penangkar::where('id_user', $Sertifikasi->id_user)->first();
+                return $penangkar->latitude . ' , ' . $penangkar->longitude;
+            })
+            ->addColumn('koordinat', function ($Sertifikasi) {
+                $penangkar = Penangkar::where('id_user', $Sertifikasi->id_user)->first();
+                return $penangkar->latitude . ' , ' . $penangkar->longitude;
+            })
+            ->addColumn('stok', function ($Sertifikasi) {
+                $stokMasuk = StokBenih::where('id_sertifikasi', $Sertifikasi->id)->where('jenis_stok', 'tambah')->sum('jumlah_stok');
+                $stokKeluar = StokBenih::where('id_sertifikasi', $Sertifikasi->id)->where('jenis_stok', 'kurang')->sum('jumlah_stok');
+                $jumlahStok = $stokMasuk - $stokKeluar;
+                return  number_format($jumlahStok) . ' kg';
+            })
+            ->addColumn('kemasan', function ($Sertifikasi) {
+                $stokMasuk = StokBenih::where('id_sertifikasi', $Sertifikasi->id)->where('jenis_stok', 'tambah')->sum('jumlah_stok');
+                $stokKeluar = StokBenih::where('id_sertifikasi', $Sertifikasi->id)->where('jenis_stok', 'kurang')->sum('jumlah_stok');
+                $jumlahStok = $stokMasuk - $stokKeluar;
+                $kemasan = $jumlahStok / 25;
+                return number_format($kemasan);
+            })
 
-            ->rawColumns(['action', 'status', 'tanaman', 'identitas', 'penangkar'])
+            ->rawColumns(['action', 'status', 'tanaman', 'identitas', 'penangkar', 'luas_lahan', 'koordinat', 'stok', 'kemasan'])
             ->make(true);
     }
     public function store(Request $request)

@@ -85,8 +85,8 @@
                         name: 'koordinat'
                     },
                     {
-                        data: 'verifikasi',
-                        name: 'verifikasi'
+                        data: 'verifikasi_text',
+                        name: 'verifikasi_text'
                     },
 
                 ],
@@ -95,11 +95,15 @@
                         extend: 'pdf',
                         text: '<i class="bx bxs-file-pdf"></i> PDF',
                         className: 'btn-danger mx-3',
+                        title: 'Data Laporan Penangkaran Benih',
                         orientation: 'potrait',
                         pageSize: 'A4',
                         exportOptions: {
                             columns: ':visible' // Ekspor seluruh kolom yang terlihat
-                        }
+                        },
+                        customize: function(doc) {
+                            doc.styles.tableHeader.fillColor = '#2a6908';
+                        },
                     },
                     {
                         extend: 'excelHtml5',

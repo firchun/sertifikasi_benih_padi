@@ -20,4 +20,11 @@ class LaporanController extends Controller
         ];
         return view('admin.laporan.penangkaran', $data);
     }
+    public function laporan_stok()
+    {
+        $data = [
+            'title' => 'Data Laporan Stok Benih tersertifikasi'
+        ];
+        return view('admin.laporan.stok', $data);
+    }
 }

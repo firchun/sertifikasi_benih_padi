@@ -34,6 +34,9 @@ class PenangkarController extends Controller
             ->addColumn('verifikasi', function ($Penangkar) {
                 return view('admin.penangkar.components.verifikasi', compact('Penangkar'));
             })
+            ->addColumn('verifikasi_text', function ($Penangkar) {
+                return $Penangkar->is_verified == 1 ? 'Terverifikasi' : 'Pending';
+            })
             ->addColumn('tanggal', function ($Penangkar) {
                 return $Penangkar->created_at->format('d M Y');
             })
@@ -50,7 +53,7 @@ class PenangkarController extends Controller
                 return '<a href="' . $googleMapsUrl . '" target="__blank">' . $latitude . ', ' . $longitude . '</a>';
             })
 
-            ->rawColumns(['action', 'koordinat', 'verifikasi', 'tanggal'])
+            ->rawColumns(['action', 'koordinat', 'verifikasi', 'tanggal', 'verifikasi_text'])
             ->make(true);
     }
     public function store(Request $request)

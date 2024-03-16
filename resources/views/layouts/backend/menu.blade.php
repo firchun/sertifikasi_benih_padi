@@ -147,6 +147,12 @@
                         <div data-i18n="Analytics">Laporan Sertifikasi</div>
                     </a>
                 </li>
+                <li class="menu-item {{ request()->is('laporan/stok') ? 'active' : '' }}">
+                    <a href="{{ url('/laporan/stok') }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bxs-component"></i>
+                        <div data-i18n="Analytics">Laporan Stok</div>
+                    </a>
+                </li>
             @endif
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Akun</span>

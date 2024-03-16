@@ -6,6 +6,7 @@ use App\Models\Penangkar;
 use App\Models\StokBenih;
 use App\Models\varietas;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class StokController extends Controller
 {
@@ -36,6 +37,26 @@ class StokController extends Controller
         }
 
         return response()->json($varietas);
+    }
+    public function getStoksDataTable()
+    {
+        $Stok = StokBenih::selectRaw('stok_benihs.id_penangkar,stok_benihs.id_kelas_benih, stok_benihs.id_varietas')
+            ->groupBy('stok_benihs.id_penangkar', 'stok_benihs.id_varietas', 'stok_benihs.id_kelas_benih')
+            ->join('penangkars', 'penangkars.id', '=', 'stok_benihs.id_penangkar')
+            ->join('varietas', 'varietas.id', '=', 'stok_benihs.id_varietas')
+            ->join('kelas_benihs', 'kelas_benihs.id', '=', 'stok_benihs.id_kelas_benih')
+            ->with(['penangkar', 'varietas', 'kelas_benih']);
+
+        return DataTables::of($Stok)
+            ->addColumn('stok', function ($Stok) {
+                $stokMasuk = StokBenih::where('id_varietas', $Stok->id_varietas)->where('jenis_stok', 'tambah')->sum('jumlah_stok');
+                $stokKeluar = StokBenih::where('id_varietas', $Stok->id_varietas)->where('jenis_stok', 'kurang')->sum('jumlah_stok');
+                $jumlahStok = $stokMasuk - $stokKeluar;
+                return $jumlahStok;
+            })
+
+            ->rawColumns(['stok'])
+            ->make(true);
     }
 
 

@@ -26,32 +26,38 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Penangkaran</th>
-                                <th>Ketua</th>
-                                <th>Alamat</th>
-                                <th>Luas Tanam</th>
+                                <th>Nama Kelompok Tani</th>
+                                <th>Nama Pimpinan</th>
+                                <th>Kampung</th>
                                 <th>Varietas</th>
                                 <th>Kelas Benih</th>
-                                <th>Tanggal Sebar</th>
-                                <th>Tanggal Tanam</th>
-                                <th>Jumlah Benih</th>
-                                <th>Status</th>
+                                <th>Harga Benih</th>
+                                <th>Luas</th>
+                                <th>No. Blok</th>
+                                <th>Tanam</th>
+                                <th>Ttitk Koordinat</th>
+                                <th>Stok Benih</th>
+                                <th>Kemasan (25 kg)</th>
+                                <th>Status Sertifikasi</th>
                             </tr>
                         </thead>
 
                         <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>Penangkaran</th>
-                                <th>Ketua</th>
-                                <th>Alamat</th>
-                                <th>Luas Tanam</th>
+                                <th>Nama Kelompok Tani</th>
+                                <th>Nama Pimpinan</th>
+                                <th>Kampung</th>
                                 <th>Varietas</th>
                                 <th>Kelas Benih</th>
-                                <th>Tanggal Sebar</th>
-                                <th>Tanggal Tanam</th>
-                                <th>Jumlah Benih</th>
-                                <th>Status</th>
+                                <th>Harga Benih</th>
+                                <th>Luas</th>
+                                <th>No. Blok</th>
+                                <th>Tanam</th>
+                                <th>Titik Koordinat</th>
+                                <th>Stok Benih</th>
+                                <th>Kemasan (25 kg)</th>
+                                <th>Status Sertifikasi</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -67,6 +73,9 @@
                 processing: true,
                 serverSide: true,
                 responsive: true,
+                scrollX: true,
+                autoWidth: true,
+
                 ajax: '{{ url('sertifikasis-datatable') }}',
                 columns: [{
                         data: 'id',
@@ -81,13 +90,10 @@
                         name: 'user.name'
                     },
                     {
-                        data: 'alamat',
-                        name: 'alamat'
+                        data: 'desa.name',
+                        name: 'desa.name'
                     },
-                    {
-                        data: 'luas_pertanaman',
-                        name: 'luas_pertanaman'
-                    },
+
                     {
                         data: 'varietas.name',
                         name: 'varietas.name'
@@ -97,21 +103,38 @@
                         name: 'kelas_benih.code'
                     },
                     {
-                        data: 'tanggal_sebar',
-                        name: 'tanggal_sebar'
+                        data: 'kelas_benih.price',
+                        name: 'kelas_benih.price'
+                    },
+                    {
+                        data: 'luas_lahan',
+                        name: 'luas_lahan'
+                    },
+                    {
+                        data: 'blok',
+                        name: 'blok'
                     },
                     {
                         data: 'tanggal_tanam',
                         name: 'tanggal_tanam'
                     },
+
                     {
-                        data: 'jumlah_benih',
-                        name: 'jumlah_benih'
+                        data: 'koordinat',
+                        name: 'koordinat'
+                    },
+                    {
+                        data: 'stok',
+                        name: 'stok'
+                    },
+                    {
+                        data: 'kemasan',
+                        name: 'kemasan'
                     },
                     {
                         data: 'status',
                         name: 'status'
-                    }
+                    },
                 ],
                 dom: 'lBfrtip',
                 buttons: [{
@@ -119,17 +142,19 @@
                         text: '<i class="bx bxs-file-pdf"></i> PDF',
                         className: 'btn-danger mx-3',
                         orientation: 'landscape',
-                        title: 'Data Laporan Sertifikasi Benih',
+                        title: 'Data Laporan Stok Benih Tersertifikasi',
                         pageSize: 'A4',
                         exportOptions: {
                             columns: ':visible'
                         },
                         customize: function(doc) {
-                            doc.defaultStyle.fontSize = 12;
-                            doc.styles.tableHeader.fontSize = 12;
+                            doc.defaultStyle.fontSize = 8;
+                            doc.styles.tableHeader.fontSize = 8;
                             doc.styles.tableHeader.fillColor = '#2a6908';
-                        },
 
+
+                        },
+                        header: true
                     },
                     {
                         extend: 'excelHtml5',
