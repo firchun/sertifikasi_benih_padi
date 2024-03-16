@@ -85,7 +85,7 @@
                                         <div class="text-center">
                                             <p> {{ $value }} belum diupdate..</p>
                                             @if (Auth::user()->role == 'BPSB' && $permohonan)
-                                                @if ($permohonan->status == 'Permohonan diterima')
+                                                @if ($Sertifikasi->status == 'Permohonan diterima')
                                                     <button class="btn btn-secondary btn-primary" type="button"
                                                         onclick="openFase('{{ $key }}')">
                                                         <span>
