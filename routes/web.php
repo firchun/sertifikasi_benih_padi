@@ -84,7 +84,10 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('/sertifikasi/tolak/{id}',  [SertifikasiController::class, 'tolak'])->name('sertifikasi.tolak');
     Route::get('/sertifikasi/pengajuan',  [SertifikasiController::class, 'pengajuan'])->name('sertifikasi.pengajuan');
 });
-Route::middleware(['auth:web', 'role:Penangkar'])->group(function () {
+Route::middleware(['auth:web', 'role:BPSB'])->group(function () {
+    //cetak sertifikat dan label
+    Route::get('/sertifikasi/cetak_sertifikat/{id}', [SertifikasiController::class, 'cetakSertifikat'])->name('sertifikasi.cetak_sertifikat');
+    Route::get('/sertifikasi/cetak_label/{id}', [SertifikasiController::class, 'cetakLabel'])->name('sertifikasi.cetak_label');
 });
 Route::middleware(['auth:web', 'role:BPSB,Dinas'])->group(function () {
     //laporan managemen

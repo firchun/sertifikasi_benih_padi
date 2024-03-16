@@ -224,10 +224,13 @@
                     @if ($uji_lab)
                         @if ($uji_lab->kesimpulan == 'Lulus')
                             <div class="mb-3">
-                                <button class="btn btn-primary"><i class="bx bx-file"></i> Cetak Sertifikat</button>
-                                <button class="btn btn-warning"><i class="bx bx-purchase-tag"></i> Cetak
+                                <button class="btn btn-primary" onclick="cetakSertifikat({{ $Sertifikasi->id }})"><i
+                                        class="bx bx-file"></i> Cetak Sertifikat</button>
+                                <button class="btn btn-warning" onclick="cetakLabel({{ $Sertifikasi->id }})"><i
+                                        class="bx bx-purchase-tag"></i> Cetak
                                     Label</button>
                             </div>
+                            @include('admin.sertifikasi.components.script_cetak')
                         @endif
                     @endif
                 @endif

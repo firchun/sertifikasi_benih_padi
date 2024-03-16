@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class SertifikasiController extends Controller
 {
@@ -617,5 +618,23 @@ class SertifikasiController extends Controller
         $message = 'Permohonan berhasil ditolak';
 
         return response()->json(['message' => $message]);
+    }
+    public function cetakSertifikat($id)
+    {
+        $data = SertifikasiLab::where('id_sertifikasi', $id)->with('sertifikasi')->first();
+        $pdf =  \PDF::loadView('admin.sertifikasi.cetak_sertifikat', [
+            'data' => $data,
+        ])->setPaper('a4', 'potrait');
+
+        return $pdf->stream('Sertifikat-' . $data->id . '.pdf');
+    }
+    public function cetakLabel($id)
+    {
+        $data = SertifikasiLab::where('id_sertifikasi', $id)->with('sertifikasi')->first();
+        $pdf =  \PDF::loadView('admin.sertifikasi.cetak_label', [
+            'data' => $data,
+        ])->setPaper(array(0, 0, 480, 250));
+
+        return $pdf->stream('Label-' . $data->id . '.pdf');
     }
 }
