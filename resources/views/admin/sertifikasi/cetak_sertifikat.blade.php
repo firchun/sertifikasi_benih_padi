@@ -112,7 +112,7 @@
             <tr>
                 <td style="width: 30%; padding:0;">Tanaman Pangan</td>
                 <td style="width: 10px; padding:0;">:</td>
-                <td style=" padding:0;">{{ $data->sertifikasi->penangkar->name }}</td>
+                <td style=" padding:0;">{{ $data->sertifikasi->penangkar->nama }}</td>
             </tr>
             <tr>
                 <td style="width: 30%; padding:0;">Alamat</td>
@@ -167,7 +167,7 @@
             tanggal akhir label : <b>{{ $data->tanggal_label }}</b>
         </p>
         <div class="mt-3 float-right text-left">
-            Dikelarukan di : Merauke<br>
+            Dikeluarkan di : Merauke<br>
             Tanggal : {{ date('d F Y') }}<br>
             a.n. Kepala Balai Pengawasan dan Sertifikasi Benih<br>
             Tanaman Pangan dan Hortikultura Provinsi Papua<br>

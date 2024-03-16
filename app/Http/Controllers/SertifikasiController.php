@@ -44,6 +44,55 @@ class SertifikasiController extends Controller
         }
         return response()->json(['data' => $sertifikasi]);
     }
+    public function fasePermohonan($id)
+    {
+        $sertifikasi = Sertifikasi::where('id', $id)->with(['desa', 'kecamatan', 'kelas_benih_sebelumnya', 'kelas_benih_asal', 'varietas', 'varietas_sebelumnya', 'user', 'vegetatif', 'uji_lab', 'penangkar'])
+            ->get();
+
+        return response()->json(['data' => $sertifikasi]);
+    }
+    public function fasePendahuluan($id)
+    {
+        $sertifikasi = SertifikasiPendahuluan::where('id_sertifikasi', $id)->with(['sertifikasi', 'kelas_benih_sebelumnya',  'varietas_sebelumnya'])
+            ->get();
+
+        return response()->json(['data' => $sertifikasi]);
+    }
+    public function faseVegetatif($id)
+    {
+        $sertifikasi = SertifikasiVegetatif::where('id_sertifikasi', $id)->with(['sertifikasi'])
+            ->get();
+
+        return response()->json(['data' => $sertifikasi]);
+    }
+    public function faseBerbunga($id)
+    {
+        $sertifikasi = SertifikasiBerbunga::where('id_sertifikasi', $id)->with(['sertifikasi'])
+            ->get();
+
+        return response()->json(['data' => $sertifikasi]);
+    }
+    public function faseMasak($id)
+    {
+        $sertifikasi = SertifikasiMasak::where('id_sertifikasi', $id)->with(['sertifikasi'])
+            ->get();
+
+        return response()->json(['data' => $sertifikasi]);
+    }
+    public function fasePanen($id)
+    {
+        $sertifikasi = SertifikasiPanen::where('id_sertifikasi', $id)->with(['sertifikasi'])
+            ->get();
+
+        return response()->json(['data' => $sertifikasi]);
+    }
+    public function ujiLab($id)
+    {
+        $sertifikasi = SertifikasiLab::where('id_sertifikasi', $id)->with(['sertifikasi'])
+            ->get();
+
+        return response()->json(['data' => $sertifikasi]);
+    }
     public function getSertifikasisDataTable()
     {
         $Sertifikasi = Sertifikasi::with(['desa', 'kecamatan', 'kelas_benih_sebelumnya', 'kelas_benih_asal', 'varietas', 'varietas_sebelumnya', 'user', 'kelas_benih'])->orderByDesc('id');

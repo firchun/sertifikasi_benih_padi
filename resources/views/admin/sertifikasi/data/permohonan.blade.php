@@ -1,6 +1,5 @@
 <table class="table table-bordered table-sm">
     <tr>
-
         <td class="table-primary">Komoditas</td>
         <td style="width: 10px;">:</td>
         <td colspan="3">{{ $Sertifikasi->komoditas }}</td>

@@ -79,6 +79,12 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('/penangkars/store',  [PenangkarController::class, 'store'])->name('penangkars.store');
     //pengajuan Sertifikasi
     Route::get('/sertifikasi/data', [SertifikasiController::class, 'getData'])->name('sertifikasi.get');
+    Route::get('/sertifikasi/pendahuluan/{id}', [SertifikasiController::class, 'fasePendahuluan'])->name('sertifikasi.pendahuluan');
+    Route::get('/sertifikasi/vegetatif/{id}', [SertifikasiController::class, 'faseVegetatif'])->name('sertifikasi.vegetatif');
+    Route::get('/sertifikasi/masak/{id}', [SertifikasiController::class, 'faseMasak'])->name('sertifikasi.masak');
+    Route::get('/sertifikasi/panen/{id}', [SertifikasiController::class, 'fasePanen'])->name('sertifikasi.panen');
+    Route::get('/sertifikasi/berbunga/{id}', [SertifikasiController::class, 'faseBerbunga'])->name('sertifikasi.vegetatif');
+    Route::get('/sertifikasi/uji_lab/{id}', [SertifikasiController::class, 'ujiLab'])->name('sertifikasi.uji_lab');
     Route::post('/sertifikasi/store',  [SertifikasiController::class, 'store'])->name('sertifikasi.store');
     Route::post('/sertifikasi/terima/{id}',  [SertifikasiController::class, 'terima'])->name('sertifikasi.terima');
     Route::post('/sertifikasi/tolak/{id}',  [SertifikasiController::class, 'tolak'])->name('sertifikasi.tolak');
