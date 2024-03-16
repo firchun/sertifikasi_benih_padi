@@ -41,7 +41,7 @@
             <tr>
                 <td class="text-center" style="width: 80%;margin-bottom: 0px; padding:0;"><b>SERTIFIKAT BENIH
                         UNGGUL</b><br>
-                    Nomor :
+                    Nomor : {{ $data->nomor_sertifikat }}
                 </td>
             </tr>
         </table>
