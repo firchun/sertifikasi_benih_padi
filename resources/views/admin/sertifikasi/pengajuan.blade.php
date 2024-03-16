@@ -49,7 +49,7 @@
                         <div class="mb-3">
                             <label for="kelas_benih" class="form-label">Kelas Benih</label>
                             <select class="form-select" name="id_kelas_benih">
-                                @foreach (App\Models\KelasBenih::all() as $item)
+                                @foreach (App\Models\kelasBenih::all() as $item)
                                     <option value="{{ $item->id }}">{{ $item->name . ' - ' . $item->code }}</option>
                                 @endforeach
                             </select>
@@ -130,7 +130,7 @@
                         <div class="mb-3">
                             <label for="nama" class="form-label">Kelas Benih</label>
                             <select class="form-select" name="id_kelas_benih_sebelumnya">
-                                @foreach (App\Models\KelasBenih::all() as $item)
+                                @foreach (App\Models\kelasBenih::all() as $item)
                                     <option value="{{ $item->id }}">{{ $item->name . ' - ' . $item->code }}</option>
                                 @endforeach
                             </select>
@@ -159,7 +159,7 @@
                         <div class="mb-3">
                             <label for="nama" class="form-label">Sumber/No. Kelas Benih</label>
                             <select class="form-select" name="id_kelas_benih_asal">
-                                @foreach (App\Models\KelasBenih::all() as $item)
+                                @foreach (App\Models\kelasBenih::all() as $item)
                                     <option value="{{ $item->id }}">{{ $item->name . ' - ' . $item->code }}</option>
                                 @endforeach
                             </select>
