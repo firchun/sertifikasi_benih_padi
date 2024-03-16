@@ -26,8 +26,9 @@
                             <li class="nav-item">
                                 <button type="button" class="nav-link {{ $key == 'permohonan' ? 'active' : '' }}"
                                     role="tab" data-bs-toggle="tab"
-                                    data-bs-target="#navs-pills-justified-{{ $key }}"
-                                    aria-controls="navs-pills-justified-{{ $key }}" aria-selected="true">
+                                    data-bs-target="#navs-pills-justified-{{ $key }}-{{ $Sertifikasi->id }}"
+                                    aria-controls="navs-pills-justified-{{ $key }}-{{ $Sertifikasi->id }}"
+                                    aria-selected="true">
                                     <i class="tf-icons bx bx-message-square"></i> {{ $value }}
                                     {{-- <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">3</span> --}}
                                 </button>
@@ -37,7 +38,7 @@
                     <div class="tab-content">
                         @foreach ($tahapan as $key => $value)
                             <div class="tab-pane fade {{ $key == 'permohonan' ? 'active show' : '' }} r"
-                                id="navs-pills-justified-{{ $key }}" role="tabpanel">
+                                id="navs-pills-justified-{{ $key }}-{{ $Sertifikasi->id }}" role="tabpanel">
                                 @php
                                     $permohonan = App\Models\Sertifikasi::find($Sertifikasi->id)->first();
                                     $fase_pendahuluan = App\Models\SertifikasiPendahuluan::where(
@@ -83,15 +84,17 @@
                                     @else
                                         <div class="text-center">
                                             <p> {{ $value }} belum diupdate..</p>
-                                            @if (Auth::user()->role == 'BPSB' && $permohonan->status == 'Permohonan diterima')
-                                                <button class="btn btn-secondary btn-primary" type="button"
-                                                    onclick="openFase('{{ $key }}')">
-                                                    <span>
-                                                        <i class="bx bx-plus me-sm-1"> </i>
-                                                        <span class="d-none d-sm-inline-block"> Isi data
-                                                            {{ $value }}</span>
-                                                    </span>
-                                                </button>
+                                            @if (Auth::user()->role == 'BPSB' && $permohonan)
+                                                @if ($permohonan->status == 'Permohonan diterima')
+                                                    <button class="btn btn-secondary btn-primary" type="button"
+                                                        onclick="openFase('{{ $key }}')">
+                                                        <span>
+                                                            <i class="bx bx-plus me-sm-1"> </i>
+                                                            <span class="d-none d-sm-inline-block"> Isi data
+                                                                {{ $value }}</span>
+                                                        </span>
+                                                    </button>
+                                                @endif
                                             @endif
                                         </div>
                                     @endif
