@@ -191,28 +191,29 @@
         </div>
     </div>
 </div>
-
-@foreach ($tahapan as $key => $value)
-    <div class="modal fade" id="modal-{{ $key }}" tabindex="-1" aria-labelledby="customersModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="userModalLabel">Form {{ $value }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="form{{ $key }}">
-                        @include('admin.sertifikasi.formulir.' . $key)
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+@if (Auth::user()->role == 'BPSB')
+    @foreach ($tahapan as $key => $value)
+        <div class="modal fade" id="modal-{{ $key }}" tabindex="-1" aria-labelledby="customersModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userModalLabel">Form {{ $value }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form{{ $key }}">
+                            @include('admin.sertifikasi.formulir.' . $key)
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@endforeach
+    @endforeach
+@endif
 @if (Auth::user()->role == 'BPSB')
     @foreach ($tahapan as $key => $value)
         <div class="modal fade" id="modal-edit-{{ $key }}-{{ $Sertifikasi->id }}" tabindex="-1"
@@ -269,7 +270,9 @@
                         @if ($uji_lab)
                             @include('admin.sertifikasi.data.uji_lab')
                         @else
-                            @include('admin.sertifikasi.formulir.uji_lab')
+                            @if (Auth::user()->role == 'BPSB')
+                                @include('admin.sertifikasi.formulir.uji_lab')
+                            @endif
                         @endif
                     @else
                         <div class="text-center">
@@ -284,29 +287,31 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="modal-edit-uji-lab-{{ $Sertifikasi->id }}" tabindex="-1"
-    aria-labelledby="customersModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="userModalLabel"> Uji Laboratorium</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
+@if (Auth::user()->role == 'BPSB')
+    <div class="modal fade" id="modal-edit-uji-lab-{{ $Sertifikasi->id }}" tabindex="-1"
+        aria-labelledby="customersModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalLabel"> Uji Laboratorium</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
 
-                <form id="form-edit-uji-laboratorium-{{ $Sertifikasi->id }}">
-                    @if ($panen)
-                        @include('admin.sertifikasi.formulir_edit.uji_lab')
-                    @else
-                        <div class="text-center">
-                            Menunggu proses pemeriksaan lapangan...
-                        </div>
-                    @endif
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form id="form-edit-uji-laboratorium-{{ $Sertifikasi->id }}">
+                        @if ($panen)
+                            @include('admin.sertifikasi.formulir_edit.uji_lab')
+                        @else
+                            <div class="text-center">
+                                Menunggu proses pemeriksaan lapangan...
+                            </div>
+                        @endif
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endif
