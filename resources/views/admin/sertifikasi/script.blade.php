@@ -32,6 +32,7 @@
                     }
                 ]
             });
+
             $('.refresh').click(function() {
                 $('#datatable-sertifikasi').DataTable().ajax.reload();
             });
@@ -153,6 +154,51 @@
                                 .luas_pemeriksaan);
                             $('#luasPanenPanenEdit-' + id).val(response.data[i].luas_panen);
                             $('#hasilPanenPanenEdit-' + id).val(response.data[i].hasil_panen);
+
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('Terjadi kesalahan: ' + xhr.responseText);
+                    }
+                });
+            };
+            // Memperbarui fungsi window.editUjiLab 
+            window.editUjiLab = function(id) {
+                $('#modal-edit-uji-lab-' + id).modal('show');
+                $.ajax({
+                    url: '/sertifikasi/uji_lab/' + id,
+                    type: 'GET',
+                    success: function(response) {
+                        for (var i = 0; i < response.data.length; i++) {
+                            $('#idUjiLab' + id).val(response.data[i].id);
+                            $('#nomorInduk-' + id).val(response.data[i]
+                                .nomor_induk);
+                            $('#musimTanam-' + id).val(response.data[i]
+                                .musim_tanam);
+                            $('#nomorKelompok-' + id).val(response.data[i]
+                                .nomor_kelompok);
+                            $('#tanggalPanen-' + id).val(response.data[i]
+                                .tanggal_panen);
+                            $('#tanggalLabel-' + id).val(response.data[i]
+                                .tanggal_label);
+                            $('#tanggalSelesaiPengujian-' + id).val(response.data[i]
+                                .tanggal_selesai_pengujian);
+                            $('#campuranVarietasLain-' + id).val(response.data[i]
+                                .campuran_varietas_lain);
+                            $('#volume-' + id).val(response.data[i]
+                                .volume);
+                            $('#kadarAir-' + id).val(response.data[i]
+                                .kadar_air);
+                            $('#benihMurni-' + id).val(response.data[i]
+                                .benih_murni);
+                            $('#kotoranBenih-' + id).val(response.data[i]
+                                .kotoran_benih);
+                            $('#dayaBerkecambah-' + id).val(response.data[i]
+                                .daya_berkecambah);
+                            $('#kesehatanBenih-' + id).val(response.data[i]
+                                .kesehatan_benih);
+                            $('#bijiGulma-' + id).val(response.data[i]
+                                .biji_gulma);
 
                         }
                     },

@@ -1,5 +1,8 @@
-<button type="button" onclick="editUjiLab({{ $Sertifikasi->id }})" class="btn btn-warning mb-3"><i class="bx bx-edit"></i>
-    Rubah Data</button>
+@if (Auth::user()->role == 'BPSB')
+    <button type="button" onclick="editUjiLab({{ $Sertifikasi->id }})" class="btn btn-warning mb-3"><i
+            class="bx bx-edit"></i>
+        Rubah Data</button>
+@endif
 <table class="table table-bordered table-sm">
     <tr>
         <td class="table-primary">Jenis Tanaman</td>

@@ -213,27 +213,30 @@
         </div>
     </div>
 @endforeach
-@foreach ($tahapan as $key => $value)
-    <div class="modal fade" id="modal-edit-{{ $key }}-{{ $Sertifikasi->id }}" tabindex="-1"
-        aria-labelledby="customersModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="userModalLabel">Form Edit {{ $value }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="form{{ $key }}-edit{{ $Sertifikasi->id }}">
-                        @include('admin.sertifikasi.formulir_edit.' . $key)
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+@if (Auth::user()->role == 'BPSB')
+    @foreach ($tahapan as $key => $value)
+        <div class="modal fade" id="modal-edit-{{ $key }}-{{ $Sertifikasi->id }}" tabindex="-1"
+            aria-labelledby="customersModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userModalLabel">Form Edit {{ $value }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form{{ $key }}-edit{{ $Sertifikasi->id }}">
+                            @include('admin.sertifikasi.formulir_edit.' . $key)
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@endforeach
+    @endforeach
+@endif
 {{-- //uji lab --}}
 <div class="modal fade" id="modal-uji-lab-{{ $Sertifikasi->id }}" tabindex="-1"
     aria-labelledby="customersModalLabel" aria-hidden="true">
@@ -244,17 +247,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @if ($panen)
-                    @if ($uji_lab)
-                        @if ($uji_lab->kesimpulan == 'Lulus')
-                            <div class="mb-3">
-                                <button class="btn btn-primary" onclick="cetakSertifikat({{ $Sertifikasi->id }})"><i
-                                        class="bx bx-file"></i> Cetak Sertifikat</button>
-                                <button class="btn btn-warning" onclick="cetakLabel({{ $Sertifikasi->id }})"><i
-                                        class="bx bx-purchase-tag"></i> Cetak
-                                    Label</button>
-                            </div>
-                            @include('admin.sertifikasi.components.script_cetak')
+                @if (Auth::user()->role == 'BPSB')
+                    @if ($panen)
+                        @if ($uji_lab)
+                            @if ($uji_lab->kesimpulan == 'Lulus')
+                                <div class="mb-3">
+                                    <button class="btn btn-primary"
+                                        onclick="cetakSertifikat({{ $Sertifikasi->id }})"><i class="bx bx-file"></i>
+                                        Cetak Sertifikat</button>
+                                    <button class="btn btn-warning" onclick="cetakLabel({{ $Sertifikasi->id }})"><i
+                                            class="bx bx-purchase-tag"></i> Cetak
+                                        Label</button>
+                                </div>
+                                @include('admin.sertifikasi.components.script_cetak')
+                            @endif
                         @endif
                     @endif
                 @endif
@@ -287,27 +293,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @if ($panen)
-                    @if ($uji_lab)
-                        @if ($uji_lab->kesimpulan == 'Lulus')
-                            <div class="mb-3">
-                                <button class="btn btn-primary" onclick="cetakSertifikat({{ $Sertifikasi->id }})"><i
-                                        class="bx bx-file"></i> Cetak Sertifikat</button>
-                                <button class="btn btn-warning" onclick="cetakLabel({{ $Sertifikasi->id }})"><i
-                                        class="bx bx-purchase-tag"></i> Cetak
-                                    Label</button>
-                            </div>
-                            @include('admin.sertifikasi.components.script_cetak')
-                        @endif
-                    @endif
-                @endif
-                <form id="form-uji-laboratorium">
+
+                <form id="form-edit-uji-laboratorium-{{ $Sertifikasi->id }}">
                     @if ($panen)
-                        @if ($uji_lab)
-                            @include('admin.sertifikasi.data.uji_lab')
-                        @else
-                            @include('admin.sertifikasi.formulir.uji_lab')
-                        @endif
+                        @include('admin.sertifikasi.formulir_edit.uji_lab')
                     @else
                         <div class="text-center">
                             Menunggu proses pemeriksaan lapangan...
