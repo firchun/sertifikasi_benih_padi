@@ -35,10 +35,31 @@
                     </div>
                 </div>
                 @include('admin.dashboard_component.modal_stok')
-
+                @foreach (App\Models\Sertifikasi::where('id_user', Auth::user()->id)->get() as $Sertifikasi)
+                    @php
+                        $penangkar = App\Models\Penangkar::where('id_user', $Sertifikasi->id_user)->first();
+                        $pendahuluan = App\Models\SertifikasiPendahuluan::where(
+                            'id_sertifikasi',
+                            $Sertifikasi->id,
+                        )->first();
+                        $vegetatif = App\Models\SertifikasiVegetatif::where(
+                            'id_sertifikasi',
+                            $Sertifikasi->id,
+                        )->first();
+                        $masak = App\Models\SertifikasiMasak::where('id_sertifikasi', $Sertifikasi->id)->first();
+                        $berbunga = App\Models\SertifikasiBerbunga::where('id_sertifikasi', $Sertifikasi->id)->first();
+                        $panen = App\Models\SertifikasiPanen::where('id_sertifikasi', $Sertifikasi->id)->first();
+                        $uji_lab = App\Models\SertifikasiLab::where('id_sertifikasi', $Sertifikasi->id)->first();
+                    @endphp
+                    @include('admin.sertifikasi.components.modal')
+                @endforeach
                 @push('js')
                     <script>
                         $(document).ready(function() {
+                            window.editSertifikasi = function(id) {
+                                $('#sertifikasiModal' + id).modal('show');
+                            };
+
                             function dataSertifikasi() {
                                 $('#loadingIndicator').removeClass('d-none');
                                 $.ajax({
@@ -71,11 +92,9 @@
                                                                     <i class="bx bx-menu"></i>
                                                                 </button>
                                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                                    <li><a class="dropdown-item" href="javascript:void(0);">Detail Sertifikasi</a></li>
+                                                                    <li><button type="button" class="dropdown-item" onclick="editSertifikasi(${item.id})">Detail Sertifikasi</button></li>
                                                                     <li><a class="dropdown-item" href="javascript:void(0);">Edit data</a></li>
-                                                                <li><hr class="dropdown-divider"></li>
-                                                                    <li><a class="dropdown-item text-danger" href="javascript:void(0);">Batalkan Pengajuan</a></li>
-                                                                </ul>
+                                                               
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
@@ -230,7 +249,7 @@
 
                 </div>
             </div>
-            @if ($anggota != null)
+            @if ($anggota->count() != 0)
                 <div class="card">
                     <div class="card-header">Anggota Penangkaran</div>
                     <div class="card-body">
