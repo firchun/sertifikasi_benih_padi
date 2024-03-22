@@ -14,12 +14,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VarietasController;
 use App\Models\Penangkar;
 use App\Models\PenangkarAnggota;
+use App\Models\SertifikasiLab;
 use App\Models\StokBenih;
 use App\Models\varietas;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Svg\Gradient\Stop;
-
+use Illuminate\Support\Facades\Crypt;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +46,12 @@ Route::get('/detail_stoks/{id}', function ($id) {
     $varietas = varietas::find($id);
     return view('pages.detail_stok', ['title' => 'Stok Benih : ' . $varietas->name, 'varietas' => $varietas]);
 })->name('detail_stoks');
+
+Route::get('/label/{id}', function ($id) {
+    $ID = Crypt::decrypt($id);
+    $data = SertifikasiLab::where('id', $ID)->with('sertifikasi')->first();
+    return view('pages.cek_label', ['title' => 'Detail Label Benih : ' . $data->sertifikasi->varietas->name, 'data' => $data]);
+})->name('label');
 
 Route::get('/varietas-unggulan', function () {
     return view('pages.varietas', ['title' => 'Varietas Unggulan']);

@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Barryvdh\DomPDF\Facade as PDF;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Crypt;
 
 class SertifikasiController extends Controller
 {
@@ -680,8 +682,12 @@ class SertifikasiController extends Controller
     public function cetakLabel($id)
     {
         $data = SertifikasiLab::where('id_sertifikasi', $id)->with('sertifikasi')->first();
+        $encrypt = Crypt::encrypt($data->id);
+        $url = route('label', $encrypt);
+        $qr = base64_encode(QrCode::format('svg')->size(120)->errorCorrection('H')->generate($url));
         $pdf =  \PDF::loadView('admin.sertifikasi.cetak_label', [
             'data' => $data,
+            'qr' => $qr
         ])->setPaper(array(0, 0, 480, 250));
 
         return $pdf->stream('Label-' . $data->id . '.pdf');
