@@ -29,8 +29,8 @@
 </div>
 <div class="mb-3">
     <label for="taksiranHasil" class="form-label">Taksiran hasil</label>
-    <input type="number" class="form-control" id="taksiranHasilMasakEdit-{{ $Sertifikasi->id }}" name="taksiran_hasil"
-        required>
+    <input type="text" class="form-control" id="taksiranHasilMasakEdit-{{ $Sertifikasi->id }}" name="taksiran_hasil"
+        required pattern="[0-9]+(\.[0-9]{1,2})?">
 </div>
 <div class="mb-3">
     <label for="kesimpulan" class="form-label">Kesimpulan</label>

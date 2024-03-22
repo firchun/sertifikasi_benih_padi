@@ -23,10 +23,18 @@ class PenangkarController extends Controller
 
         return response()->json($Penangkar);
     }
-    public function getPenangkarsDataTable()
+    public function getPenangkarsDataTable(Request $request)
     {
         $Penangkar = Penangkar::select(['id', 'id_user', 'nama', 'alamat', 'jumlah_anggota', 'jenis', 'luas_lahan', 'latitude', 'longitude', 'created_at', 'updated_at', 'is_verified'])->with(['user'])->orderByDesc('id');
 
+        if ($request->filled('verifikasi')) {
+            $verifikasi = $request->input('verifikasi');
+            if ($verifikasi == 'true') {
+                $Penangkar->where('is_verified', 1);
+            } elseif ($verifikasi == 'false') {
+                $Penangkar->where('is_verified', 0);
+            }
+        }
         return Datatables::of($Penangkar)
             ->addColumn('action', function ($Penangkar) {
                 return view('admin.penangkar.components.actions', compact('Penangkar'));

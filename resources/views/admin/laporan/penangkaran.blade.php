@@ -21,6 +21,28 @@
                         </div>
                     </div>
                 </div>
+                <hr>
+                <div style="margin-left:24px; margin-right: 24px;">
+                    <strong>Filter Data</strong>
+                    <div class="d-flex justify-content-center align-items-center row gap-3 gap-md-0">
+
+                        <div class="col-md-3 col-12">
+                            <div class="input-group">
+                                <span class="input-group-text">Verifikasi</span>
+                                <select id="selectVerifikasi" name="varifikasi" class="form-select">
+                                    <option value="">Semua</option>
+                                    <option value="true">Sudah</option>
+                                    <option value="false">belum</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-12 ">
+                            <button type="button" id="filter" class="btn btn-primary"><i class="bx bx-filter"></i>
+                                Filter</button>
+                        </div>
+                    </div>
+                </div>
+                <hr>
                 <div class="card-datatable table-responsive">
                     <table id="datatable-penangkars" class="table table-hover table-bordered display">
                         <thead>
@@ -55,11 +77,16 @@
 @push('js')
     <script>
         $(function() {
-            $('#datatable-penangkars').DataTable({
+            var table = $('#datatable-penangkars').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: '{{ url('penangkars-datatable') }}',
+                ajax: {
+                    url: '{{ url('penangkars-datatable') }}',
+                    data: function(d) {
+                        d.selectVerifikasi = $('#selectVerifikasi').val();
+                    }
+                },
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -115,7 +142,10 @@
                     }
                 ]
             });
-
+            $('#filter').click(function() {
+                table.ajax.url('{{ url('penangkars-datatable') }}?verifikasi=' + $(
+                    '#selectVerifikasi').val()).load();
+            });
             $('.refresh').click(function() {
                 $('#datatable-penangkars').DataTable().ajax.reload();
             });

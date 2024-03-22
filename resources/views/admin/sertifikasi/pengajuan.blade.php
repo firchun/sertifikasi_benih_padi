@@ -35,8 +35,8 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="nama" class="form-label">Luas Pertanaman</label>
-                            <input type="number" class="form-control" value="{{ old('luas_pertanaman') }}"
-                                name="luas_pertanaman">
+                            <input type="text" class="form-control" value="{{ old('luas_pertanaman') }}"
+                                name="luas_pertanaman" pattern="[0-9]+(\.[0-9]{1,2})?">
                         </div>
                         <div class="mb-3">
                             <label for="nama" class="form-label">Varietas</label>

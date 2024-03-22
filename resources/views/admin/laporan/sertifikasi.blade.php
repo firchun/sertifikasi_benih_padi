@@ -21,6 +21,34 @@
                         </div>
                     </div>
                 </div>
+                <hr>
+                <div style="margin-left:24px; margin-right: 24px;">
+                    <strong>Filter Data</strong>
+                    <div class="d-flex justify-content-center align-items-center row gap-3 gap-md-0">
+                        <div class="col-md-5 col-12">
+                            <div class="input-group">
+                                <span class="input-group-text">Tanggal Sebar</span>
+                                <input type="date" id="tanggalSebarAwal" name="tanggal_sebar_awal" class="form-control">
+                                <input type="date" id="tanggalSebarAkhir" name="tanggal_sebar_akhir"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-12">
+                            <div class="input-group">
+                                <span class="input-group-text">Tanggal Tanam</span>
+                                <input type="date" id="tanggalTanamAwal" name="tanggal_tanam_awal" class="form-control">
+                                <input type="date" id="tanggalTanamAkhir" name="tanggal_tanam_akhir"
+                                    class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-12 ">
+                            <button type="button" id="filter" class="btn btn-primary"><i class="bx bx-filter"></i>
+                                Filter</button>
+                        </div>
+                    </div>
+                </div>
+                <hr>
                 <div class="card-datatable table-responsive">
                     <table id="datatable-sertifikasi" class="table table-hover table-bordered table-sm display">
                         <thead>
@@ -63,11 +91,19 @@
 @push('js')
     <script>
         $(function() {
-            $('#datatable-sertifikasi').DataTable({
+            var table = $('#datatable-sertifikasi').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: '{{ url('sertifikasis-datatable') }}',
+                ajax: {
+                    url: '{{ url('sertifikasis-datatable') }}',
+                    data: function(d) {
+                        d.tanggalSebarAwal = $('#tanggalSebarAwal').val();
+                        d.tanggalSebarAkhir = $('#tanggalSebarAkhir').val();
+                        d.tanggalTanamAwal = $('#tanggalTanamAwal').val();
+                        d.tanggalTanamAkhir = $('#tanggalTanamAkhir').val();
+                    }
+                },
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -140,6 +176,12 @@
                         }
                     }
                 ]
+            });
+            $('#filter').click(function() {
+                table.ajax.url('{{ url('sertifikasis-datatable') }}?tanggal_sebar_awal=' + $(
+                        '#tanggalSebarAwal').val() + '&tanggal_sebar_akhir=' + $('#tanggalSebarAkhir')
+                    .val() + '&tanggal_tanam_awal=' + $('#tanggalTanamAwal').val() +
+                    '&tanggal_tanam_akhir=' + $('#tanggalTanamAkhir').val()).load();
             });
             $('.refresh').click(function() {
                 $('#datatable-sertifikasi').DataTable().ajax.reload();

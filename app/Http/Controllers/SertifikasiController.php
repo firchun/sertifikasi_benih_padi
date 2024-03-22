@@ -18,6 +18,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Barryvdh\DomPDF\Facade as PDF;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 
 class SertifikasiController extends Controller
 {
@@ -95,10 +96,39 @@ class SertifikasiController extends Controller
 
         return response()->json(['data' => $sertifikasi]);
     }
-    public function getSertifikasisDataTable()
+    public function getSertifikasisDataTable(Request $request)
     {
         $Sertifikasi = Sertifikasi::with(['desa', 'kecamatan', 'kelas_benih_sebelumnya', 'kelas_benih_asal', 'varietas', 'varietas_sebelumnya', 'user', 'kelas_benih'])->orderByDesc('id');
 
+        if ($request->filled('tanggal_sebar_awal')) {
+            $tanggal_sebar_awal =  $request->input('tanggal_sebar_awal');
+            $tanggal_sebar_akhir =  $request->input('tanggal_sebar_akhir') ?? date('Y-m-d');
+            $Sertifikasi->whereDate('tanggal_sebar', '>=', $tanggal_sebar_awal)->whereDate('tanggal_sebar', '<=', $tanggal_sebar_akhir);
+        }
+        if ($request->filled('tanggal_tanam_awal')) {
+            $tanggal_tanam_awal =  $request->input('tanggal_tanam_awal');
+            $tanggal_tanam_akhir =  $request->input('tanggal_tanam_akhir') ?? date('Y-m-d');
+            $Sertifikasi->whereDate('tanggal_tanam', '>=', $tanggal_tanam_awal)->whereDate('tanggal_tanam', '<=', $tanggal_tanam_akhir);
+        }
+        if ($request->filled('stok')) {
+            $stokStatus = $request->input('stok');
+            if ($stokStatus === 'tersedia') {
+                $Sertifikasi->whereExists(function ($query) use ($stokStatus) {
+                    $query->select(DB::raw(1))
+                        ->from('stok_benihs')
+                        ->whereColumn('stok_benihs.id_sertifikasi', 'sertifikasis.id')
+                        ->where('jenis_stok', 'tambah')
+                        ->havingRaw('SUM(jumlah_stok) > 0');
+                });
+            } elseif ($stokStatus === 'habis') {
+                $Sertifikasi->whereNotExists(function ($query) use ($stokStatus) {
+                    $query->select(DB::raw(1))
+                        ->from('stok_benihs')
+                        ->whereColumn('stok_benihs.id_sertifikasi', 'sertifikasis.id')
+                        ->havingRaw('SUM(jumlah_stok) > 0');
+                });
+            }
+        }
         return Datatables::of($Sertifikasi)
             ->addColumn('action', function ($Sertifikasi) {
                 $penangkar = Penangkar::where('id_user', $Sertifikasi->id_user)->first();

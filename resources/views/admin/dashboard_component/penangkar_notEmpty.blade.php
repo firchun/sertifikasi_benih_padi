@@ -49,7 +49,7 @@
                                         var sertifikasiHtml = '';
                                         sertifikasiData.forEach(function(item) {
                                             var stok = '';
-                                            if (item.uji_lab) {
+                                            if (item.uji_lab.length !== 0) {
                                                 stok = `
                                                 <p class="mt-3">Stok benih</p>
                                                 <button type="button" class="btn btn-sm btn-warning mb-3" onclick="updateStok(${item.id})">Update Stok</button>

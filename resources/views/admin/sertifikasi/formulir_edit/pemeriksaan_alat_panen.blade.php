@@ -4,7 +4,7 @@
 <div class="mb-3">
     <label for="luasPemeriksaan" class="form-label">Luas pemeriksaan fase akhir</label>
     <input type="text" class="form-control" id="luasPemeriksaanPanenEdit-{{ $Sertifikasi->id }}"
-        name="luas_pemeriksaan" required>
+        name="luas_pemeriksaan" pattern="[0-9]+(\.[0-9]{1,2})?" required>
 </div>
 <div class="mb-3">
     <label for="luasPanen" class="form-label">Luas penguasaan lahan panen</label>
