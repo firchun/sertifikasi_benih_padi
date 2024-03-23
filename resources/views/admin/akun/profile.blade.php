@@ -69,7 +69,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-md-6">
                                     <div class="form-group  mb-3">
                                         <label class="form-control-label" for="email">Email address<span
                                                 class="small text-danger">*</span></label>
@@ -77,6 +77,18 @@
                                             class="form-control  @error('email') is-invalid @enderror" name="email"
                                             placeholder="example@example.com"
                                             value="{{ old('email', Auth::user()->email) }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="id_desa" class="form-control-label" id="no-title">Desa/Kampung</label>
+                                        <select class="form-select" id="id_desa" name="id_desa">
+                                            @foreach (App\Models\Desa::orderBy('name')->get() as $item)
+                                                <option value="{{ $item->id }}"
+                                                    @if (Auth::user()->id_desa == $item->id) selected @endif>{{ $item->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>

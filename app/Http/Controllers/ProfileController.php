@@ -37,6 +37,7 @@ class ProfileController extends Controller
             $user = User::findOrFail(Auth::user()->id);
             $user->name = $request->input('name');
             $user->email = $request->input('email');
+            $user->id_desa = $request->input('id_desa');
 
             if (!is_null($request->input('current_password'))) {
                 if (Hash::check($request->input('current_password'), $user->password)) {

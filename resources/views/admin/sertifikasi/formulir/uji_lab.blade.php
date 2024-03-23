@@ -3,93 +3,106 @@
     <div class="col-lg-4 col-md-6">
         <div class="mb-3">
             <label for="nomorInduk" class="form-label">Nomor Induk</label>
-            <input type="text" class="form-control" id="nomorInduk" name="nomor_induk" required>
+            <input type="text" class="form-control" id="nomorInduk-{{ $Sertifikasi->id }}" name="nomor_induk"
+                required>
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
 
         <div class="mb-3">
             <label for="musimTanam" class="form-label">Musim Tanam</label>
-            <input type="text" class="form-control" id="musimTanam" name="musim_tanam" required>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6">
-        <div class="mb-3">
-            <label for="nomotKelompok" class="form-label">Nomor Kelompok</label>
-            <input type="text" class="form-control" id="nomotKelompok" name="nomor_kelompok" required>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6">
-        <div class="mb-3">
-            <label for="tanggalPanen" class="form-label">Tanggal Panen</label>
-            <input type="date" class="form-control" id="tanggalPanen" name="tanggal_panen" required>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6">
-        <div class="mb-3">
-            <label for="tanggalLabel" class="form-label">Tanggal Label</label>
-            <input type="date" class="form-control" id="tanggalLabel" name="tanggal_label" required>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6">
-        <div class="mb-3">
-            <label for="tanggalSelesaiPengujian" class="form-label">Tanggal Selesai Pengujian</label>
-            <input type="date" class="form-control" id="tanggalSelesaiPengujian" name="tanggal_selesai_pengujian"
+            <input type="text" class="form-control" id="musimTanam-{{ $Sertifikasi->id }}" name="musim_tanam"
                 required>
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
         <div class="mb-3">
+            <label for="nomotKelompok" class="form-label">Nomor Kelompok</label>
+            <input type="text" class="form-control" id="nomotKelompok-{{ $Sertifikasi->id }}" name="nomor_kelompok"
+                required>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="mb-3">
+            <label for="tanggalPanen" class="form-label">Tanggal Panen</label>
+            <input type="date" class="form-control" id="tanggalPanen-{{ $Sertifikasi->id }}" name="tanggal_panen"
+                required>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="mb-3">
+            <label for="tanggalLabel" class="form-label">Tanggal Label</label>
+            <input type="date" class="form-control" id="tanggalLabel-{{ $Sertifikasi->id }}" name="tanggal_label"
+                required>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="mb-3">
+            <label for="tanggalSelesaiPengujian" class="form-label">Tanggal Selesai Pengujian</label>
+            <input type="date" class="form-control" id="tanggalSelesaiPengujian-{{ $Sertifikasi->id }}"
+                name="tanggal_selesai_pengujian" required>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="mb-3">
             <label for="campuranVarietasLain" class="form-label">Campuran Varietas Lain</label>
-            <input type="number" class="form-control" id="campuranVarietasLain" name="campuran_varietas_lain" required>
+            <input type="text" pattern="[0-9]+(\.[0-9]{1,2})?" class="form-control"
+                id="campuranVarietasLain-{{ $Sertifikasi->id }}" name="campuran_varietas_lain" required>
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
         <div class="mb-3">
             <label for="volume" class="form-label">Volume</label>
-            <input type="number" class="form-control" id="volume" name="volume" required>
+            <input type="text" pattern="[0-9]+(\.[0-9]{1,2})?" class="form-control"
+                id="volume-{{ $Sertifikasi->id }}" name="volume" required>
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
         <div class="mb-3">
             <label for="kadarAir" class="form-label">Kadar Air</label>
-            <input type="number" class="form-control" id="kadarAir" name="kadar_air" required>
+            <input type="text" pattern="[0-9]+(\.[0-9]{1,2})?" class="form-control"
+                id="kadarAir-{{ $Sertifikasi->id }}" name="kadar_air" required>
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
         <div class="mb-3">
             <label for="benihMurni" class="form-label">Benih Murni</label>
-            <input type="number" class="form-control" id="benihMurni" name="benih_murni" required>
+            <input type="text" pattern="[0-9]+(\.[0-9]{1,2})?" class="form-control"
+                id="benihMurni-{{ $Sertifikasi->id }}" name="benih_murni" required>
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
         <div class="mb-3">
             <label for="kotoranBenih" class="form-label">Kotoran Benih</label>
-            <input type="number" class="form-control" id="kotoranBenih" name="kotoran_benih" required>
+            <input type="text" pattern="[0-9]+(\.[0-9]{1,2})?" class="form-control"
+                id="kotoranBenih-{{ $Sertifikasi->id }}" name="kotoran_benih" required>
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
         <div class="mb-3">
             <label for="dayaBerkecambah" class="form-label">Daya Berkecambah</label>
-            <input type="number" class="form-control" id="dayaBerkecambah" name="daya_berkecambah" required>
+            <input type="text" pattern="[0-9]+(\.[0-9]{1,2})?" class="form-control"
+                id="dayaBerkecambah-{{ $Sertifikasi->id }}" name="daya_berkecambah" required>
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
         <div class="mb-3">
             <label for="kesehatanBenih" class="form-label">Kesehatan Benih</label>
-            <input type="number" class="form-control" id="kesehatanBenih" name="kesehatan_benih" required>
+            <input type="text" pattern="[0-9]+(\.[0-9]{1,2})?" class="form-control"
+                id="kesehatanBenih-{{ $Sertifikasi->id }}" name="kesehatan_benih" required>
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
         <div class="mb-3">
             <label for="bijiGulma" class="form-label">Biji Gulma</label>
-            <input type="number" class="form-control" id="bijiGulma" name="biji_gulma" required>
+            <input type="text" pattern="[0-9]+(\.[0-9]{1,2})?" class="form-control"
+                id="bijiGulma-{{ $Sertifikasi->id }}" name="biji_gulma" required>
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
         <div class="mb-3">
             <label for="bijiGulma" class="form-label">Label</label>
-            <select class="form-control" name="label" id="label">
+            <select class="form-control" name="label" id="label-{{ $Sertifikasi->id }}">
                 <option value="Kuning">Kuning</option>
                 <option value="Putih">Putih</option>
                 <option value="Ungu">Ungu</option>
@@ -100,19 +113,19 @@
     <div class="col-lg-4 col-md-6">
         <div class="mb-3">
             <label for="bijiGulma" class="form-label">Kesimpulan</label>
-            <select class="form-control" name="kesimpulan" id="kesimpulan">
+            <select class="form-control" name="kesimpulan" id="kesimpulan-{{ $Sertifikasi->id }}">
                 <option value="Tidak">Tidak Lulus Sertifikasi</option>
                 <option value="Lulus">Lulus Sertifikasi</option>
             </select>
         </div>
     </div>
 </div>
-<button class="btn btn-primary" type="button" id="saveUjiLaboratorium">Simpan Data</button>
+<button class="btn btn-primary" type="button" id="saveUjiLaboratorium-{{ $Sertifikasi->id }}">Simpan Data</button>
 <script>
     $(document).ready(function() {
         //simpan form
-        $('#saveUjiLaboratorium').click(function() {
-            var formData = $('#form-uji-laboratorium').serialize();
+        $('#saveUjiLaboratorium-{{ $Sertifikasi->id }}').click(function() {
+            var formData = $('#form-uji-laboratorium-{{ $Sertifikasi->id }}').serialize();
             $.ajax({
                 type: 'POST',
                 url: '/sertifikasi/uji_laboratorium',

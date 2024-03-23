@@ -151,6 +151,7 @@ Route::middleware(['auth:web', 'role:Admin'])->group(function () {
     Route::get('/kelas-benih-datatable', [KelasBenihController::class, 'getKelasBenihDataTable']);
     //desa managemen
     Route::get('/desa', [DesaController::class, 'index'])->name('desa');
+    Route::get('/desa/getall', [DesaController::class, 'getall'])->name('desa.getall');
     Route::post('/desa/store',  [DesaController::class, 'store'])->name('desa.store');
     Route::get('/desa/edit/{id}',  [DesaController::class, 'edit'])->name('desa.edit');
     Route::delete('/desa/delete/{id}',  [DesaController::class, 'destroy'])->name('desa.delete');

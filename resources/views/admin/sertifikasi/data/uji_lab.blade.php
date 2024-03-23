@@ -94,6 +94,11 @@
         <td>{{ $uji_lab->biji_gulma }} %</td>
     </tr>
     <tr>
+        <td class="table-primary">Kotoran Benih</td>
+        <td style="width: 10px;">:</td>
+        <td>{{ $uji_lab->kotoran_benih }} %</td>
+    </tr>
+    <tr>
         <td class="table-primary">Kesehatan Benih</td>
         <td style="width: 10px;">:</td>
         <td>{{ $uji_lab->kesehatan_benih }} %</td>

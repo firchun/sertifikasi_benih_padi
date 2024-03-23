@@ -43,7 +43,7 @@ class SertifikasiController extends Controller
             ->get();
 
         foreach ($sertifikasi as $item) {
-            $item->jumlahStok = StokBenih::getSertifikasi($item->id); // Panggil fungsi getSertifikasi untuk setiap item
+            $item->jumlahStok = StokBenih::getSertifikasi($item->id);
         }
         return response()->json(['data' => $sertifikasi]);
     }
@@ -148,7 +148,19 @@ class SertifikasiController extends Controller
                 return view('admin.sertifikasi.components.tanaman', compact('Sertifikasi'));
             })
             ->addColumn('status', function ($Sertifikasi) {
-                return '<span class="badge bg-label-info">' . $Sertifikasi->status . '</span>';
+                $warna = 'info';
+                if (
+                    $Sertifikasi->status == 'Permohonan ditolak' ||
+                    $Sertifikasi->status == 'Tidak memenuhi syarat areal sertifikasi' ||
+                    $Sertifikasi->status == 'Gagal Fase Vegetatif' ||
+                    $Sertifikasi->status == 'Gagal Fase Berbunga' ||
+                    $Sertifikasi->status == 'Gagal Fase Masak' ||
+                    $Sertifikasi->status == 'Gagal Pemeriksaan Peralatan Panen' ||
+                    $Sertifikasi->status == 'Gagal uji laboratorium'
+                ) {
+                    $warna = 'danger';
+                }
+                return '<span class="badge bg-label-' . $warna . '">' . $Sertifikasi->status . '</span>';
             })
             ->addColumn('penangkar', function ($Sertifikasi) {
                 $penangkar = Penangkar::where('id_user', $Sertifikasi->id_user)->first();

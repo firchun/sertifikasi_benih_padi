@@ -202,7 +202,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="form{{ $key }}">
+                        <form id="form{{ $key }}-{{ $Sertifikasi->id }}">
                             @include('admin.sertifikasi.formulir.' . $key)
                         </form>
                     </div>
@@ -265,7 +265,7 @@
                         @endif
                     @endif
                 @endif
-                <form id="form-uji-laboratorium">
+                <form id="form-uji-laboratorium-{{ $Sertifikasi->id }}">
                     @if ($panen)
                         @if ($uji_lab)
                             @include('admin.sertifikasi.data.uji_lab')

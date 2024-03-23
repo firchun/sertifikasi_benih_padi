@@ -28,6 +28,7 @@
                                 <th>ID</th>
                                 <th>Avatar</th>
                                 <th>Name</th>
+                                <th>Desa/Kampung</th>
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Action</th>
@@ -39,6 +40,7 @@
                                 <th>ID</th>
                                 <th>Avatar</th>
                                 <th>Name</th>
+                                <th>Desa/Kampung</th>
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Action</th>

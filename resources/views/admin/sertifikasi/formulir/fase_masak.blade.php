@@ -10,47 +10,48 @@
 
 <div class="mb-3">
     <label for="hamaPenyakit" class="form-label">Keadaan Hama dan Penyakit</label>
-    <input type="text" class="form-control" id="hamaPenyakit" name="hama_penyakit" required>
+    <input type="text" class="form-control" id="hamaPenyakit-{{ $Sertifikasi->id }}" name="hama_penyakit" required>
 </div>
 <div class="mb-3">
     <label for="kemurnian" class="form-label">Tingkat kemurnian di lapangan</label>
-    <input type="text" class="form-control" id="kemurnian" name="kemurnian" required>
+    <input type="text" class="form-control" id="kemurnian-{{ $Sertifikasi->id }}" name="kemurnian" required>
 </div>
 <div class="mb-3">
     <label for="pemeriksaan" class="form-label">Populasi pertanaman tiap contoh pemeriksaan</label>
-    <input type="text" class="form-control" id="pemeriksaan" name="pemeriksaan" required>
+    <input type="text" class="form-control" id="pemeriksaan-{{ $Sertifikasi->id }}" name="pemeriksaan" required>
 </div>
 <div class="mb-3">
     <label for="keadaanRumput" class="form-label">Keadaan rerumputan</label>
-    <input type="text" class="form-control" id="keadaanRumput" name="keadaan_rumput" required>
+    <input type="text" class="form-control" id="keadaanRumput-{{ $Sertifikasi->id }}" name="keadaan_rumput" required>
 </div>
 <div class="mb-3">
     <label for="taksiranHasil" class="form-label">Taksiran hasil</label>
-    <input type="text" class="form-control" id="taksiranHasil" name="taksiran_hasil" pattern="[0-9]+(\.[0-9]{1,2})?"
-        required>
+    <input type="text" class="form-control" id="taksiranHasil-{{ $Sertifikasi->id }}" name="taksiran_hasil"
+        pattern="[0-9]+(\.[0-9]{1,2})?" required>
 </div>
 <div class="mb-3">
     <label for="kesimpulan" class="form-label">Kesimpulan</label>
-    <select class="form-control" id="kesimpulan" name="kesimpulan">
+    <select class="form-control" id="kesimpulan-{{ $Sertifikasi->id }}" name="kesimpulan">
         <option value="Tidak">Tidak Lulus</option>
         <option value="Lulus">Lulus</option>
     </select>
 </div>
-<div class="form-group mb-4" id="form-container-Masak">
+<div class="form-group mb-4" id="form-container-Masak-{{ $Sertifikasi->id }}">
     <label class="mb-3">Campuran Varietas Lain</label>
     <div class="d-flex">
         <input type="number" name="no[]" placeholder="no" class="form-control mx-2" style="width: 200px;"
             value="1">
         <input type="number" placeholder="jumlah" name="jumlah[]" class="form-control mx-2" value="0">
-        <button type="button" class="btn btn-sm btn-primary add-button-Masak"><i class="bx bx-plus"></i></button>
+        <button type="button" class="btn btn-sm btn-primary add-button-Masak-{{ $Sertifikasi->id }}"><i
+                class="bx bx-plus"></i></button>
     </div>
 </div>
 
-<button type="button" id="saveFaseMasak" class="btn btn-primary">Simpan Data</button>
+<button type="button" id="saveFaseMasak-{{ $Sertifikasi->id }}" class="btn btn-primary">Simpan Data</button>
 <script>
     $(document).ready(function() {
         //tambah form
-        const formContainerMasak = document.getElementById('form-container-Masak');
+        const formContainerMasak = document.getElementById('form-container-Masak-{{ $Sertifikasi->id }}');
         let countMasak = 2;
 
         function addFormMasak() {
@@ -87,12 +88,12 @@
             });
         }
 
-        const addButtonMasak = document.querySelector('.add-button-Masak');
+        const addButtonMasak = document.querySelector('.add-button-Masak-{{ $Sertifikasi->id }}');
         addButtonMasak.addEventListener('click', addFormMasak);
 
         //simpan form
-        $('#saveFaseMasak').click(function() {
-            var formData = $('#formfase_masak').serialize();
+        $('#saveFaseMasak-{{ $Sertifikasi->id }}').click(function() {
+            var formData = $('#formfase_masak-{{ $Sertifikasi->id }}').serialize();
             $.ajax({
                 type: 'POST',
                 url: '/sertifikasi/fase_masak_store',

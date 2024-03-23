@@ -10,46 +10,48 @@
 
 <div class="mb-3">
     <label for="hamaPenyakit" class="form-label">Keadaan Hama dan Penyakit</label>
-    <input type="text" class="form-control" id="hamaPenyakit" name="hama_penyakit" required>
+    <input type="text" class="form-control" id="hamaPenyakit-{{ $Sertifikasi->id }}" name="hama_penyakit" required>
 </div>
 <div class="mb-3">
     <label for="kemurnian" class="form-label">Tingkat kemurnian di lapangan</label>
-    <input type="text" class="form-control" id="kemurnian" name="kemurnian" required>
+    <input type="text" class="form-control" id="kemurnian-{{ $Sertifikasi->id }}" name="kemurnian" required>
 </div>
 <div class="mb-3">
     <label for="pemeriksaan" class="form-label">Populasi pertanaman tiap contoh pemeriksaan</label>
-    <input type="text" class="form-control" id="pemeriksaan" name="pemeriksaan" required>
+    <input type="text" class="form-control" id="pemeriksaan-{{ $Sertifikasi->id }}" name="pemeriksaan" required>
 </div>
 <div class="mb-3">
     <label for="keadaanRumput" class="form-label">Keadaan rerumputan</label>
-    <input type="text" class="form-control" id="keadaanRumput" name="keadaan_rumput" required>
+    <input type="text" class="form-control" id="keadaanRumput-{{ $Sertifikasi->id }}" name="keadaan_rumput" required>
 </div>
 <div class="mb-3">
     <label for="taksiranHasil" class="form-label">Taksiran hasil</label>
-    <input type="number" class="form-control" id="taksiranHasil" name="taksiran_hasil" required>
+    <input type="number" class="form-control" id="taksiranHasil-{{ $Sertifikasi->id }}" name="taksiran_hasil" required>
 </div>
 <div class="mb-3">
     <label for="kesimpulan" class="form-label">Kesimpulan</label>
-    <select class="form-control" id="kesimpulan" name="kesimpulan">
+    <select class="form-control" id="kesimpulan-{{ $Sertifikasi->id }}" name="kesimpulan">
         <option value="Tidak">Tidak Lulus</option>
         <option value="Lulus">Lulus</option>
     </select>
 </div>
-<div class="form-group mb-4" id="form-container-vegetatif">
+<div class="form-group mb-4" id="form-container-vegetatif-{{ $Sertifikasi->id }}">
     <label class="mb-3">Campuran Varietas Lain</label>
     <div class="d-flex">
         <input type="number" name="no[]" placeholder="no" class="form-control mx-2" style="width: 200px;"
             value="1">
         <input type="number" placeholder="jumlah" name="jumlah[]" class="form-control mx-2" value="0">
-        <button type="button" class="btn btn-sm btn-primary add-button-vegetatif"><i class="bx bx-plus"></i></button>
+        <button type="button" class="btn btn-sm btn-primary add-button-vegetatif-{{ $Sertifikasi->id }}"><i
+                class="bx bx-plus"></i></button>
     </div>
 </div>
 
-<button type="button" id="saveFaseVegetatif" class="btn btn-primary">Simpan Data</button>
+<button type="button" id="saveFaseVegetatif-{{ $Sertifikasi->id }}" class="btn btn-primary">Simpan Data</button>
 <script>
     $(document).ready(function() {
         //tambah form
-        const formContainerVegetatif = document.getElementById('form-container-vegetatif');
+        const formContainerVegetatif = document.getElementById(
+            'form-container-vegetatif-{{ $Sertifikasi->id }}');
         let countVegetatif = 2;
 
         function addFormVegetatif() {
@@ -86,12 +88,12 @@
             });
         }
 
-        const addButtonVegetatif = document.querySelector('.add-button-vegetatif');
+        const addButtonVegetatif = document.querySelector('.add-button-vegetatif-{{ $Sertifikasi->id }}');
         addButtonVegetatif.addEventListener('click', addFormVegetatif);
 
         //simpan form
-        $('#saveFaseVegetatif').click(function() {
-            var formData = $('#formfase_vegetatif').serialize();
+        $('#saveFaseVegetatif-{{ $Sertifikasi->id }}').click(function() {
+            var formData = $('#formfase_vegetatif-{{ $Sertifikasi->id }}').serialize();
             $.ajax({
                 type: 'POST',
                 url: '/sertifikasi/fase_vegetatif_store',

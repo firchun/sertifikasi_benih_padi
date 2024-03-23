@@ -22,12 +22,12 @@
                 <h3>1. Identitas Pemohon</h3>
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama Pemohon</label>
-                    <input type="text" class="form-control" value="{{ Auth::user()->name }}" readonly>
+                    <input type="text" class="form-control" value="{{ Auth::user()->name }}">
                 </div>
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Alamat</label>
                     <input type="text" class="form-control" id="alamat" name="alamat"
-                        value="{{ App\Models\Penangkar::where('id_user', Auth::user()->id)->first()->alamat }}" readonly>
+                        value="{{ App\Models\Penangkar::where('id_user', Auth::user()->id)->first()->alamat }}">
                 </div>
                 <hr>
                 <h3>2. Sertifikasi benih untuk</h3>

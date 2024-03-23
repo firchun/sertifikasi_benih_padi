@@ -25,7 +25,7 @@ class UserController extends Controller
     }
     public function getUsersDataTable()
     {
-        $users = User::select(['id', 'name', 'email', 'created_at', 'updated_at', 'role', 'avatar'])->orderByDesc('id');
+        $users = User::select(['id', 'name', 'email', 'created_at', 'updated_at', 'role', 'avatar', 'id_desa'])->with(['desa'])->orderByDesc('id');
 
         return Datatables::of($users)
             ->addColumn('avatar', function ($user) {
@@ -62,13 +62,16 @@ class UserController extends Controller
             $usersData = [
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
+                'id_desa' => $request->input('id_desa'),
                 'role' => $request->input('role'),
             ];
             $user = User::find($request->input('id'));
             if (!$user) {
                 return response()->json(['message' => 'user not found'], 404);
             }
-
+            if ($user->role != 'Penangkar') {
+                $usersData = ['role' => $request->input('role')];
+            }
             $user->update($usersData);
             $message = 'user updated successfully';
         } else {
@@ -76,7 +79,7 @@ class UserController extends Controller
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'role' => $request->input('role'),
-                'id_desa' => Desa::first()->id,
+                'id_desa' => $request->input('id_desa'),
                 'password' => Hash::make('password'),
             ];
 

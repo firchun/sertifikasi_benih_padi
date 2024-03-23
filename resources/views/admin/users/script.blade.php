@@ -19,6 +19,10 @@
                         name: 'name'
                     },
                     {
+                        data: 'desa.name',
+                        name: 'desa.name'
+                    },
+                    {
                         data: 'email',
                         name: 'email'
                     },
@@ -45,6 +49,7 @@
                         $('#formUserId').val(response.id);
                         $('#formUserName').val(response.name);
                         $('#formUserEmail').val(response.email);
+                        populateDesaOptions(response.id_desa);
                         $('#UsersModal').modal('show');
                     },
                     error: function(xhr) {
@@ -115,6 +120,32 @@
                     });
                 }
             };
+
+            function populateDesaOptions(selectedId) {
+                var selectOptions = $('#id_desa');
+                selectOptions.empty();
+
+                selectOptions.append('<option value="">Pilih Desa</option>');
+
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ route('desa.getall') }}',
+                    success: function(response) {
+                        response.forEach(function(option) {
+                            var optionElement = $('<option></option>').attr('value', option.id)
+                                .text(option.name);
+                            if (option.id === selectedId) {
+                                optionElement.attr('selected', 'selected');
+                            }
+                            selectOptions.append(optionElement);
+                        });
+                    },
+                    error: function(xhr) {
+                        console.error('Error fetching desa data:', xhr.responseText);
+                    }
+                });
+            }
+
         });
     </script>
 @endpush

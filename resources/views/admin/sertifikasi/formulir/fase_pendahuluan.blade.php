@@ -4,36 +4,40 @@
     <div class="col-6">
         <div class="mb-3">
             <label for="tanamanUtara" class="form-label">Bagian Utara</label>
-            <input type="text" class="form-control" id="tanamanUtara" name="tanaman_utara" required>
+            <input type="text" class="form-control" id="tanamanUtara-{{ $Sertifikasi->id }}" name="tanaman_utara"
+                required>
         </div>
     </div>
     <div class="col-6">
         <div class="mb-3">
             <label for="tanamanSelatan" class="form-label">Bagian Selatan</label>
-            <input type="text" class="form-control" id="tanamanSelatan" name="tanaman_selatan" required>
+            <input type="text" class="form-control" id="tanamanSelatan-{{ $Sertifikasi->id }}" name="tanaman_selatan"
+                required>
         </div>
     </div>
     <div class="col-6">
         <div class="mb-3">
             <label for="tanamanTimur" class="form-label">Bagian Timur</label>
-            <input type="text" class="form-control" id="tanamanTimur" name="tanaman_timur" required>
+            <input type="text" class="form-control" id="tanamanTimur-{{ $Sertifikasi->id }}" name="tanaman_timur"
+                required>
         </div>
     </div>
     <div class="col-6">
         <div class="mb-3">
             <label for="tanamanBarat" class="form-label">Bagian Barat</label>
-            <input type="text" class="form-control" id="tanamanBarat" name="tanaman_barat" required>
+            <input type="text" class="form-control" id="tanamanBarat-{{ $Sertifikasi->id }}" name="tanaman_barat"
+                required>
         </div>
     </div>
 </div>
 
 <div class="mb-3">
     <label for="bekasTanaman" class="form-label">Bekas Tanaman</label>
-    <input type="text" class="form-control" id="bekasTanaman" name="bekas_tanam" required>
+    <input type="text" class="form-control" id="bekasTanaman-{{ $Sertifikasi->id }}" name="bekas_tanam" required>
 </div>
 <div class="mb-3">
     <label for="bekasBero" class="form-label">Bekas Bero</label>
-    <input type="text" class="form-control" id="bekasBero" name="bekas_bero" required>
+    <input type="text" class="form-control" id="bekasBero-{{ $Sertifikasi->id }}" name="bekas_bero" required>
 </div>
 <div class="row">
     <div class="col">
@@ -60,17 +64,17 @@
 </div>
 <div class="mb-3">
     <label for="kesimpulan" class="form-label">Kesimpulan</label>
-    <select class="form-control" id="kesimpulan" name="kesimpulan">
+    <select class="form-control" id="kesimpulan-{{ $Sertifikasi->id }}" name="kesimpulan">
         <option value="Tidak">Tidak Memenuhi</option>
         <option value="Memenuhi">Memenuhi</option>
     </select>
 </div>
-<button type="button" id="saveFasePendahuluan" class="btn btn-primary">Simpan Data</button>
+<button type="button" id="saveFasePendahuluan-{{ $Sertifikasi->id }}" class="btn btn-primary">Simpan Data</button>
 
 <script>
     $(document).ready(function() {
-        $('#saveFasePendahuluan').click(function() {
-            var formData = $('#formfase_pendahuluan').serialize();
+        $('#saveFasePendahuluan-{{ $Sertifikasi->id }}').click(function() {
+            var formData = $('#formfase_pendahuluan-{{ $Sertifikasi->id }}').serialize();
             $.ajax({
                 type: 'POST',
                 url: '/sertifikasi/fase_pendahuluan_store',

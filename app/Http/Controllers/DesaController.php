@@ -15,6 +15,12 @@ class DesaController extends Controller
         ];
         return view('admin.desa.index', $data);
     }
+    public function getall()
+    {
+        $Desa = Desa::select(['id', 'name', 'id_kecamatan', 'description', 'created_at', 'updated_at'])->with(['kecamatan'])->orderBy('name')->get();
+
+        return response()->json($Desa);
+    }
     public function getDesaDataTable()
     {
         $Desa = Desa::select(['id', 'name', 'id_kecamatan', 'description', 'created_at', 'updated_at'])->with(['kecamatan'])->orderByDesc('id');

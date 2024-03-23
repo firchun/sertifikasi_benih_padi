@@ -8,11 +8,11 @@
     </div>
     <hr>
     @if (Auth::user()->role != 'Penangkar')
-        <div class="row">
+        <div class="row justify-content-center">
             @include('admin.dashboard_component.card1', [
-                'count' => $users,
-                'title' => 'Pengguna',
-                'subtitle' => 'Total pengguna',
+                'count' => $penangkars,
+                'title' => 'Penangkar',
+                'subtitle' => 'Total Penangkar',
                 'color' => 'primary',
                 'icon' => 'user',
             ])
@@ -36,6 +36,27 @@
                 'subtitle' => 'Total Kecamatan',
                 'color' => 'info',
                 'icon' => 'city',
+            ])
+            @include('admin.dashboard_component.card1', [
+                'count' => $Sertifikasi,
+                'title' => 'Sertifikasi',
+                'subtitle' => 'Total Data Sertfikasi',
+                'color' => 'warning',
+                'icon' => 'folder',
+            ])
+            @include('admin.dashboard_component.card1', [
+                'count' => $terSertifikasi,
+                'title' => 'ter-sertifikasi',
+                'subtitle' => 'Total Lulus Sertifikasi',
+                'color' => 'success',
+                'icon' => 'folder',
+            ])
+            @include('admin.dashboard_component.card1', [
+                'count' => $Testimoni,
+                'title' => 'Testimoni',
+                'subtitle' => 'Total Testimoni',
+                'color' => 'primary',
+                'icon' => 'message',
             ])
         </div>
     @elseif(Auth::user()->role == 'Penangkar')

@@ -39,6 +39,12 @@
                         <div class="col-lg-12 mb-4 pb-2">
                             <div class="form-group">
                                 <label for="sebagai" class="form-label">Sebagai</label>
+                                <input type="text" class="form-control shadow-none" id="sebagai" name="sebagai">
+                            </div>
+                        </div>
+                        {{-- <div class="col-lg-12 mb-4 pb-2">
+                            <div class="form-group">
+                                <label for="sebagai" class="form-label">Sebagai</label>
                                 <select id="sebagai" name="sebagai" class="form-control">
                                     <option value="Masyarakat">Masyarakat</option>
                                     <option value="Penangkar">Penangkar</option>
@@ -48,7 +54,7 @@
                                     <option value="ppl">PPL</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-12 mb-4 pb-2">
                             <div class="form-group">
                                 <label for="testimoni" class="form-label">Testimoni anda</label>
@@ -108,10 +114,10 @@
                                 <div class="d-block d-sm-flex align-items-center mb-3">
                                     <div class="mt-3 mt-sm-0 ms-0 ms-sm-3">
                                         <h4 class="h5 mb-1">${testimoni.nama}</h4>
-                                        <p class="mb-0">${testimoni.sebagai}</p>
+                                        <p class="mb-0"> ${testimoni.sebagai}  </p>
                                     </div>
                                 </div>
-                                <div class="content">${testimoni.testimoni}</div>
+                                <div class="content text-success"><i> "${testimoni.testimoni}"</i></div>
                             </div>
                         </div>`
                         );

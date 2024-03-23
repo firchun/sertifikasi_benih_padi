@@ -19,6 +19,12 @@
                         <input type="email" class="form-control" id="formUserEmail" name="email" required>
                     </div>
                     <div class="mb-3">
+                        <label for="id_desa" class="form-label" id="no-title">Desa/Kampung</label>
+                        <select id="id_desa" name="id_desa" class="form-control">
+                            <option value="">Pilih Desa</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="formUserRole" class="form-label">Role</label>
                         <select class="form-control" id="formUserRole" name="role">
                             <option value="Dinas">Dinas</option>
@@ -53,6 +59,14 @@
                     <div class="mb-3">
                         <label for="formUserEmail" class="form-label">Email</label>
                         <input type="email" class="form-control" id="formUserEmail" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_desa" class="form-label" id="no-title">Desa/Kampung</label>
+                        <select class="form-select" id="id_desa" name="id_desa">
+                            @foreach (App\Models\Desa::orderBy('name')->get() as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="formUserRole" class="form-label">Role</label>

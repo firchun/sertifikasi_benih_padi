@@ -70,6 +70,8 @@
                                         var sertifikasiHtml = '';
                                         sertifikasiData.forEach(function(item) {
                                             var stok = '';
+                                            var warna = '';
+
                                             if (item.uji_lab.length !== 0) {
                                                 stok = `
                                                 <p class="mt-3">Stok benih</p>
@@ -81,10 +83,30 @@
                                                         </li>
                                                     </ul>
                                                 `;
+                                                window.updateStok = function(id) {
+                                                    $('#update-stok').modal('show');
+                                                    $('#idVarieatas').val(item.id_varietas);
+                                                    $('#idKelasBenih').val(item.id_kelas_benih);
+                                                    $('#idSertifikasi').val(item.id);
+                                                    $('#idPenangkar').val(item.penangkar.id);
+                                                    console.log(item);
+                                                };
+                                            }
+                                            if (item.status == 'Permohonan ditolak' ||
+                                                item.status == 'Tidak memenuhi syarat areal sertifikasi' ||
+                                                item.status == 'Gagal Fase Vegetatif' ||
+                                                item.status == 'Gagal Fase Berbunga' ||
+                                                item.status == 'Gagal Fase Masak' ||
+                                                item.status == 'Gagal Pemeriksaan Peralatan Panen' ||
+                                                item.status == 'Gagal uji laboratorium'
+                                            ) {
+                                                warna = 'danger';
+                                            } else {
+                                                warna = 'primary';
                                             }
                                             sertifikasiHtml += `
                                                 <div class="col-lg-6 mb-3">
-                                                    <div class="card border border-${item.status == 'Permohonan ditolak' ? 'danger' : 'primary'}">
+                                                    <div class="card border border-${warna}">
                                                         <div class="card-header d-flex justify-content-between align-items-center">
                                                             <span>Data Sertifikasi <span class="badge bg-success">Benih Padi</span></span>
                                                             <div class="btn-group float-end">
@@ -133,20 +155,13 @@
                                                             </ul>
                                                             ${stok}
                                                         </div>
-                                                        <div class="card-footer bg-${item.status == 'Permohonan ditolak' ? 'danger' : 'primary'} text-white">
+                                                        <div class="card-footer bg-${warna} text-white">
                                                             <strong class="text-center">Status : ${item.status}</strong>
                                                         </div>
                                                     </div>
                                                 </div>
                                             `;
-                                            window.updateStok = function(id) {
-                                                $('#update-stok').modal('show');
-                                                $('#idVarieatas').val(item.id_varietas);
-                                                $('#idKelasBenih').val(item.id_kelas_benih);
-                                                $('#idSertifikasi').val(item.id);
-                                                $('#idPenangkar').val(item.penangkar.id);
-                                                console.log('berhasil');
-                                            };
+
                                         });
                                         $('#sertifikasiContainer').html(sertifikasiHtml);
                                     },
