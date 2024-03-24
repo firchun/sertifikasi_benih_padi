@@ -50,5 +50,10 @@
         <td style="width: 10px;">:</td>
         <td colspan="3">{{ $berbunga->kesimpulan }}</td>
     </tr>
+    <tr>
+        <td class="table-primary">Catatan</td>
+        <td style="width: 10px;">:</td>
+        <td colspan="3">{{ $berbunga->catatan }}</td>
+    </tr>
 
 </table>

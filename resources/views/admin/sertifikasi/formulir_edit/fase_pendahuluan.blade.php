@@ -70,6 +70,10 @@
         <option value="Memenuhi">Memenuhi</option>
     </select>
 </div>
+<div class="mb-3">
+    <label for="catatan" class="form-label">Catatan</label>
+    <textarea class="form-control" id="catatanPendahuluanEdit-{{ $Sertifikasi->id }}" name="catatan"></textarea>
+</div>
 <button type="button" id="saveFasePendahuluanEdit{{ $Sertifikasi->id }}" class="btn btn-warning">Simpan
     Perubahan</button>
 

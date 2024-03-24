@@ -106,7 +106,7 @@
         <td colspan="3">{{ $pendahuluan->kesimpulan }} Syarat Areal Sertifikasi Benih **)</td>
     </tr>
     <tr>
-        <td>Catatan</td>
+        <td class="table-primary">Catatan</td>
         <td style="width: 10px;">:</td>
         <td colspan="3">{{ $pendahuluan->catatan }}</td>
     </tr>

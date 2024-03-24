@@ -60,6 +60,7 @@
                             $('#pemeriksaanEdit-' + id).val(response.data[i].pemeriksaan);
                             $('#keadaanRumputEdit-' + id).val(response.data[i].keadaan_rumput);
                             $('#taksiranHasilEdit-' + id).val(response.data[i].taksiran_hasil);
+                            $('#catatanVegetatifEdit-' + id).val(response.data[i].catatan);
 
                         }
                     },
@@ -86,6 +87,7 @@
                                 .keadaan_rumput);
                             $('#taksiranHasilBerbungaEdit-' + id).val(response.data[i]
                                 .taksiran_hasil);
+                            $('#catatanBerbungaEdit-' + id).val(response.data[i].catatan);
 
                         }
                     },
@@ -109,7 +111,7 @@
                             $('#pemeriksaanMasakEdit-' + id).val(response.data[i].pemeriksaan);
                             $('#keadaanRumputMasakEdit-' + id).val(response.data[i].keadaan_rumput);
                             $('#taksiranHasilMasakEdit-' + id).val(response.data[i].taksiran_hasil);
-
+                            $('#catatanMasakEdit-' + id).val(response.data[i].catatan);
                         }
                     },
                     error: function(xhr) {
@@ -133,6 +135,7 @@
                             $('#tanamanBaratEdit-' + id).val(response.data[i].tanaman_barat);
                             $('#bekasTanamanEdit-' + id).val(response.data[i].bekas_tanam);
                             $('#bekasBeroEdit-' + id).val(response.data[i].bekas_bero);
+                            $('#catatanPendahuluanEdit-' + id).val(response.data[i].catatan);
                         }
                     },
                     error: function(xhr) {
@@ -154,7 +157,7 @@
                                 .luas_pemeriksaan);
                             $('#luasPanenPanenEdit-' + id).val(response.data[i].luas_panen);
                             $('#hasilPanenPanenEdit-' + id).val(response.data[i].hasil_panen);
-
+                            $('#catatanPanenEdit-' + id).val(response.data[i].catatan);
                         }
                     },
                     error: function(xhr) {
@@ -173,6 +176,8 @@
                             $('#idUjiLab' + id).val(response.data[i].id);
                             $('#nomorInduk-' + id).val(response.data[i]
                                 .nomor_induk);
+                            $('#nomorSertifikat-' + id).val(response.data[i]
+                                .nomor_sertifikat);
                             $('#musimTanam-' + id).val(response.data[i]
                                 .musim_tanam);
                             $('#nomorKelompok-' + id).val(response.data[i]
@@ -199,7 +204,7 @@
                                 .kesehatan_benih);
                             $('#bijiGulma-' + id).val(response.data[i]
                                 .biji_gulma);
-
+                            $('#catatanLabEdit-' + id).val(response.data[i].catatan);
                         }
                     },
                     error: function(xhr) {
@@ -207,8 +212,6 @@
                     }
                 });
             };
-
-
 
             window.terimaPermohonan = function(id) {
                 $.ajax({

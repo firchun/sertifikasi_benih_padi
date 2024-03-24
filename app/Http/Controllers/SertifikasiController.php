@@ -319,6 +319,7 @@ class SertifikasiController extends Controller
             'keadaan_rumput' => $request->input('keadaan_rumput'),
             'taksiran_hasil' => $request->input('taksiran_hasil'),
             'kesimpulan' => $request->input('kesimpulan'),
+            'catatan' => $request->input('catatan'),
         ];
 
         $campuranVarietas = [];
@@ -398,6 +399,7 @@ class SertifikasiController extends Controller
             'keadaan_rumput' => $request->input('keadaan_rumput'),
             'taksiran_hasil' => $request->input('taksiran_hasil'),
             'kesimpulan' => $request->input('kesimpulan'),
+            'catatan' => $request->input('catatan'),
         ];
 
         $campuranVarietas = [];
@@ -477,6 +479,7 @@ class SertifikasiController extends Controller
             'keadaan_rumput' => $request->input('keadaan_rumput'),
             'taksiran_hasil' => $request->input('taksiran_hasil'),
             'kesimpulan' => $request->input('kesimpulan'),
+            'catatan' => $request->input('catatan'),
         ];
 
         $campuranVarietas = [];
@@ -555,6 +558,7 @@ class SertifikasiController extends Controller
             'hasil_panen' => $request->input('hasil_panen'),
             'campuran' => $request->input('campuran'),
             'kesimpulan' => $request->input('kesimpulan'),
+            'catatan' => $request->input('catatan'),
         ];
 
         $alatPananen = [];
@@ -648,9 +652,11 @@ class SertifikasiController extends Controller
         $UjiLaboratorium = [
             'id_sertifikasi' => $request->input('id_sertifikasi'),
             'nomor_induk' => $request->input('nomor_induk'),
+            'nomor_sertifikat' => $request->input('nomor_sertifikat'),
             'musim_tanam' => $request->input('musim_tanam'),
             'nomor_kelompok' => $request->input('nomor_kelompok'),
             'tanggal_panen' => $request->input('tanggal_panen'),
+            'tanggal_pemeriksaan' => $request->input('tanggal_pemeriksaan'),
             'tanggal_label' => $request->input('tanggal_label'),
             'tanggal_selesai_pengujian' => $request->input('tanggal_selesai_pengujian'),
             'campuran_varietas_lain' => $request->input('campuran_varietas_lain'),
@@ -663,6 +669,7 @@ class SertifikasiController extends Controller
             'biji_gulma' => $request->input('biji_gulma'),
             'label' => $request->input('label'),
             'kesimpulan' => $request->input('kesimpulan'),
+            'catatan' => $request->input('catatan'),
         ];
 
         if ($request->filled('id')) {

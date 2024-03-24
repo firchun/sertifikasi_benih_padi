@@ -69,6 +69,10 @@
         <option value="Memenuhi">Memenuhi</option>
     </select>
 </div>
+<div class="mb-3">
+    <label for="catatan" class="form-label">Catatan</label>
+    <textarea class="form-control" id="catatan-{{ $Sertifikasi->id }}" name="catatan"></textarea>
+</div>
 <button type="button" id="saveFasePendahuluan-{{ $Sertifikasi->id }}" class="btn btn-primary">Simpan Data</button>
 
 <script>

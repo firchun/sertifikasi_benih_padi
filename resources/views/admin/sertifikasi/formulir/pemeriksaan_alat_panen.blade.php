@@ -42,7 +42,10 @@
                 class="bx bx-plus"></i></button>
     </div>
 </div>
-
+<div class="mb-3">
+    <label for="catatan" class="form-label">Catatan</label>
+    <textarea class="form-control" id="catatan-{{ $Sertifikasi->id }}" name="catatan"></textarea>
+</div>
 <button type="button" id="saveFasePanen-{{ $Sertifikasi->id }}" class="btn btn-primary">Simpan Data</button>
 <script>
     $(document).ready(function() {

@@ -5,6 +5,16 @@
 @endif
 <table class="table table-bordered table-sm">
     <tr>
+        <td class="table-primary">Nomor Sertifikat</td>
+        <td style="width: 10px;">:</td>
+        <td colspan="3">{{ $uji_lab->nomor_sertifikat }}</td>
+    </tr>
+    <tr>
+        <td class="table-primary">Nomor Induk</td>
+        <td style="width: 10px;">:</td>
+        <td colspan="3">{{ $uji_lab->nomor_induk }}</td>
+    </tr>
+    <tr>
         <td class="table-primary">Jenis Tanaman</td>
         <td style="width: 10px;">:</td>
         <td colspan="3">{{ $Sertifikasi->komoditas }}</td>
@@ -19,11 +29,7 @@
         <td style="width: 10px;">:</td>
         <td colspan="3">BD</td>
     </tr>
-    <tr>
-        <td class="table-primary">Nomor Induk</td>
-        <td style="width: 10px;">:</td>
-        <td colspan="3">{{ $uji_lab->nomor_induk }}</td>
-    </tr>
+
     <tr>
         <td class="table-primary">Musim Tanam</td>
         <td style="width: 10px;">:</td>
@@ -46,6 +52,11 @@
     </tr>
     <tr>
         <td class="table-primary">Tanggal Pemeriksaan</td>
+        <td style="width: 10px;">:</td>
+        <td colspan="3">{{ $uji_lab->tanggal_pemeriksaan }}</td>
+    </tr>
+    <tr>
+        <td class="table-primary">Tanggal Akhir Label</td>
         <td style="width: 10px;">:</td>
         <td colspan="3">{{ $uji_lab->tanggal_label }}</td>
     </tr>
@@ -102,5 +113,10 @@
         <td class="table-primary">Kesehatan Benih</td>
         <td style="width: 10px;">:</td>
         <td>{{ $uji_lab->kesehatan_benih }} %</td>
+    </tr>
+    <tr>
+        <td class="table-primary">Catatan</td>
+        <td style="width: 10px;">:</td>
+        <td colspan="3">{{ $uji_lab->catatan }}</td>
     </tr>
 </table>

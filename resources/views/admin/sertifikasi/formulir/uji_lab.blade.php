@@ -8,6 +8,13 @@
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
+        <div class="mb-3">
+            <label for="nomorSertifikat" class="form-label">Nomor Sertifikat</label>
+            <input type="text" class="form-control" id="nomorSertifikat-{{ $Sertifikasi->id }}"
+                name="nomor_sertifikat" required>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
 
         <div class="mb-3">
             <label for="musimTanam" class="form-label">Musim Tanam</label>
@@ -31,7 +38,14 @@
     </div>
     <div class="col-lg-4 col-md-6">
         <div class="mb-3">
-            <label for="tanggalLabel" class="form-label">Tanggal Label</label>
+            <label for="tanggalPemeriksaan" class="form-label">Tanggal Pemeriksaan</label>
+            <input type="date" class="form-control" id="tanggalPemeriksaan-{{ $Sertifikasi->id }}"
+                name="tanggal_pemeriksaan" required>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="mb-3">
+            <label for="tanggalLabel" class="form-label">Tanggal batas Label</label>
             <input type="date" class="form-control" id="tanggalLabel-{{ $Sertifikasi->id }}" name="tanggal_label"
                 required>
         </div>
@@ -119,6 +133,13 @@
             </select>
         </div>
     </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="mb-3">
+            <label for="catatan" class="form-label">Catatan</label>
+            <textarea class="form-control" id="catatanLab-{{ $Sertifikasi->id }}" name="catatan"></textarea>
+        </div>
+    </div>
+
 </div>
 <button class="btn btn-primary" type="button" id="saveUjiLaboratorium-{{ $Sertifikasi->id }}">Simpan Data</button>
 <script>

@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: 'Times New Roman', sans-serif;
-            font-size: 9px;
+            font-size: 10px;
         }
 
         tr,
@@ -62,26 +62,26 @@
         <tr>
             <td style="margin:0; padding:0;"><strong>Campuran</strong></td>
             <td style="margin:0; padding:0;">:</td>
-            <td style="margin:0; padding:0;">{{ $data->campuran_varietas_lain }}</td>
+            <td style="margin:0; padding:0;">{{ $data->campuran_varietas_lain }} %</td>
             <td style="margin:0; padding:0;"><strong>Kadar Air</strong></td>
             <td style="margin:0; padding:0;">:</td>
-            <td style="margin:0; padding:0;">{{ $data->kadar_air }}</td>
+            <td style="margin:0; padding:0;">{{ $data->kadar_air }} %</td>
         </tr>
         <tr>
             <td style="margin:0; padding:0;"><strong>Benih Murni</strong></td>
             <td style="margin:0; padding:0;">:</td>
-            <td style="margin:0; padding:0;">{{ $data->benih_murni }}</td>
+            <td style="margin:0; padding:0;">{{ $data->benih_murni }} %</td>
             <td style="margin:0; padding:0;"><strong>Daya Berkecambah</strong></td>
             <td style="margin:0; padding:0;">:</td>
-            <td style="margin:0; padding:0;">{{ $data->daya_berkecambah }}</td>
+            <td style="margin:0; padding:0;">{{ $data->daya_berkecambah }} %</td>
         </tr>
         <tr>
             <td style="margin:0; padding:0;"><strong>Buji Gulma/lain</strong></td>
             <td style="margin:0; padding:0;">:</td>
-            <td style="margin:0; padding:0;">{{ $data->biji_gulma }}</td>
+            <td style="margin:0; padding:0;">{{ $data->biji_gulma }} %</td>
             <td style="margin:0; padding:0;"><strong>Kesehatan Benih</strong></td>
             <td style="margin:0; padding:0;">:</td>
-            <td style="margin:0; padding:0;">{{ $data->kesehatan_benih }}</td>
+            <td style="margin:0; padding:0;">{{ $data->kesehatan_benih }} %</td>
         </tr>
 
 
