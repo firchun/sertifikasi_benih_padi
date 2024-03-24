@@ -98,7 +98,8 @@ class PenangkarController extends Controller
 
             $Desa->update($DesaData);
             $message = 'Penangkar updated successfully';
-            return response()->json(['message' => $message]);
+            // return response()->json(['message' => $message]);
+            return redirect()->back()->with('success', $message);
         } else {
             $penangkar = Penangkar::create($DesaData);
 
@@ -128,6 +129,16 @@ class PenangkarController extends Controller
         $Desas->delete();
 
         return response()->json(['message' => 'Desa deleted successfully']);
+    }
+    public function edit($id)
+    {
+        $Penangkar = Penangkar::with('user')->find($id);
+
+        if (!$Penangkar) {
+            return response()->json(['message' => 'Penangkar not found'], 404);
+        }
+
+        return response()->json($Penangkar);
     }
     public function detail($id)
     {

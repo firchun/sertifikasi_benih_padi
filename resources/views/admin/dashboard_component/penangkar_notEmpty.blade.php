@@ -59,6 +59,9 @@
                             window.editSertifikasi = function(id) {
                                 $('#sertifikasiModal' + id).modal('show');
                             };
+                            window.editLaboratorium = function(id) {
+                                $('#modal-uji-lab-' + id).modal('show');
+                            };
 
                             function dataSertifikasi() {
                                 $('#loadingIndicator').removeClass('d-none');
@@ -70,9 +73,20 @@
                                         var sertifikasiHtml = '';
                                         sertifikasiData.forEach(function(item) {
                                             var stok = '';
+                                            var ujiLab = '';
+                                            var editData = '';
                                             var warna = '';
 
+
+                                            if (item.pendahuluan.length == 0) {
+                                                editData = `
+                                                <li><a class="dropdown-item" href="javascript:void(0);">Edit data</a></li>
+                                                `;
+                                            }
                                             if (item.uji_lab.length !== 0) {
+                                                ujiLab = `
+                                                <li><a class="dropdown-item"  onclick="editLaboratorium(${item.id})" href="javascript:void(0);">Uji Laboratorium</a></li>
+                                                `;
                                                 stok = `
                                                 <p class="mt-3">Stok benih</p>
                                                 <button type="button" class="btn btn-sm btn-warning mb-3" onclick="updateStok(${item.id})">Update Stok</button>
@@ -115,8 +129,8 @@
                                                                 </button>
                                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                                     <li><button type="button" class="dropdown-item" onclick="editSertifikasi(${item.id})">Detail Sertifikasi</button></li>
-                                                                    <li><a class="dropdown-item" href="javascript:void(0);">Edit data</a></li>
-                                                               
+                                                                    ${ujiLab}
+                                                                    ${editData}
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
@@ -204,89 +218,7 @@
             @endif
         </div>
         <div class="col-lg-4 col-md-6">
-            @php
-                $penangkar = App\Models\Penangkar::where('id_user', Auth::user()->id)->first();
-                $anggota = App\Models\PenangkarAnggota::where('id_penangkar', $penangkar->id)->get();
-            @endphp
-            <div class="card mb-3">
-                <div class="card-header">
-                    Data Penangkaran
-                </div>
-                <div class="card-body">
-                    <table class="table table-sm table-hover">
-                        <tr>
-                            <td class="fw-bold">Nama Penangkaran</td>
-                            <td>:</td>
-                            <td><input type="text" value="{{ $penangkar->nama }}" class="form-control"> </td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Alamat Penangkaran</td>
-                            <td>:</td>
-                            <td><input type="text" value="{{ $penangkar->alamat }}" class="form-control"></td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">jenis Penangkaran</td>
-                            <td>:</td>
-                            <td>{{ $penangkar->jenis }}</td>
-                        </tr>
-                        @if ($penangkar->jenis == 'Kelompok')
-                            <tr>
-                                <td class="fw-bold">Jumlah Anggota</td>
-                                <td>:</td>
-                                <td><input type="text" value="{{ $penangkar->jumlah_anggota }}" class="form-control">
-                                </td>
-                            </tr>
-                        @endif
-                        <tr>
-                            <td class="fw-bold">Luas Lahan Penangkaran</td>
-                            <td>:</td>
-                            <td>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="text" value="{{ $penangkar->luas_lahan }}" class="form-control">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">/ha</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Koordinat</td>
-                            <td>:</td>
-                            <td>{{ $penangkar->latitude }} , {{ $penangkar->longitude }}</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="card-footer text-center">
-                    <button type="submit" class="btn btn-primary"><i class="bx bx-save"></i> Simpan
-                        Perubahan</button>
-
-                </div>
-            </div>
-            @if ($anggota->count() != 0)
-                <div class="card">
-                    <div class="card-header">Anggota Penangkaran</div>
-                    <div class="card-body">
-                        <table class="table table-sm table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>Luas</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($anggota as $item)
-                                    <tr>
-                                        <td>{{ $item->nama_anggota }}</td>
-                                        <td>{{ $item->luas_lahan }} /ha</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            @endif
+            @include('admin.dashboard_component.penangkar_detail')
         </div>
     </div>
 

@@ -12,7 +12,7 @@
     <tr>
         <td class="table-primary">Keadaan hama dan penyakit</td>
         <td style="width: 10px;">:</td>
-        <td colspan="3">{{ $berbunga->hama_penyakit }}</td>
+        <td colspan="3">{{ $berbunga->Hama_penyakit }}</td>
     </tr>
     <tr>
         <td class="table-primary">Tingkat kemurnian di lapangan</td>

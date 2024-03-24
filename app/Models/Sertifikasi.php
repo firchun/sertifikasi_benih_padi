@@ -46,6 +46,10 @@ class Sertifikasi extends Model
     {
         return $this->hasMany(SertifikasiVegetatif::class, 'id_sertifikasi');
     }
+    public function pendahuluan()
+    {
+        return $this->hasMany(SertifikasiPendahuluan::class, 'id_sertifikasi');
+    }
     public function uji_lab()
     {
         return $this->hasMany(SertifikasiLab::class, 'id_sertifikasi');

@@ -84,6 +84,7 @@ Route::middleware(['auth:web'])->group(function () {
     //add penangkar
     Route::post('/stoks/store',  [StokController::class, 'store'])->name('stoks.store');
     Route::post('/penangkars/store',  [PenangkarController::class, 'store'])->name('penangkars.store');
+    Route::get('/penangkars/edit/{id}',  [PenangkarController::class, 'edit'])->name('penangkars.edit');
     //pengajuan Sertifikasi
     Route::get('/sertifikasi/data', [SertifikasiController::class, 'getData'])->name('sertifikasi.get');
     Route::get('/sertifikasi/pendahuluan/{id}', [SertifikasiController::class, 'fasePendahuluan'])->name('sertifikasi.pendahuluan');
