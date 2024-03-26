@@ -8,6 +8,8 @@
     </div>
     <hr>
     @if (Auth::user()->role != 'Penangkar')
+        @include('admin.dashboard_component.chart')
+        <hr>
         <div class="row justify-content-center">
             @include('admin.dashboard_component.card1', [
                 'count' => $penangkars,

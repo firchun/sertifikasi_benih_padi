@@ -1,5 +1,19 @@
 @extends('layouts.backend.admin')
+@push('css')
+    <style>
+        /* CSS untuk perangkat dengan lebar layar >= 768px */
+        .dtr-hidden {
+            display: block !important;
+        }
 
+        @media (min-width: 768px) {
+
+            .dtr-hidden .btn-group {
+                display: hidden !important;
+            }
+        }
+    </style>
+@endpush
 @section('content')
     @include('layouts.backend.alert')
     <div class="row justify-content-center">

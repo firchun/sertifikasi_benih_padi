@@ -77,6 +77,7 @@ Route::get('/penangkars/getall',  [PenangkarController::class, 'getAll'])->name(
 Auth::routes();
 Route::middleware(['auth:web'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/chart', [App\Http\Controllers\HomeController::class, 'chart'])->name('chart');
 
     //akun managemen
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
