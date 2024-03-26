@@ -1,4 +1,8 @@
-<canvas id="myChart" width="400" height="100"></canvas>
+<div class="card">
+    <div class="card-body">
+        <canvas id="myChart" style="max-height: 300px; width:100%;"></canvas>
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

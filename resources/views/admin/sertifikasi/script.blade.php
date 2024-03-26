@@ -4,7 +4,7 @@
             $('#datatable-sertifikasi').DataTable({
                 processing: true,
                 serverSide: true,
-                responsive: true,
+                // responsive: true,
                 ajax: '{{ url('sertifikasis-datatable') }}',
                 columns: [{
                         data: 'id',
