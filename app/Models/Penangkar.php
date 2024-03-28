@@ -19,6 +19,7 @@ class Penangkar extends Model
         'latitude',
         'longitude',
         'is_verified',
+        'phone',
     ];
 
     public function user(): BelongsTo

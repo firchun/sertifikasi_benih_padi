@@ -57,6 +57,7 @@
                         $('#Ketua').text(response.user.name);
                         $('#Alamat').text(response.alamat);
                         $('#Jenis').text(response.jenis);
+                        $('#phone').text(response.phone);
                         $('#Jumlah_anggota').text(response.jumlah_anggota + ' Orang');
                         $('#detailModal').modal('show');
 

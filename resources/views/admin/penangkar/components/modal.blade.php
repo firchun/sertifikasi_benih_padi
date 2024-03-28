@@ -15,6 +15,8 @@
                                     class="text-primary"></span></span>
                             <span class="list-group-item list-group-item-action">Nama Ketua : <span id="Ketua"
                                     class="text-primary"></span></span>
+                            <span class="list-group-item list-group-item-action">Nomor HP : <span id="phone"
+                                    class="text-primary"></span></span>
                             <span class="list-group-item list-group-item-action">Jenis Penangkaran : <span
                                     id="Jenis" class="text-primary"></span></span>
                             <span class="list-group-item list-group-item-action">Jumlah Anggota : <span

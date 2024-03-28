@@ -29,6 +29,10 @@
                                     required>
                             </div>
                             <div class="mb-3">
+                                <label for="formPhone" class="form-label">Nomor HP/WA</label>
+                                <input type="text" class="form-control" id="formPhone" name="phone" required>
+                            </div>
+                            <div class="mb-3">
                                 <label for="formJenis" class="form-label">Jenis Penangkaran</label>
                                 <select class="form-select" id="formJenis" name="jenis">
                                     <option value="Mandiri">Mandiri</option>

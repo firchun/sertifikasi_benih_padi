@@ -19,13 +19,13 @@ class PenangkarController extends Controller
     }
     public function getAll()
     {
-        $Penangkar = Penangkar::select(['id', 'id_user', 'nama', 'alamat', 'jumlah_anggota', 'jenis', 'luas_lahan', 'latitude', 'longitude', 'created_at', 'updated_at', 'is_verified'])->with(['user'])->orderByDesc('id')->get();
+        $Penangkar = Penangkar::select(['id', 'id_user', 'nama', 'alamat', 'jumlah_anggota', 'jenis', 'luas_lahan', 'latitude', 'longitude', 'created_at', 'updated_at', 'is_verified', 'phone'])->with(['user'])->orderByDesc('id')->get();
 
         return response()->json($Penangkar);
     }
     public function getPenangkarsDataTable(Request $request)
     {
-        $Penangkar = Penangkar::select(['id', 'id_user', 'nama', 'alamat', 'jumlah_anggota', 'jenis', 'luas_lahan', 'latitude', 'longitude', 'created_at', 'updated_at', 'is_verified'])->with(['user'])->orderByDesc('id');
+        $Penangkar = Penangkar::select(['id', 'id_user', 'nama', 'alamat', 'jumlah_anggota', 'jenis', 'luas_lahan', 'latitude', 'longitude', 'created_at', 'updated_at', 'is_verified', 'phone'])->with(['user'])->orderByDesc('id');
 
         if ($request->filled('verifikasi')) {
             $verifikasi = $request->input('verifikasi');
@@ -83,6 +83,7 @@ class PenangkarController extends Controller
             'nama' => $request->input('nama'),
             'id_user' => $request->input('id_user'),
             'alamat' => $request->input('alamat'),
+            'phone' => $request->input('phone'),
             'jenis' => $request->input('jenis'),
             'jumlah_anggota' => $request->input('jumlah_anggota'),
             'luas_lahan' => $request->input('luas_lahan'),

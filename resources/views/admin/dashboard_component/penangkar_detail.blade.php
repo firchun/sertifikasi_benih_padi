@@ -15,6 +15,11 @@
                 <td>{{ $penangkar->nama }}</td>
             </tr>
             <tr>
+                <td class="fw-bold">Nomor HP/WA</td>
+                <td>:</td>
+                <td>{{ $penangkar->phone }}</td>
+            </tr>
+            <tr>
                 <td class="fw-bold">Alamat Penangkaran</td>
                 <td>:</td>
                 <td>{{ $penangkar->alamat }}</td>
@@ -70,6 +75,10 @@
                         <label for="formPenangkarNama" class="form-label">Nama</label>
                         <input type="text" class="form-control" id="formPenangkarNama" name="nama" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="formPenangkarPhone" class="form-label">Nomor HP/WA</label>
+                        <input type="text" class="form-control" id="formPenangkarPhone" name="phone" required>
+                    </div>
                     <div class="mb-3" id="editJumlahAnggota" style="display: none;">
                         <label for="formPenangkarJumlahAnggota" class="form-label">Jumlah Anggota Kelompok
                             Penangkaran</label>
@@ -112,6 +121,7 @@
                     $('#formPenangkarId').val(response.id);
                     $('#formPenangkarIdUser').val(response.id_user);
                     $('#formPenangkarNama').val(response.nama);
+                    $('#formPenangkarPhone').val(response.phone);
                     $('#formPenangkarLuasLahan').val(response.luas_lahan);
                     $('#formPenangkarAlamat').val(response.alamat);
                     $('#formPenangkarJenis').val(response.jenis);

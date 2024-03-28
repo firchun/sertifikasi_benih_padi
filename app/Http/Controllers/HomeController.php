@@ -56,7 +56,7 @@ class HomeController extends Controller
         $passedValues = []; // Data lulus
 
         // Inisialisasi array untuk setiap tahun
-        foreach (range(date('Y') - 3, date('Y')) as $year) {
+        foreach (range(date('Y') - 2, date('Y')) as $year) {
             $labels[] = strval($year);
             $certifiedValues[$year] = 0;
             $failedValues[$year] = 0;
