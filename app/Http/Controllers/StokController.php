@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penangkar;
+use App\Models\SertifikasiLab;
 use App\Models\StokBenih;
 use App\Models\varietas;
 use Illuminate\Http\Request;
@@ -86,9 +87,9 @@ class StokController extends Controller
 
     public function getDetailStok($id)
     {
-        $stok = StokBenih::selectRaw('stok_benihs.id_penangkar,stok_benihs.id_kelas_benih, stok_benihs.id_varietas')
+        $stok = StokBenih::selectRaw('stok_benihs.id_penangkar,stok_benihs.id_kelas_benih, stok_benihs.id_varietas,stok_benihs.id_sertifikasi')
             ->where('stok_benihs.id_varietas', $id)
-            ->groupBy('stok_benihs.id_penangkar', 'stok_benihs.id_varietas', 'stok_benihs.id_kelas_benih')
+            ->groupBy('stok_benihs.id_penangkar', 'stok_benihs.id_varietas', 'stok_benihs.id_kelas_benih', 'stok_benihs.id_sertifikasi')
             ->join('penangkars', 'penangkars.id', '=', 'stok_benihs.id_penangkar')
             ->join('varietas', 'varietas.id', '=', 'stok_benihs.id_varietas')
             ->join('kelas_benihs', 'kelas_benihs.id', '=', 'stok_benihs.id_kelas_benih')
@@ -100,6 +101,9 @@ class StokController extends Controller
             $stokKeluar = StokBenih::where('id_varietas', $stokItem->id_varietas)->where('jenis_stok', 'kurang')->sum('jumlah_stok');
             $jumlahStok = $stokMasuk - $stokKeluar;
             $stok[$key]->stok = $jumlahStok;
+
+            $sertifikasiLabs = SertifikasiLab::where('id_sertifikasi', $stokItem->id_sertifikasi)->latest()->first()->tanggal_label ?? null;
+            $stok[$key]->expired = $sertifikasiLabs;
         }
         return response()->json($stok);
     }

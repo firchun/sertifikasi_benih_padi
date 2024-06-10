@@ -27,9 +27,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="form">
-
+                <form id="form" enctype="multipart/form-data">
                     <div class="row">
+                        <div class="col-lg-12 mb-4 pb-2">
+                            <div class="form-group">
+                                <label for="nama" class="form-label">Foto (Opsional)</label>
+                                <input type="file" class="form-control shadow-none" id="file" name="image">
+                            </div>
+                        </div>
                         <div class="col-lg-12 mb-4 pb-2">
                             <div class="form-group">
                                 <label for="nama" class="form-label">Nama Anda</label>
@@ -74,17 +79,20 @@
     <script>
         $(document).ready(function() {
             $('#form').submit(function(e) {
-                e.preventDefault(); // Mencegah form untuk melakukan submit secara default
-                var formData = $(this).serialize();
+                e.preventDefault();
+
+                var formData = new FormData(this);
 
                 $.ajax({
-                    url: '/testimoni/store', // Ganti dengan URL yang benar untuk menyimpan data testimoni
+                    url: '/testimoni/store',
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     dataType: 'json',
                     data: formData,
+                    processData: false,
+                    contentType: false,
                     success: function(response) {
                         alert(response.message);
                         $('#applyLoan').modal('hide');
@@ -108,18 +116,26 @@
                     $('#TestimoniCard').empty();
 
                     $.each(data, function(index, testimoni) {
+                        var imageHtml = '';
+                        if (testimoni.image != null) {
+                            imageHtml =
+                                `<img src="${testimoni.imgsrc}" id="image" alt="testimoni" style="width:100%">`;
+                        }
                         $('#TestimoniCard').append(
                             `<div class="col-lg-4 col-md-6 pt-1">
-                            <div class="shadow rounded bg-white p-4 mt-4">
-                                <div class="d-block d-sm-flex align-items-center mb-3">
-                                    <div class="mt-3 mt-sm-0 ms-0 ms-sm-3">
-                                        <h4 class="h5 mb-1">${testimoni.nama}</h4>
-                                        <p class="mb-0"> ${testimoni.sebagai}  </p>
-                                    </div>
+                        <div class="shadow rounded bg-white p-4 mt-4">
+                            <div class="d-block d-sm-flex align-items-center mb-3">
+                                <div class="mt-3 mt-sm-0 ms-0 ms-sm-3">
+                                    <h4 class="h5 mb-1">${testimoni.nama}</h4>
+                                    <p class="mb-0"> ${testimoni.sebagai}  </p>
                                 </div>
-                                <div class="content text-success"><i> "${testimoni.testimoni}"</i></div>
                             </div>
-                        </div>`
+                            <div class="content text-success">
+                                ${imageHtml}
+                                <i> "${testimoni.testimoni}"</i>
+                            </div>
+                        </div>
+                    </div>`
                         );
                     });
                 },

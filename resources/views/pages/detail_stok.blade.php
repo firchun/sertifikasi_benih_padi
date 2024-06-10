@@ -61,6 +61,10 @@
                                                 ${item.stok > 0 ? 'Tersedia ' + item.stok + ' Kg' : 'Stok Kosong'}
                                             </strong>
                                                 <p class="mb-3">
+                                                    <strong class="text-success">Tanggal Akhir Label</strong><br>
+                                                <span>${item.expired}</span><br>
+                                                </p>
+                                                <p class="mb-3">
                                                     <strong class="text-success">Alamat Penangkar</strong><br>
                                                 <span>${item.penangkar.alamat}</span><br>
                                                 </p>

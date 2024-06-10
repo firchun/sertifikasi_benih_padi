@@ -12,5 +12,6 @@ class Testimoni extends Model
         'nama',
         'sebagai',
         'testimoni',
+        'image'
     ];
 }
